@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<!--style-->
+
+<body>
+	<div id="loader" class="loader" style="visibility: hidden;"></div>
+	<div id="container" class="container">
+		<div class="grid-container">
+			<div id="maxd6">Max d6:</div>
+			<div>
+				<label for="expendedd6">Expended d6: </label><input id="expendedd6" type="number"
+					onkeypress="return event.charCode >= 48 && event.charCode <= 57"><label style="visibility:hidden"
+					for="expendedd6">d6</label>
+			</div>
+			<div id="maxd8">Max d8:</div>
+			<div>
+				<label for="expendedd8">Expended d8: </label><input id="expendedd8" type="number"
+					onkeypress="return event.charCode >= 48 && event.charCode <= 57"><label style="visibility:hidden"
+					for="expendedd8">d8</label>
+			</div>
+			<div id="maxd10">Max d10:</div>
+			<div>
+				<label for="expendedd10">Expended d10: </label><input id="expendedd10" type="number"
+					onkeypress="return event.charCode >= 48 && event.charCode <= 57"><label style="visibility:hidden"
+					for="expendedd10">d10</label>
+			</div>
+			<div id="maxd12">Max d12:</div>
+			<div>
+				<label for="expendedd12">Expended d12: </label><input id="expendedd12" type="number"
+					onkeypress="return event.charCode >= 48 && event.charCode <= 57"><label style="visibility:hidden"
+					for="expendedd12">d12</label>
+			</div>
+		</div><br>
+		<button class="submit" onclick="update();">Update</button><br><br>
+		<div id="error" class="error" style="visibility: hidden">
+			Error: Your entered values exceed the maximum number of hit
+			dice you are allowed to recover. Please
+			adjust accordingly.
+		</div>
+	</div>
+</body>
+
+<!--script-->
+
+</html>

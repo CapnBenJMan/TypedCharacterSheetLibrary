@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+	</head>
+	<style>
+		/* Master CSS */
+		.magic {
+			display: none !important;
+		}
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		.loader {
+			border: 5px solid #f3f3f3;
+			border-radius: 50%;
+			border-top: 5px solid #3498db;
+			border-bottom: 5px solid #3498db;
+			position: absolute;
+			animation: spin 2s linear infinite;
+		}
+
+		/* hitdice.css */
+		.container {
+			background-color: white;
+			padding: 15px;
+			height: 130px;
+			width: 400px;
+			font-family: Georgia;
+			color: black;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			text-align: center;
+			font-size: 15px;
+		}
+
+		.grid-container {
+			display: grid;
+			grid-template-columns: auto auto;
+		}
+
+		.grid-container div input {
+			width: 50px;
+			border-radius: 1em;
+			text-align: center;
+			font-family: Georgia;
+		}
+
+		.submit {
+			border-radius: 1em;
+			font-family: Georgia;
+			font-size: 15px;
+		}
+
+		.error {
+			color: red;
+		}
+
+		button:active {
+			filter: brightness(80%);
+		}
+
+		.loader {
+			top: calc(50% - 30px);
+			left: calc(50% - 30px);
+			width: 50px;
+			height: 50px;
+			z-index: 10;
+		}
+	</style>
+
+	<body>
+		<div id="loader" class="loader magic"></div>
+		<div id="container" class="container">
+			<div class="grid-container">
+				<div id="maxd6">Max d6:</div>
+				<div>
+					<label for="expendedd6">Expended d6: </label
+					><input
+						id="expendedd6"
+						type="number"
+						onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+					/><label style="visibility: hidden" for="expendedd6"
+						>d6</label
+					>
+				</div>
+				<div id="maxd8">Max d8:</div>
+				<div>
+					<label for="expendedd8">Expended d8: </label
+					><input
+						id="expendedd8"
+						type="number"
+						onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+					/><label style="visibility: hidden" for="expendedd8"
+						>d8</label
+					>
+				</div>
+				<div id="maxd10">Max d10:</div>
+				<div>
+					<label for="expendedd10">Expended d10: </label
+					><input
+						id="expendedd10"
+						type="number"
+						onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+					/><label style="visibility: hidden" for="expendedd10"
+						>d10</label
+					>
+				</div>
+				<div id="maxd12">Max d12:</div>
+				<div>
+					<label for="expendedd12">Expended d12: </label
+					><input
+						id="expendedd12"
+						type="number"
+						onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+					/><label style="visibility: hidden" for="expendedd12"
+						>d12</label
+					>
+				</div>
+			</div>
+			<br />
+			<button class="submit" onclick="update();">Update</button>
+		</div>
+	</body>
+
+	<script>
+		// Master JS
+		/** Returns the value of the function called
+		 * @param {string} f The function name
+		 * @param {any[]} [args] The arguments to be passed to the function
+		*/
+		function runGoogleWithReturn(f, args) {
+		    if (arguments.length == 1)
+		        return new Promise((resolve, reject) => {
+		            google.script.run
+		                .withSuccessHandler(stuff => resolve(stuff))
+		                .withFailureHandler(err => reject(err))
+		                .callLibraryFunction(`CharacterSheetCode.${f}`);
+		        });
+		    else if (arguments.length == 2)
+		        return new Promise((resolve, reject) => {
+		            google.script.run
+		                .withSuccessHandler(stuff => resolve(stuff))
+		                .withFailureHandler(err => reject(err))
+		                .callLibraryFunction(`CharacterSheetCode.${f}`, args);
+		        });
+		}
+		/** Simply calls a function with no return value
+		 * @param {string} f The function name
+		 * @param {any[]} [args] The arguments to be passed to the function
+		*/
+		function runGoogle(f, args) {
+		    if (arguments.length == 1)
+		        return new Promise((resolve, reject) => {
+		            google.script.run
+		                .withSuccessHandler(() => resolve())
+		                .withFailureHandler(err => reject(err))
+		                .callLibraryFunction(`CharacterSheetCode.${f}`);
+		        });
+		    else if (arguments.length == 2)
+		        return new Promise((resolve, reject) => {
+		            google.script.run
+		                .withSuccessHandler(() => resolve())
+		                .withFailureHandler(err => reject(err))
+		                .callLibraryFunction(`CharacterSheetCode.${f}`, args);
+		        });
+		}
+		const ID = (n) => document.getElementById(n);
+		const qry = (n, el = document) => el.querySelector(n);
+		const qryA = (n, el = document) => el.querySelectorAll(n);
+		const capitalizer = (x) => {
+			if (x.includes(' ')) { // if v includes spaces
+				const arr = x.split(" "); // split v on spaces
+				for (let j in arr) { // loop through arr
+					if (arr[j].includes('\n')) break; // break the loop if arr[j] includes \n
+					else arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1).toLowerCase();
+					// ^otherwise set arr[j] to itself capitalized
+				}
+				return arr.join(" "); // return the reformatted array joined by spaces
+			} else return x.charAt(0).toUpperCase() + x.slice(1).toLowerCase(); // otherwise, return capitalized word
+		}
+
+		// hitdice.js
+		qryA('input').forEach(x => x.autocomplete = 'off'); // disable autocomplete for each input element
+		document.addEventListener("DOMContentLoaded", async () => {
+		    ID('loader').classList.remove('magic'); // show loader
+		    const values = await runGoogleWithReturn("getHitDice"); // get hit dice values
+		    {
+		        [6, 8, 10, 12].forEach(n => {
+		            const max = ID(`maxd${n}`), expended = ID(`expendedd${n}`); // get max and expended elements for die type
+		            max.innerHTML = `Max d${n}: ${values[`maxd${n}`]}`; // set the innerHTML of the max element
+		            expended.min = values[`expendedd${n}`]; // set the min for expended input
+		            expended.max = values[`maxd${n}`]; // set the max for expended input
+		            expended.value = values[`expendedd${n}`]; // set the value for expended input
+		        });
+		    }
+		    ID('loader').classList.add('magic'); // hide loader
+		});
+		async function update() {
+		    ID('loader').classList.remove('magic'); // show loader
+		    let parseVal = (id) => Number(ID(id).value);
+		    await runGoogle("updateHitDice", [parseVal('expendedd6'), parseVal('expendedd8'), parseVal('expendedd10'), parseVal('expendedd12')]);
+		    // ^update hit dice with inputted values
+		    google.script.host.close(); // close dialog
+		}
+	</script>
+</html>

@@ -1,0 +1,81 @@
+html,
+body {
+	text-align: center;
+}
+
+.content {
+	font-family: Georgia;
+	font-size: 16px;
+	background-color: white;
+	color: black;
+	display: flex;
+	flex-direction: column;
+}
+
+input,
+select,
+label,
+button {
+	font-family: inherit;
+	font-size: inherit;
+	vertical-align: middle;
+}
+
+input:not(label),
+select:not(label),
+label:not(label),
+button:not(label) {
+	border-radius: 1em;
+}
+
+/* input,
+select,
+button {
+	border-radius: 1em;
+} */
+
+.loader {
+	width: 15px;
+	height: 15px;
+}
+
+.first tr {
+	width: 100%;
+}
+
+table tr > td > input[type="number"] {
+	width: calc(100% - 10px);
+	text-align: center;
+}
+
+th,
+td {
+	border-radius: 1em;
+}
+
+.second th,
+.second td {
+	border: 1px solid black;
+}
+
+.second tr:nth-child(1) th:nth-child(1) {
+	border: 0px;
+}
+
+.second tr:nth-child(n + 3) td:nth-last-child(1) {
+	border: 0px;
+}
+
+.second tr:nth-child(n + 4) td:nth-last-child(2) {
+	border: 0px;
+}
+
+.second tr:nth-child(n + 5) td:nth-last-child(3) {
+	border: 0px;
+}
+
+/* .second tr:nth-child(n + 3) td:nth-last-child(1),
+.second tr:nth-child(n + 4) td:nth-last-child(2),
+.second tr:nth-child(n + 5) td:nth-last-child(3) {
+	border: 0px;
+} */

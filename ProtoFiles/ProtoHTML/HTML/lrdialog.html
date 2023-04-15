@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<base target="_top">
+</head>
+
+<!--style-->
+
+<body class="content">
+	<form onsubmit="submission()">
+		<!--Run submission when confirm button is pressed-->
+		<label>Select what you want this cell to be set to after completing a Long Rest:</label>
+		<!--Selection input-->
+		<select id="type" name="type">
+			<option value="current">Current Value</option>
+			<option value="cell">Value of a Cell</option>
+			<option value="inputval">Input Value</option>
+			<option value="other">Other Value</option>
+			<option value="randomnum">Random Number Value</option>
+			<option value="randomlist">Random List Item</option>
+			<option value="modconstant">Constant Modify</option>
+			<option value="modinput">Input Modify</option>
+			<option value="srreminder">Short Rest Reminder</option>
+		</select><br>
+		<!--Options described below-->
+		<div>
+			<label>Resets on Short or Long Rest:</label>
+			<input type="checkbox" id="shortrest"><br>
+			<!--Defines whether or not a rule triggers on a short rest-->
+			<input type="submit" value="Confirm"><span id="loader" class="loader" style="visibility: hidden;"></span>
+		</div>
+	</form>
+	<!--Default option and descriptor text-->
+	<div id="infotext">Current Value: Select this option to have the sheet reset this cell to its current value.</div>
+</body>
+
+<!--script-->
+
+</html>

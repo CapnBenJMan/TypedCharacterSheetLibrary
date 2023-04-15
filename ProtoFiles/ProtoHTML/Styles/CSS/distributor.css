@@ -1,0 +1,45 @@
+html,
+body {
+	text-align: center;
+}
+
+.content {
+	font-family: Georgia;
+	font-size: 16px;
+	background-color: white;
+	color: black;
+	display: flex;
+	flex-direction: column;
+}
+
+.content > div > div,
+.content > div > div > div {
+	display: flex;
+	justify-content: center;
+}
+
+.content > div > div > div > input {
+	width: 125px;
+}
+
+input,
+select,
+label,
+button {
+	font-family: inherit;
+	font-size: inherit;
+	vertical-align: middle;
+}
+
+input:not(label),
+select:not(label),
+label:not(label),
+button:not(label) {
+	border-radius: 1em;
+	text-align: center;
+}
+
+.loader {
+	width: 15px;
+	height: 15px;
+}

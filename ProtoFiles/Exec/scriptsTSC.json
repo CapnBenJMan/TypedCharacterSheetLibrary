@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"outDir": "../ProtoHTML/Scripts/JS",
+		"lib": [
+			"DOM",
+			"ESNext",
+			"DOM.Iterable"
+		],
+		"noEmitOnError": false,
+		"noResolve": true
+	},
+	"include": [
+		"./__TEMP/*.ts"
+	]
+}

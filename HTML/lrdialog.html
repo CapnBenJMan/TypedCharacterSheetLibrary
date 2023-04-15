@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<base target="_top" />
+	</head>
+
+	<style>
+		/* Master CSS */
+		.magic {
+			display: none !important;
+		}
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		.loader {
+			border: 5px solid #f3f3f3;
+			border-radius: 50%;
+			border-top: 5px solid #3498db;
+			border-bottom: 5px solid #3498db;
+			position: absolute;
+			animation: spin 2s linear infinite;
+		}
+
+		/* lrdialog.css */
+		.content {
+			text-align: center;
+			font-family: Georgia;
+		}
+
+		input,
+		select {
+			font-family: inherit;
+			font-size: inherit;
+			border-radius: 1em;
+		}
+
+		select {
+			background-color: #34c;
+			color: #fff;
+		}
+
+		.loader {
+			width: 15px;
+			height: 15px;
+		}
+	</style>
+
+	<body class="content">
+		<form onsubmit="submission()">
+			<!--Run submission when confirm button is pressed-->
+			<label
+				>Select what you want this cell to be set to after completing a
+				Long Rest:</label
+			>
+			<!--Selection input-->
+			<select id="type" name="type">
+				<option value="current">Current Value</option>
+				<option value="cell">Value of a Cell</option>
+				<option value="inputval">Input Value</option>
+				<option value="other">Other Value</option>
+				<option value="randomnum">Random Number Value</option>
+				<option value="randomlist">Random List Item</option>
+				<option value="modconstant">Constant Modify</option>
+				<option value="modinput">Input Modify</option>
+				<option value="srreminder">Short Rest Reminder</option></select
+			><br />
+			<!--Options described below-->
+			<div>
+				<label>Resets on Short or Long Rest:</label>
+				<input type="checkbox" id="shortrest" /><br />
+				<!--Defines whether or not a rule triggers on a short rest-->
+				<input type="submit" value="Confirm" /><span
+					id="loader"
+					class="loader"
+					style="visibility: hidden"
+				></span>
+			</div>
+		</form>
+		<!--Default option and descriptor text-->
+		<div id="infotext">
+			Current Value: Select this option to have the sheet reset this cell
+			to its current value.
+		</div>
+	</body>
+
+	<script>
+		// Master JS
+		/** Returns the value of the function called
+		 * @param {string} f The function name
+		 * @param {any[]} [args] The arguments to be passed to the function
+		*/
+		function runGoogleWithReturn(f, args) {
+		    if (arguments.length == 1)
+		        return new Promise((resolve, reject) => {
+		            google.script.run
+		                .withSuccessHandler(stuff => resolve(stuff))
+		                .withFailureHandler(err => reject(err))
+		                .callLibraryFunction(`CharacterSheetCode.${f}`);
+		        });
+		    else if (arguments.length == 2)
+		        return new Promise((resolve, reject) => {
+		            google.script.run
+		                .withSuccessHandler(stuff => resolve(stuff))
+		                .withFailureHandler(err => reject(err))
+		                .callLibraryFunction(`CharacterSheetCode.${f}`, args);
+		        });
+		}
+		/** Simply calls a function with no return value
+		 * @param {string} f The function name
+		 * @param {any[]} [args] The arguments to be passed to the function
+		*/
+		function runGoogle(f, args) {
+		    if (arguments.length == 1)
+		        return new Promise((resolve, reject) => {
+		            google.script.run
+		                .withSuccessHandler(() => resolve())
+		                .withFailureHandler(err => reject(err))
+		                .callLibraryFunction(`CharacterSheetCode.${f}`);
+		        });
+		    else if (arguments.length == 2)
+		        return new Promise((resolve, reject) => {
+		            google.script.run
+		                .withSuccessHandler(() => resolve())
+		                .withFailureHandler(err => reject(err))
+		                .callLibraryFunction(`CharacterSheetCode.${f}`, args);
+		        });
+		}
+		const ID = (n) => document.getElementById(n);
+		const qry = (n, el = document) => el.querySelector(n);
+		const qryA = (n, el = document) => el.querySelectorAll(n);
+		const capitalizer = (x) => {
+			if (x.includes(' ')) { // if v includes spaces
+				const arr = x.split(" "); // split v on spaces
+				for (let j in arr) { // loop through arr
+					if (arr[j].includes('\n')) break; // break the loop if arr[j] includes \n
+					else arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1).toLowerCase();
+					// ^otherwise set arr[j] to itself capitalized
+				}
+				return arr.join(" "); // return the reformatted array joined by spaces
+			} else return x.charAt(0).toUpperCase() + x.slice(1).toLowerCase(); // otherwise, return capitalized word
+		}
+
+		// lrdialog.js
+		qryA('input').forEach(x => x.autocomplete = 'off');
+		const type = ID('type'); // defines reference to type element and its options
+		const info = ID('infotext'); // defines reference to infotext
+		async function submission() {
+		    ID('loader').style.visibility = 'visible'; // set loader to visible
+		    const range = await runGoogleWithReturn('selection'); // get range of current cell
+		    const r1 = type.value, // selected option
+		    r2 = ID('shortrest').checked, // runs on short rest
+		    r3 = r2 ? 'short or long' : 'long'; // type of rest
+		    await runGoogle("restCompiler", [range, r1, r2, r3]); // runs rest compiler
+		    google.script.host.close(); // closes dialog
+		}
+		type.addEventListener('change', t => {
+		    const tt = {
+		        'current': `Current Value: Select this option to have the sheet reset this cell to its current value.`,
+		        'cell': `Value of a Cell: Select this option to have the sheet reset this cell to the value of a certain cell.`,
+		        'inputval': `Input Value: Select this option to have the sheet reset this cell to a value inputted by the user on long rest.`,
+		        'other': `Other Value: Select this option to have the sheet reset this cell to a specific value.`,
+		        'randomnum': `Random Number Value: Select this option to have the sheet reset this cell to a random value in dice format (ex. 1d4-1).`,
+		        'randomlist': `Random List Item: Select this option to have the sheet reset this cell to a random item on a list.`,
+		        'modconstant': `Constant Modify: Select this option to have the sheet modify this cell by a given numeric value.`,
+		        'modinput': `Input Modify: Select this option to have the sheet modify this cell by a value inputted by the user.`,
+		        'srreminder': `Short Rest Reminder: Select this option to have the sheet give you a reminder when you take a short rest (ex. Wizard's Arcane Recovery).`,
+		    };
+		    info.innerHTML = tt[t.target.value];
+		});
+	</script>
+</html>

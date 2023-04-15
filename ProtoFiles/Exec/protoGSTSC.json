@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"target": "ES2019",
+		"lib": [
+			"ESNext"
+		],
+		"experimentalDecorators": true,
+		"strictNullChecks": true,
+		"outDir": "../../GS"
+	},
+	"include": [
+		"../ProtoGS/TS/*.ts"
+	]
+}

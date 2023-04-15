@@ -1,0 +1,40 @@
+.content {
+	text-align: center;
+	vertical-align: middle;
+	font-family: Georgia;
+	background-color: white;
+	color: black;
+	width: 450px;
+}
+
+input,
+select,
+label {
+	font-family: inherit;
+	font-size: inherit;
+	vertical-align: middle;
+
+	&:not(label) {
+		border-radius: 1em;
+	}
+}
+
+input {
+	&[type="checkbox"] {
+		vertical-align: middle;
+	}
+
+	&[type="radio"] {
+		vertical-align: top;
+	}
+}
+
+.loader {
+	width: 15px;
+	height: 15px;
+}
+
+.bonus {
+	text-align: center;
+	width: 35px;
+}

@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"target": "ES6",
+		"outDir": "JS",
+		"lib": [
+			"DOM",
+			"ESNext",
+			"DOM.Iterable"
+		],
+		"module": "NodeNext"
+	},
+	"include": ["./*.ts"]
+}

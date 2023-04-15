@@ -1,0 +1,73 @@
+html,
+body {
+	height: 99%;
+	text-align: center;
+}
+
+.content {
+	font-family: Georgia;
+	font-size: 16px;
+	background-color: white;
+	color: black;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+input,
+select,
+label,
+button {
+	font-family: inherit;
+	font-size: inherit;
+	vertical-align: middle;
+
+	&:not(label) {
+		border-radius: 1em;
+	}
+}
+
+.loader {
+	top: calc(50% - 30px);
+	left: calc(50% - 30px);
+	width: 50px;
+	height: 50px;
+	z-index: 10;
+}
+
+.bonus {
+	text-align: center;
+	width: 35px;
+}
+
+.flexbox-search {
+	display: flex;
+	text-align: center;
+
+	& > div {
+		display: flex;
+		flex-direction: column;
+		flex: 1 1 100%;
+		min-width: 0;
+
+		& > input {
+			flex: 1;
+			min-width: 0;
+		}
+	}
+}
+
+.output {
+	text-align: initial;
+	flex: 1;
+	outline: 1px solid black;
+	overflow: auto;
+
+	& table {
+		border-collapse: collapse;
+
+		& tr:nth-child(odd) {
+			background-color: #eee;
+		}
+	}
+}

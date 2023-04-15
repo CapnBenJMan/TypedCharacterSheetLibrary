@@ -1,0 +1,615 @@
+body {
+	font-family: Georgia;
+	width: 600px;
+	height: 300px;
+	margin: 0px;
+}
+
+input,
+button,
+select {
+	border-radius: 1em;
+	font-family: Georgia;
+}
+
+.tab {
+	overflow: hidden;
+	border: 1px solid #ccc;
+	background-color: #f1f1f1;
+	height: 45px;
+	text-align: center;
+
+	& button {
+		background-color: inherit;
+		float: center;
+		border: none;
+		outline: none;
+		cursor: pointer;
+		padding: 15px;
+		transition: 0.3s;
+		font-size: 15px;
+		font-family: Georgia;
+
+		&:hover {
+			background-color: #ddd;
+		}
+
+		&.active {
+			background-color: #ccc;
+		}
+	}
+}
+
+/* Style the tab content */
+.tabcontent {
+	display: none;
+	padding: 10px;
+	border: 1px solid #ccc;
+	height: calc(300px - 45px);
+	border-top: none;
+	background-color: white;
+	color: black;
+}
+
+.savingthrow,
+.skillcheck,
+.checkbuilder {
+	display: inherit;
+}
+
+.scbutton {
+	font-family: Georgia;
+}
+
+.stbutton,
+.cbbutton {
+	width: 98px;
+}
+
+.widebutton {
+	width: calc(98px * 2);
+}
+
+.triangle {
+	-webkit-text-stroke: 12px black;
+	color: transparent;
+	font-size: 200px;
+}
+
+.d4,
+.d6,
+.d8,
+.d10,
+.d12 {
+	width: 100px;
+	height: 100px;
+	position: relative;
+	float: left;
+	border: black solid 1px;
+
+	& svg {
+		position: absolute;
+		max-width: 100px;
+		max-height: 100px;
+	}
+}
+
+.d20 {
+	width: 200px;
+	height: 200px;
+	position: relative;
+	float: left;
+	border: black solid 1px;
+
+	& svg {
+		position: absolute;
+		max-width: 200px;
+		max-height: 200px;
+	}
+
+	& .a {
+		animation: rotationA 4s ease-in-out;
+	}
+
+	& .a1 {
+		animation: rotationA 4s 0.1s ease-in-out;
+	}
+
+	& .a2 {
+		animation: rotationA 4s 0.2s ease-in-out;
+	}
+
+	& .a3 {
+		animation: rotationA 4s 0.3s ease-in-out;
+	}
+
+	& .b {
+		animation: rotationB 4s 0.4s ease-in-out;
+	}
+
+	& .b1 {
+		animation: rotationB 4s 0.5s ease-in-out;
+	}
+
+	& .b2 {
+		animation: rotationB 4s 0.6s ease-in-out;
+	}
+
+	& .b3 {
+		animation: rotationB 4s 0.7s ease-in-out;
+	}
+
+	& .hex {
+		position: absolute;
+	}
+}
+
+@keyframes rotationA {
+	0% {
+		transform: rotate(0deg) scale(100%);
+	}
+
+	15% {
+		transform: rotate(90deg) scale(75%);
+	}
+
+	30% {
+		transform: rotate(180deg) scale(100%);
+	}
+
+	65% {
+		transform: rotate(360deg) scale(0%);
+	}
+
+	100% {
+		transform: rotate(720deg) scale(100%);
+	}
+}
+
+@keyframes rotationB {
+	0% {
+		transform: rotate(0deg) scale(75%);
+	}
+
+	15% {
+		transform: rotate(-90deg) scale(75%);
+	}
+
+	30% {
+		transform: rotate(-180deg) scale(100%);
+	}
+
+	65% {
+		transform: rotate(-360deg) scale(0%);
+	}
+
+	100% {
+		transform: rotate(-720deg) scale(100%);
+	}
+}
+
+.loadnum {
+	@keyframes loadNumber {
+		from {
+			transform: scale(0%);
+		}
+
+		to {
+			transform: scale(100%);
+		}
+	}
+
+	animation: loadNumber 1s ease-in-out;
+
+	&1 {
+		animation: loadNumber 1.5s ease-in-out;
+	}
+}
+
+.unloadnum {
+	@keyframes unloadNumber {
+		from {
+			transform: scale(100%);
+		}
+
+		to {
+			transform: scale(0%);
+		}
+	}
+
+	animation: unloadNumber 1s ease-in-out;
+}
+
+.randomnumber {
+	font-size: 30px;
+	transform: scale(100%);
+}
+
+.inputmod {
+	font-family: Georgia;
+	width: 73px;
+	text-align: center;
+}
+
+.tri-state-toggle {
+	display: flex;
+	justify-content: center;
+}
+
+.storage {
+	display: none;
+}
+
+.totalindicator {
+	font-size: 18px;
+	text-align: center;
+}
+
+.diceholder {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.d4 {
+	@keyframes d4animation {
+		from {
+			transform: rotate(0deg);
+		}
+
+		to {
+			transform: rotate(-360deg);
+		}
+	}
+
+	@keyframes d4xanimation {
+		from {
+			transform: rotateX(0deg);
+		}
+
+		to {
+			transform: rotateX(360deg);
+		}
+	}
+
+	@keyframes d4yanimation {
+		from {
+			transform: rotateY(0deg);
+		}
+
+		to {
+			transform: rotateY(360deg);
+		}
+	}
+
+	&x {
+		animation: d4xanimation 4s ease-in-out;
+		transform-origin: center;
+	}
+
+	&y {
+		animation: d4yanimation 4s ease-in-out;
+		transform-origin: center;
+	}
+
+	&a {
+		animation: d4animation 4s 0.4s ease-in-out;
+		transform-origin: center;
+	}
+
+	&b {
+		animation: d4animation 4s 0.3s ease-in-out;
+		transform-origin: center;
+	}
+
+	&c {
+		animation: d4animation 4s 0.2s ease-in-out;
+		transform-origin: center;
+	}
+
+	&d {
+		animation: d4animation 4s 0.1s ease-in-out;
+		transform-origin: center;
+	}
+
+	&e {
+		animation: d4animation 4s ease-in-out;
+		transform-origin: center;
+	}
+
+	&ar {
+		animation: d4animation 4s 0.4s ease-in-out reverse;
+		transform-origin: center;
+	}
+
+	&br {
+		animation: d4animation 4s 0.3s ease-in-out reverse;
+		transform-origin: center;
+	}
+
+	&cr {
+		animation: d4animation 4s 0.2s ease-in-out reverse;
+		transform-origin: center;
+	}
+
+	&dr {
+		animation: d4animation 4s 0.1s ease-in-out reverse;
+		transform-origin: center;
+	}
+
+	&er {
+		animation: d4animation 4s ease-in-out reverse;
+		transform-origin: center;
+	}
+}
+
+.d6 {
+	@keyframes d6animation {
+		from {
+			transform: rotate(0deg);
+		}
+
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	@keyframes d6yanimation {
+		from {
+			transform: rotateY(0deg);
+		}
+
+		to {
+			transform: rotateY(360deg);
+		}
+	}
+
+	&a {
+		animation: d6animation 4s ease-in-out;
+		transform-origin: center;
+	}
+
+	&b {
+		animation: d6animation 4s 0.1s ease-in-out;
+		transform-origin: center;
+	}
+
+	&c {
+		animation: d6animation 4s 0.2s ease-in-out;
+		transform-origin: center;
+	}
+
+	&y1 {
+		animation: d6yanimation 4s ease-in-out;
+		transform-origin: center;
+	}
+
+	&y2 {
+		animation: d6yanimation 4s 0.25s ease-in-out;
+		transform-origin: center;
+	}
+
+	&y3 {
+		animation: d6yanimation 4s 0.5s ease-in-out;
+		transform-origin: center;
+	}
+
+	&y4 {
+		animation: d6yanimation 4s 0.75s ease-in-out;
+		transform-origin: center;
+	}
+
+	&y5 {
+		animation: d6yanimation 4s 1s ease-in-out;
+		transform-origin: center;
+	}
+
+	&y6 {
+		animation: d6yanimation 4s 1.25s ease-in-out;
+		transform-origin: center;
+	}
+}
+
+.d8 {
+	@keyframes d8animation1 {
+		from {
+			transform: rotateZ(0deg) rotateY(0deg);
+		}
+
+		to {
+			transform: rotateZ(180deg) rotateY(180deg);
+		}
+	}
+
+	@keyframes d8animation2 {
+		from {
+			transform: rotateX(0deg) rotateY(0deg);
+		}
+
+		to {
+			transform: rotateX(180deg) rotateY(180deg);
+		}
+	}
+
+	@keyframes d8animation3 {
+		from {
+			transform: rotateZ(0deg) rotateX(0deg);
+		}
+
+		to {
+			transform: rotateZ(-180deg) rotateX(-180deg);
+		}
+	}
+
+	&a {
+		animation: d8animation1 4s ease-in-out;
+		transform-origin: center;
+	}
+
+	&b {
+		animation: d8animation2 4s ease-in-out;
+		transform-origin: center;
+	}
+
+	&c {
+		animation: d8animation3 4s ease-in-out;
+		transform-origin: center;
+	}
+
+	&ar {
+		animation: d8animation1 4s ease-in-out reverse;
+		transform-origin: center;
+	}
+
+	&br {
+		animation: d8animation2 4s ease-in-out reverse;
+		transform-origin: center;
+	}
+
+	&cr {
+		animation: d8animation3 4s ease-in-out reverse;
+		transform-origin: center;
+	}
+}
+
+.d10 {
+	@keyframes d10animation {
+		from {
+			transform: rotateX(0deg);
+		}
+
+		to {
+			transform: rotateX(360deg);
+		}
+	}
+
+	@keyframes d10animation1 {
+		from {
+			transform: rotateY(0deg);
+		}
+
+		to {
+			transform: rotateY(360deg);
+		}
+	}
+
+	@keyframes d10panimation {
+		from {
+			transform: rotate(0deg);
+		}
+
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	&a {
+		animation: d10animation 4s ease-in-out;
+		transform-origin: center;
+	}
+
+	&a1 {
+		animation: d10animation1 4s ease-in-out;
+		transform-origin: center;
+	}
+
+	&p {
+		animation: d10panimation 4s ease-in-out;
+		transform-origin: center;
+	}
+
+	&p1 {
+		animation: d10panimation 4s ease-in-out reverse;
+		transform-origin: center;
+	}
+}
+
+.d12 {
+	@keyframes d12animation {
+		from {
+			transform: rotate(0deg);
+		}
+
+		to {
+			transform: rotate(360deg);
+		}
+	}
+
+	&a {
+		animation: d12animation 4s ease-in-out;
+		transform-origin: center;
+	}
+
+	&b {
+		animation: d12animation 4s ease-in-out reverse;
+		transform-origin: center;
+	}
+
+	&aa {
+		animation: d12animation 4s ease-in-out;
+		transform-origin: 50px 20px;
+	}
+
+	&ab {
+		animation: d12animation 4s ease-in-out;
+		transform-origin: 21.468px 40.729px;
+	}
+
+	&ac {
+		animation: d12animation 4s ease-in-out;
+		transform-origin: 32.366px 74.271px;
+	}
+
+	&ad {
+		animation: d12animation 4s ease-in-out;
+		transform-origin: 67.634px 74.271px;
+	}
+
+	&ae {
+		animation: d12animation 4s ease-in-out;
+		transform-origin: 78.532px 40.729px;
+	}
+}
+
+.dieinput {
+	width: 32px;
+	font-family: Georgia;
+
+	&container {
+		text-align: center;
+	}
+}
+
+.dice {
+	&rolls {
+		width: 100px;
+		overflow: visible;
+		text-align: center;
+	}
+
+	&totals {
+		width: 100px;
+		text-align: center;
+	}
+}
+
+.finalinput {
+	position: absolute;
+	display: flex;
+	width: 600px;
+	top: 280px;
+	flex-direction: column;
+	align-items: center;
+}
+
+.helpfulinfo {
+	display: flex;
+	justify-content: center;
+	width: 590px;
+	transform: translate(0, -1rem);
+	font-size: 15px;
+
+	& > * {
+		flex: 1;
+		padding: 2.5px;
+	}
+}

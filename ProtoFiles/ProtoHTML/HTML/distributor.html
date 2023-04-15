@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+</head>
+
+<!--style-->
+
+<body class="content">
+	<div>
+		<div>Coin Remaining (in copper)</div>
+		<div><input id="available" type="number" readonly></div>
+
+		<div>
+			<div><span>Platinum</span><span>(1000cp)</span><input id="plat" type="number" value="0"></div>
+			<div><span>Gold</span><span>(100cp)</span><input id="gold" type="number" value="0"></div>
+		</div>
+		<div>
+			<div><span>Silver</span><span>(10cp)</span><input id="silv" type="number" value="0"></div>
+			<div><span>Copper</span><span>(1cp)</span><input id="copp" type="number" value="0"></div>
+		</div>
+		<button onclick="handler()">Set Values</button>
+		<div id="error" style="color: red" class="magic">Error: You must have 0 Coin Remaining to set the proper values.
+			Please readjust your values and try again.</div>
+	</div>
+</body>
+
+<!--script-->
+
+</html>

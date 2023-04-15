@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+	</head>
+	<style>
+		/* Master CSS */
+		.magic {
+			display: none !important;
+		}
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		.loader {
+			border: 5px solid #f3f3f3;
+			border-radius: 50%;
+			border-top: 5px solid #3498db;
+			border-bottom: 5px solid #3498db;
+			position: absolute;
+			animation: spin 2s linear infinite;
+		}
+
+		/* level.css */
+		.container {
+			background-color: white;
+			padding: 15px;
+			height: 200px;
+			width: 300px;
+			font-family: Georgia;
+			color: black;
+			font-size: 25px;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			text-align: center;
+		}
+
+		.option {
+			border-radius: 1em;
+			font-family: Georgia;
+			font-size: 20px;
+		}
+
+		.option:hover {
+			filter: brightness(120%);
+		}
+
+		.option:active {
+			filter: brightness(80%);
+		}
+
+		.loader {
+			top: calc(50% - 30px);
+			left: calc(50% - 30px);
+			width: 50px;
+			height: 50px;
+			z-index: 10;
+		}
+	</style>
+
+	<body>
+		<div id="loader" class="loader magic"></div>
+		<div id="container" class="container"></div>
+	</body>
+
+	<script>
+		// Master JS
+		/** Returns the value of the function called
+		 * @param {string} f The function name
+		 * @param {any[]} [args] The arguments to be passed to the function
+		*/
+		function runGoogleWithReturn(f, args) {
+		    if (arguments.length == 1)
+		        return new Promise((resolve, reject) => {
+		            google.script.run
+		                .withSuccessHandler(stuff => resolve(stuff))
+		                .withFailureHandler(err => reject(err))
+		                .callLibraryFunction(`CharacterSheetCode.${f}`);
+		        });
+		    else if (arguments.length == 2)
+		        return new Promise((resolve, reject) => {
+		            google.script.run
+		                .withSuccessHandler(stuff => resolve(stuff))
+		                .withFailureHandler(err => reject(err))
+		                .callLibraryFunction(`CharacterSheetCode.${f}`, args);
+		        });
+		}
+		/** Simply calls a function with no return value
+		 * @param {string} f The function name
+		 * @param {any[]} [args] The arguments to be passed to the function
+		*/
+		function runGoogle(f, args) {
+		    if (arguments.length == 1)
+		        return new Promise((resolve, reject) => {
+		            google.script.run
+		                .withSuccessHandler(() => resolve())
+		                .withFailureHandler(err => reject(err))
+		                .callLibraryFunction(`CharacterSheetCode.${f}`);
+		        });
+		    else if (arguments.length == 2)
+		        return new Promise((resolve, reject) => {
+		            google.script.run
+		                .withSuccessHandler(() => resolve())
+		                .withFailureHandler(err => reject(err))
+		                .callLibraryFunction(`CharacterSheetCode.${f}`, args);
+		        });
+		}
+		const ID = (n) => document.getElementById(n);
+		const qry = (n, el = document) => el.querySelector(n);
+		const qryA = (n, el = document) => el.querySelectorAll(n);
+		const capitalizer = (x) => {
+			if (x.includes(' ')) { // if v includes spaces
+				const arr = x.split(" "); // split v on spaces
+				for (let j in arr) { // loop through arr
+					if (arr[j].includes('\n')) break; // break the loop if arr[j] includes \n
+					else arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1).toLowerCase();
+					// ^otherwise set arr[j] to itself capitalized
+				}
+				return arr.join(" "); // return the reformatted array joined by spaces
+			} else return x.charAt(0).toUpperCase() + x.slice(1).toLowerCase(); // otherwise, return capitalized word
+		}
+
+		// level.js
+		const formattedIDs = [];
+		async function closer(evt) {
+		    ID('loader').classList.remove('magic'); // show loader
+		    if (evt.id == "addlevel") {
+		        await runGoogle("levelBuffer", ['addlevel']); // add this to level buffer
+		        google.script.host.close(); // close the dialog
+		    }
+		    else { // if editing a level
+		        const x = formattedIDs.find(item => item[0] == evt.id); // get the item that matches the element
+		        await runGoogle("levelBuffer", [x[1]]); // add this to level buffer
+		        google.script.host.close(); // close the dialog
+		    }
+		}
+		qryA('input').forEach(x => x.autocomplete = 'off');
+		document.addEventListener("DOMContentLoaded", async () => {
+		    ID('loader').classList.remove('magic'); // show loader
+		    const className = await runGoogleWithReturn("getLevels"); // get Levels and their info
+		    const formattedNames = className.arr.map(x => capitalizer(x).replace(/ /g, "")), // get formatted names
+		    html = formattedNames.reduce((tot, name, i) => {
+		        formattedIDs.push([`edit${name}`, className.arr[i]]);
+		        return tot +
+		            `\n<button id="edit${name}" class="option" onclick="closer(this);">Level Up/Edit ${capitalizer(className.arr[i])}</button><br>`;
+		    }, "<div>Select an option</div>") +
+		        (className.lvl < 20 ? `\n<button id="addlevel" class="option" onclick="closer(this);">Add New Class</button>` : '');
+		    // ^generate html with reduce function while also creating formattedIDs array
+		    ID('container').innerHTML = html; // assign generated html to container innerHTML
+		    ID('loader').classList.add('magic'); // hide loader
+		});
+	</script>
+</html>

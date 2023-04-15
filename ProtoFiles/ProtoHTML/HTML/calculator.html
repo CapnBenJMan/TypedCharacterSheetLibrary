@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<!--style-->
+
+<body class="content">
+	<div>
+		<div><strong>Coin Totals to be Added</strong></div>
+		<table class="first">
+			<tr>
+				<td><input id="input1" type="number" value="0"></td>
+				<td><select id="select1"></select></td>
+				<td><input id="input2" type="number" value="0"></td>
+				<td><select id="select2"></select></td>
+			</tr>
+			<tr>
+				<td><input id="input3" type="number" value="0"></td>
+				<td><select id="select3"></select></td>
+				<td><input id="input4" type="number" value="0"></td>
+				<td><select id="select4"></select></td>
+			</tr>
+			<tr>
+				<td colspan="2" width="50%"><button type="button" onclick="importer()">Import Current Values</button>
+				</td>
+				<td colspan="2" width="50%"><button type="button" onclick="calculator()">Calculate</button></td>
+			</tr>
+		</table>
+		<div><strong>Coin Totals by Primary Coin Type</strong></div>
+		<table class="second" style="width: 100%; table-layout: fixed;">
+			<colgroup span="1" width="50px"></colgroup>
+			<colgroup span="4" width="calc(calc(100%-50px)/4)"></colgroup>
+			<tr>
+				<th></th>
+				<th>Platinum</th>
+				<th>Gold</th>
+				<th>Silver</th>
+				<th>Copper</th>
+			</tr>
+			<tr>
+				<th>cp</th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<th>sp</th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<th>gp</th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<th>pp</th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+	</div>
+</body>
+
+<!--script-->
+
+</html>

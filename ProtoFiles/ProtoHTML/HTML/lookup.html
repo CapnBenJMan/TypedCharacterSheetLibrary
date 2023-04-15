@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<!--style-->
+
+<body class="content">
+	<div id="loader" class="loader" style="visibility: hidden"></div>
+	<div>
+		<form style="width: 100%; margin: auto;" onsubmit="handler()" onreset="clear0()">
+			<div style="text-align: left;">
+				<label for="searchoptions">Search for: </label>
+				<select id="searchoptions" onchange="changer()">
+					<option value="class">Class Feature</option>
+					<option value="feat">Feat</option>
+					<option value="item">Magic Item</option>
+					<option value="spell">Spell</option>
+					<option value="race">Race</option>
+					<option value="background">Background</option>
+					<option value="misc">Miscellaneous</option>
+				</select>
+			</div>
+			<div id="variance" style="flex: 1">
+				<div class="flexbox-search">
+					<div>
+						<div>Class</div>
+						<input id="classname" data-option="class" type="text" required>
+					</div>
+					<div>
+						<div>Subclass</div>
+						<input id="subclassname" type="text" data-option="class" placeholder="Hover to see options"
+							title="Leave blank to search only the base class. Include to search in the subclass.">
+					</div>
+					<div>
+						<div>Seach by:</div>
+						<select name="classSearch" id="classSearch" onchange="classChange()">
+							<option value="name">Feature Name</option>
+							<option value="level">Feature Level</option>
+							<option value="sub">Subfeature</option>
+						</select>
+					</div>
+				</div>
+				<div id="subsearchdiv" class="magic" style="display: flex"><label for="subsearch"
+						style="display:flex; align-items: center;">Subfeature
+						Type: </label>
+					<input id="subsearch" type="text" style="flex: 1"
+						placeholder="Ex. Eldritch Invocation, Infusion, etc.">
+				</div>
+				<div id="searchdiv" style="display: flex;">
+					<input id="searchbar" type="text" style="flex: 1">
+					<button>Search</button>
+					<button type="reset">Clear</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div id="outputdiv" class="output">
+	</div>
+</body>
+
+<!--script-->
+
+</html>

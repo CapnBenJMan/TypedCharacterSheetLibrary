@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- <meta http-equiv="content-security-policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"> -->
+</head>
+<!--style-->
+
+<body>
+	<!--This is the loading icon-->
+	<div id="loader" class="loader magic"></div>
+	<!--This is the version of the sheet/code-->
+	<div class="version">
+		<a href="https://ko-fi.com/bencraven" title="Support Me on Ko-Fi">
+			<img src="https://uploads-ssl.webflow.com/5c14e387dab576fe667689cf/61e111774d3a2f67c827cd25_Frame%205.png"
+				width="25ch" height="25ch">
+		</a>
+		<div id="version">vX.Y.Z</div>
+	</div>
+	<!--This is the main page-->
+	<div class="content" id="main">
+		<div id="errormessage" class="magic" style="background-color: black; color: yellow;">
+			If the loader is still displayed, Something may not have loaded properly. Try clicking the Reload button to
+			attempt to refresh the program. If the loader is not displayed and you are still seeing this message, click
+			this message to have it disappear.
+		</div>
+		<!--This is the health bar-->
+		<div style="display: flex; justify-content: center;">
+			<div class="healthbar">
+				<div class="back"></div>
+				<span id="healthtext" class="healthtext">Current Health:/</span>
+				<div class="barcontainer" style="display: flex; height: inherit;">
+					<div id='hpbar' class="bar hp" style='width: 0%; background-color: red;'></div>
+					<div id="bhpbar" class="bar bhp" style="width: 0%; background-color: yellow;"></div>
+					<div id='thpbar' class="bar thp" style='width: 0%'></div>
+				</div>
+			</div>
+		</div><br>
+		<!--This is the number input-->
+		<input type="number" class="numinp" id="ip" min="1" max="9999999999999999"
+			onkeypress="return event.charCode >= 48 && event.charCode <= 57 && this.value.length <= 16"><br>
+		<!--These are the buttons-->
+		<button id="dmg" class="dbutton" style='background-color: #d00;' onclick="health('damage');">Damage</button>
+		<button id="heal" class="dbutton" style='background-color: #3a6;' onclick="health('heal');">Heal</button>
+		<button id="temphp" class="dbutton" style='background-color: #3cc;'
+			onclick="health('temphp');">TempHP</button><br>
+		<button id="bonushp" class="dbutton" style="background-color: #d6a; max-width: 120px;"
+			onclick="health('bheal')">BonusHp</button>
+		<button id="bhplimit" class="dbutton" style="background-color: #b5c; max-width: 120px;" onclick="limit()">Bonus
+			Limit</button><br>
+		<button id="LR" class="dbutton" style='background-color: #34c; max-width: 110px;' onclick='longRest();'>Long
+			Rest</button>
+		<button id="SR" class="dbutton" style='background-color: #63c; max-width: 110px;' onclick='shortRest();'>Short
+			Rest</button><br>
+		<button id="+LR" class="dbutton" style='background-color: #da2; max-width: 80px;'
+			onclick='addLongRest();'>+Rest</button>
+		<button id="-LR" class="dbutton" style='background-color: #cd2; max-width: 80px;'
+			onclick='removeLongRest();'>-Rest</button><br>
+		<button id="level" class="dbutton" style='background-color: #585' onclick="addlevel();">Add/Edit
+			Level</button><br>
+		<span id="spellcontainer" class="magic"><button id="spellcast" class="dbutton" style="background-color: #815"
+				onclick="openSpells(this)">Spellcasting</button><br></span>
+		<button id="diceroll" class="dbutton" style='background-color: #92d;'
+			onclick='rollSomeDice();'>Diceroller</button><br>
+		<button id="btools" class="dbutton" style="background-color: #299;" onclick="openTools()">Tools</button>
+		<button id="reload" class="dbutton" style='background-color: #02f;' onclick='reload();'>Reload</button>
+		<!--This is the help text toggle-->
+		<div class="toggle">
+			<input type="checkbox" id="togglehelp">
+			<label for="togglehelp">Enable Help Text</label>
+			<div id='tip' name="tip" class="tip"></div>
+			<div id="helptext" class="helptext magic">
+				<p id="textofhelp" name="textofhelp"></p>
+			</div>
+		</div>
+	</div>
+	<!--This is the spellcasting page-->
+	<div class="content magic" id="spells" style="z-index: 9">
+		<div style="display: flex; flex-direction: column; justify-content: space-evenly">
+			<div class="spellrow" style="justify-content: space-around">
+				<div>Spellcasting</div>
+				<div>Slot Level</div>
+				<div>Pact Magic</div>
+			</div>
+			<div class="spellrow" style="justify-content: space-evenly;">
+				<div>Slots Remaining</div>
+				<div>Slots Remaining</div>
+			</div>
+			<div class="spellrow">
+				<button id="usesc1" class="dbutton" style="background-color: #0f0;"
+					onclick="useSlot(1, 'sc')">Use</button>
+				<input id="cursc1" class="slotnumber numinput" type="number" min="0" value="0">
+				<span style="font-size: 18px">1</span>
+				<input id="curpm1" class="slotnumber numinput" type="number" min="0" value="0">
+				<button id="usepm1" class="dbutton" style="background-color: #0f0;"
+					onclick="useSlot(1, 'pm')">Use</button>
+			</div>
+			<div class="spellrow">
+				<button id="usesc2" class="dbutton" style="background-color: #4f0;"
+					onclick="useSlot(2, 'sc')">Use</button>
+				<input id="cursc2" class="slotnumber numinput" type="number" min="0" value="0">
+				<span style="font-size: 18px">2</span>
+				<input id="curpm2" class="slotnumber numinput" type="number" min="0" value="0">
+				<button id="usepm2" class="dbutton" style="background-color: #4f0;"
+					onclick="useSlot(2, 'pm')">Use</button>
+			</div>
+			<div class="spellrow">
+				<button id="usesc3" class="dbutton" style="background-color: #8f0;"
+					onclick="useSlot(3, 'sc')">Use</button>
+				<input id="cursc3" class="slotnumber numinput" type="number" min="0" value="0">
+				<span style="font-size: 18px">3</span>
+				<input id="curpm3" class="slotnumber numinput" type="number" min="0" value="0">
+				<button id="usepm3" class="dbutton" style="background-color: #8f0;"
+					onclick="useSlot(3, 'pm')">Use</button>
+			</div>
+			<div class="spellrow">
+				<button id="usesc4" class="dbutton" style="background-color: #bf0;"
+					onclick="useSlot(4, 'sc')">Use</button>
+				<input id="cursc4" class="slotnumber numinput" type="number" min="0" value="0">
+				<span style="font-size: 18px">4</span>
+				<input id="curpm4" class="slotnumber numinput" type="number" min="0" value="0">
+				<button id="usepm4" class="dbutton" style="background-color: #bf0;"
+					onclick="useSlot(4, 'pm')">Use</button>
+			</div>
+			<div class="spellrow">
+				<button id="usesc5" class="dbutton" style="background-color: #ff0;"
+					onclick="useSlot(5, 'sc')">Use</button>
+				<input id="cursc5" class="slotnumber numinput" type="number" min="0" value="0">
+				<span style="font-size: 18px">5</span>
+				<input id="curpm5" class="slotnumber numinput" type="number" min="0" value="0">
+				<button id="usepm5" class="dbutton" style="background-color: #ff0;"
+					onclick="useSlot(5, 'pm')">Use</button>
+			</div>
+			<div class="spellrow">
+				<button id="usesc6" class="dbutton" style="background-color: #fb0;"
+					onclick="useSlot(6, 'sc')">Use</button>
+				<input id="cursc6" class="slotnumber numinput" type="number" min="0" value="0">
+				<span style="font-size: 18px">6</span>
+				<input id="curpm6" class="slotnumber numinput" type="number" min="0" value="0">
+				<button id="usepm6" class="dbutton" style="background-color: #fb0;"
+					onclick="useSlot(6, 'pm')">Use</button>
+			</div>
+			<div class="spellrow">
+				<button id="usesc7" class="dbutton" style="background-color: #f80;"
+					onclick="useSlot(7, 'sc')">Use</button>
+				<input id="cursc7" class="slotnumber numinput" type="number" min="0" value="0">
+				<span style="font-size: 18px">7</span>
+				<input id="curpm7" class="slotnumber numinput" type="number" min="0" value="0">
+				<button id="usepm7" class="dbutton" style="background-color: #f80;"
+					onclick="useSlot(7, 'pm')">Use</button>
+			</div>
+			<div class="spellrow">
+				<button id="usesc8" class="dbutton" style="background-color: #f40;"
+					onclick="useSlot(8, 'sc')">Use</button>
+				<input id="cursc8" class="slotnumber numinput" type="number" min="0" value="0">
+				<span style="font-size: 18px">8</span>
+				<input id="curpm8" class="slotnumber numinput" type="number" min="0" value="0">
+				<button id="usepm8" class="dbutton" style="background-color: #f40;"
+					onclick="useSlot(8, 'pm')">Use</button>
+			</div>
+			<div class="spellrow">
+				<button id="usesc9" class="dbutton" style="background-color: #f00;"
+					onclick="useSlot(9, 'sc')">Use</button>
+				<input id="cursc9" class="slotnumber numinput" type="number" min="0" value="0">
+				<span style="font-size: 18px">9</span>
+				<input id="curpm9" class="slotnumber numinput" type="number" min="0" value="0">
+				<button id="usepm9" class="dbutton" style="background-color: #f00;"
+					onclick="useSlot(9, 'pm')">Use</button>
+			</div>
+		</div>
+		<button id="setSlots" class="dbutton" style="max-width: 95px; background-color: teal;" onclick="setSlots()">Set
+			Slots</button><button id="spellReturn" class="dbutton" style="max-width: 95px; background-color: black;"
+			onclick="closeSpells()">Return</button>
+	</div>
+	<!--This is the tools page-->
+	<div class="content magic" id="tools">
+		<button id="formulas" class="dbutton" style="background-color: #4d5;"
+			onclick="runGoogle('openHTML', ['formulas'])">Formula Library</button><br>
+		<button id="distributor" class="dbutton" style="background-color: #55d"
+			onclick="runGoogle('openHTML', ['distributor'])">Coin Distributor</button><br>
+		<button id="calculator" class="dbutton" style="background-color: #e75"
+			onclick="runGoogle('openHTML', ['calculator'])">Coin Calculator</button><br>
+		<button id="sethitdice" class="dbutton" style="background-color: pink"
+			onclick="runGoogle('openHTML', ['hitdice'])">Set Hit
+			Dice</button><br>
+		<button id="equipment" class="dbutton" style="background-color: #bb0"
+			onclick="runGoogle('openHTML', ['equipment'])">Equipment</button><br>
+		<button id="featurelookup" class="dbutton" style="background-color: orange"
+			onclick="runGoogle('openHTML', ['lookup'])">Lookup</button><br>
+		<button id="returnTools" class="dbutton" style="background-color: black;" onclick="closeTools()">Return</button>
+		<div class="toggle">
+			<input type="checkbox" id="togglehelpT">
+			<label for="togglehelpT">Enable Help Text</label>
+			<div id='tip1' name="tip" class="tip"></div>
+			<div id="helptextT" class="helptext magic">
+				<p id="textofhelpT" name="textofhelp"></p>
+			</div>
+		</div>
+	</div>
+</body>
+<!--script-->
+
+</html>

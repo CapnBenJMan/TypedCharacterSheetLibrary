@@ -1,0 +1,21 @@
+.content {
+	text-align: center;
+	font-family: Georgia;
+}
+
+input,
+select {
+	font-family: inherit;
+	font-size: inherit;
+	border-radius: 1em;
+}
+
+select {
+	background-color: #34c;
+	color: #fff;
+}
+
+.loader {
+	width: 15px;
+	height: 15px;
+}

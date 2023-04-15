@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+
+<!--style-->
+
+<body class="content">
+	<div>
+		<form onsubmit="submission()">
+			<div class="loader magic" id="loader"></div>
+			<!--This is where dice info is stored-->
+			<table class="table">
+				<tr>
+					<th>Die</th>
+					<th>Available</th>
+					<th>Use</th>
+				</tr>
+				<tr id="d6">
+					<td>d6</td>
+					<td></td>
+					<td><input type="number" value="0" min="0" required
+							onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+					</td>
+				</tr>
+				<tr id="d8">
+					<td>d8</td>
+					<td></td>
+					<td><input type="number" value="0" min="0" required
+							onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+					</td>
+				</tr>
+				<tr id="d10">
+					<td>d10</td>
+					<td></td>
+					<td><input type="number" value="0" min="0" required
+							onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+					</td>
+				</tr>
+				<tr id="d12">
+					<td>d12</td>
+					<td></td>
+					<td><input type="number" value="0" min="0" required
+							onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+					</td>
+				</tr>
+			</table>
+			<br>
+			<!--Rolled Total-->
+			<label for="rolledhealth">Rolled Total : </label><input id="rolledhealth" type="number"
+				placeholder="Don't add Con mod" required><br>
+			<!--Use dice buttons-->
+			<button type="button" onclick="clear0()">Use No Hit Dice</button>
+			<button>Use Inputted Hit Dice</button>
+		</form>
+	</div>
+</body>
+
+<!--script-->
+
+</html>

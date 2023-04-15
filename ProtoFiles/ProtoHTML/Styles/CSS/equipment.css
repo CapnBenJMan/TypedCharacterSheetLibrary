@@ -1,0 +1,81 @@
+html,
+body {
+	text-align: center;
+}
+
+.content {
+	font-family: Georgia;
+	font-size: 16px;
+	background-color: white;
+	color: black;
+	margin: 0;
+	height: 400px;
+}
+
+input,
+select,
+button,
+label {
+	font-family: inherit;
+	font-size: inherit;
+	vertical-align: middle;
+}
+
+input:not(label),
+select:not(label),
+button:not(label),
+label:not(label) {
+	border-radius: 1em;
+}
+
+.loader {
+	width: 50px;
+	height: 50px;
+	top: calc(50% - 30px);
+	left: calc(50% - 30px);
+}
+
+.flexcont {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.tablecont {
+	display: flex;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	overflow: hidden scroll;
+}
+
+.tablecont table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.searchcont {
+	display: flex;
+	justify-content: center;
+}
+
+table tr[\:has\(td\)]:nth-child(odd) {
+	background-color: #eee;
+}
+
+table tr:has(td):nth-child(odd) {
+	background-color: #eee;
+}
+
+th {
+	background-color: white;
+	position: sticky;
+	top: 0;
+}
+
+tr:hover {
+	background-color: #ddd !important;
+}
+
+tr[data-sel="1"] {
+	background-color: #9f8 !important;
+}

@@ -1,0 +1,78 @@
+html,
+body {
+	text-align: center;
+}
+
+.content {
+	font-family: Georgia;
+	font-size: 16px;
+	background-color: white;
+	color: black;
+	margin: 0;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+input,
+select,
+button,
+label {
+	font-family: inherit;
+	font-size: inherit;
+	vertical-align: middle;
+}
+
+input:not(label),
+select:not(label),
+button:not(label),
+label:not(label) {
+	border-radius: 1em;
+}
+
+.loader {
+	width: 50px;
+	height: 50px;
+	top: calc(50% - 30px);
+	left: calc(50% - 30px);
+}
+
+.prewritten {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	overflow: hidden scroll;
+	height: 100%;
+}
+
+table,
+th,
+td {
+	border-collapse: collapse;
+}
+
+table:not(:not(td)),
+th:not(:not(td)),
+td:not(:not(td)) {
+	word-wrap: break-word;
+}
+
+table:not(:not(th)),
+th:not(:not(th)),
+td:not(:not(th)) {
+	background-color: white;
+	position: sticky;
+	top: 0;
+}
+
+tr {
+	height: 30px;
+	border-bottom: 1px dashed #ddd;
+}
+
+tr:hover {
+	background-color: #ddd;
+}
+
+.list {
+	width: 100%;
+}
