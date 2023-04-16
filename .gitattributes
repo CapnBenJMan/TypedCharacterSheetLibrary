@@ -1,1 +1,1 @@
-*.pcss linguist-language=PostCSS linguist-detectable=true
+**/*.pcss linguist-language=PostCSS linguist-detectable=true
