@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync, writeFileSync } from "fs"
 
-const path = "C:\\Users\\ben\\Documents\\VSCode\\GAS\\Typed\\ProtoFiles\\ProtoHTML\\Scripts\\TS\\"
+const path = "..\\ProtoFiles\\ProtoHTML\\Scripts\\TS\\"
 
 for (let fileName of readdirSync(path)) {
 	const file = readFileSync(path + fileName, { encoding: "utf-8" })

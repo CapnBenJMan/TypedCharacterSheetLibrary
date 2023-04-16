@@ -1,7 +1,6 @@
 qryA('input').forEach(x => x.autocomplete = 'off'); // prevent text inputs from showing autocomplete suggestions
 var armorOptions;
 var str;
-/** @param {string} x */
 function selector(x) {
     const n = {
         baSelect: ID('armortypes'),
@@ -88,8 +87,8 @@ function viewer() {
     }
 }
 const armor = ID('armortypes'); // defines reference to type element and its options
-async function submission() {
-    event.preventDefault();
+async function submission(e) {
+    e.preventDefault();
     ID('loader').style.visibility = 'visible'; // set loader to visible
     const selection = Array.from(document.getElementsByName('selection')).find((x) => x.checked).id;
     await runGoogle("armorSetter", [

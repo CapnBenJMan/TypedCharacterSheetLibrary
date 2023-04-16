@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"lib": [
+			"ESNext",
+			"DOM",
+			"DOM.Iterable"
+		],
+		"strictNullChecks": true
+	},
+	"include": [
+		"TS/*.ts"
+	],
+	"exclude": [
+		"JS/*.*"
+	]
+}

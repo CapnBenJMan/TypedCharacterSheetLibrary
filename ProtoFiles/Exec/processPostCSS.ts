@@ -22,7 +22,7 @@ const math = postcssMath()
 const processor = postcss([preset, each, nested, calc])
 const processor1 = postcss([math])
 
-const path = "C:\\Users\\ben\\Documents\\VSCode\\GAS\\Typed\\ProtoFiles\\ProtoHTML\\Styles\\"
+const path = "../ProtoHTML/Styles/"
 const inDIR = path + "PostCSS/"
 const outDIR = path + "CSS/"
 

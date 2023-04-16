@@ -1,15 +1,11 @@
 import { runGoogle, runGoogleWithReturn, ID, qry, qryA, capitalizer, Button, Input, Select, Div } from "../../../Master/JS"
 
-type Input = HTMLInputElement
-type Select = HTMLSelectElement
-
 
 qryA('input').forEach(x => x.autocomplete = 'off') // prevent text inputs from showing autocomplete suggestions
 
 var armorOptions: CharacterSheetCode.Armor[]
 var str: number
 
-/** @param {string} x */
 function selector(x: string) {
 	const n = { // object for looping through later
 		baSelect: ID('armortypes') as Select,
@@ -95,10 +91,10 @@ function viewer() {
 
 const armor = ID<Select>('armortypes') // defines reference to type element and its options
 
-async function submission() { // runs on pressing the confirm button
-	event.preventDefault()
+async function submission(e: Event) { // runs on pressing the confirm button
+	e.preventDefault()
 	ID('loader').style.visibility = 'visible' // set loader to visible
-	const selection = Array.from(document.getElementsByName('selection')).find((x: Input) => x.checked).id as CharacterSheetCode.ArmorSelection
+	const selection = Array.from(document.getElementsByName('selection')).find((x: Input) => x.checked)!.id as CharacterSheetCode.ArmorSelection
 	await runGoogle("armorSetter", [
 		selection, // selection in armorSetter
 		armor.value, // armor in armorSetter
@@ -152,7 +148,7 @@ function changer() { // triggers when base armor is changed
 		if (baSelect.value.toLowerCase() !== 'custom') { // if base armor selection is not custom
 			ID<Input>('customname').required = false // make custom name input not required
 			custom.classList.toggle('magic', true) // hide custom if not already hidden
-			const current = armorOptions.find(x => x.name.toLowerCase() == baSelect.value.toLowerCase()) // get current armor
+			const current = armorOptions.find(x => x.name.toLowerCase() == baSelect.value.toLowerCase())! // get current armor
 			if (current.strReq != '-') doWarn(Number(current.strReq.slice(4))) // if current armor has a strength requirement, call doWarn
 		} else if (baSelect.value.toLowerCase() === 'custom') { // if base armor selection is custom
 			custom.classList.toggle('magic', false) // show custom if not already shown
@@ -182,12 +178,12 @@ function handler() {
 		strReq = ID<Input>('strengthReq'), // strength requirement
 		warn = ID('warning'), // shield warning
 		warn1 = ID('warning1'), // strength warning
-		sel = Array.from(document.getElementsByName('selection')).find((x: Input) => x.checked).id // get id of selected radio button
+		sel = Array.from(document.getElementsByName('selection')).find((x: Input) => x.checked)!.id // get id of selected radio button
 	switch (sel) {
 		case 'ba': // case for base armor
 			warn.className = 'magic' // hide shield warning
 			const min = armor.value.toLowerCase() !== 'custom' ? // strength minimum
-				Number(armorOptions.find(x => x.name.toLowerCase() == armor.value.toLowerCase()).strReq.slice(4)) :
+				Number(armorOptions.find(x => x.name.toLowerCase() == armor.value.toLowerCase())!.strReq.slice(4)) :
 				strReq.checked ? Number(ID<Input>('minSTR').value) : 0
 			if (str < min) warn1.className = '' // if strength is less than minimum, show warning 1
 			else warn1.className = 'magic' // otherwise, hide warning 1

@@ -4,7 +4,7 @@
 import { readdir, readFile, writeFile } from "fs/promises"
 import { existsSync } from "fs"
 
-const typedPath = "C:\\Users\\ben\\Documents\\VSCode\\GAS\\Typed\\"
+const typedPath = "../../"
 const protoHTML = `${typedPath}${"ProtoFiles\\ProtoHTML\\"}` as const
 
 
