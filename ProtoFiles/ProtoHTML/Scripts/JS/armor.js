@@ -175,7 +175,7 @@ function changer() {
         }
     }
 }
-qryA('#form input[type="radio"]').forEach((x) => x.onchange = handler); // for each radio input, set the changer function to handler
+qryA('#form input[type="radio"]').forEach(x => x.onchange = handler); // for each radio input, set the changer function to handler
 /** Handles the selection between different armor types */
 function handler() {
     const shield = ID('shield'), // shield selection

@@ -1,4 +1,4 @@
-document.querySelectorAll('input').forEach(x => x.autocomplete = 'off');
+qryA('input').forEach(x => x.autocomplete = 'off');
 var allowedTotal = 0;
 document.addEventListener("DOMContentLoaded", async () => {
     ID('loader').style.visibility = 'visible';

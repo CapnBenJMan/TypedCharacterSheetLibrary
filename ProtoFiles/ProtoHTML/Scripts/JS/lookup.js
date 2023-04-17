@@ -36,10 +36,10 @@ function classChange() {
         ID('subsearch').required = false;
     }
 }
-async function handler() {
+async function handler(e) {
     ID('loader').style.visibility = 'visible';
     try {
-        event.preventDefault();
+        e.preventDefault();
         ID('outputdiv').innerHTML = '';
         const searches = {
             "class": "classSearch",
@@ -218,8 +218,8 @@ async function handler() {
 function clear0() {
     ID('outputdiv').innerHTML = '';
     ID('variance').innerHTML = searchOptions['class'];
-    document.querySelector('form').style.display = 'block';
-    document.querySelectorAll('input').forEach(x => {
+    qry('form').style.display = 'block';
+    qryA('input').forEach(x => {
         x.autocomplete = 'off';
     });
 }

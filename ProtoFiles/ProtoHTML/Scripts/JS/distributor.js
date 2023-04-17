@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     total = currency.reduce((total, x, i) => total + Number(x) * Math.pow(10, 3 - i), 0); // assign currency totals to total
     ID('available').value = String(total); // set available value to total
 });
-qryA('div>div>div>input').forEach((x) => {
+qryA('div>div>div>input').forEach(x => {
     x.onchange = () => {
         const plat = Number(ID('plat').value) * 1000, // get platinum values
         gold = Number(ID('gold').value) * 100, // get gold values

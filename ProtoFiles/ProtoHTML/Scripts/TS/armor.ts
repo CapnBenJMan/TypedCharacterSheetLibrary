@@ -170,7 +170,7 @@ function changer() { // triggers when base armor is changed
 	}
 }
 
-qryA('#form input[type="radio"]').forEach((x: Input) => x.onchange = handler) // for each radio input, set the changer function to handler
+qryA('#form input[type="radio"]').forEach(x => x.onchange = handler) // for each radio input, set the changer function to handler
 
 /** Handles the selection between different armor types */
 function handler() {

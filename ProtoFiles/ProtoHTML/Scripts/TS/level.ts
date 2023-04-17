@@ -9,7 +9,7 @@ async function closer(evt: Button) {
 		await runGoogle("levelBuffer", ['addlevel']) // add this to level buffer
 		google.script.host.close() // close the dialog
 	} else { // if editing a level
-		const x = formattedIDs.find(item => item[0] == evt.id) // get the item that matches the element
+		const x = formattedIDs.find(item => item[0] == evt.id)! // get the item that matches the element
 		await runGoogle("levelBuffer", [x[1]]) // add this to level buffer
 		google.script.host.close() // close the dialog
 	}

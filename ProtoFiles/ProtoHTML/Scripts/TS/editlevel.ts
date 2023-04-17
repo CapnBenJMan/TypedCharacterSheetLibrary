@@ -12,6 +12,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 	runGoogle('clearClassEdit') // removes the stored class edit in the character sheet
 	switch (addedit) {
 		case 'edit': // if editing a class
+			function _a<T>(o: T): asserts o is NonNullable<T> { }
+			_a(res.arr[2]!)
+
 			ID<Input>('class').value = res.arr[2].class // store class value
 			ID<Input>('subclass').value = res.arr[2].subclass // store subclass value
 			ID<Input>('level').value = res.arr[2].level // store level
@@ -32,8 +35,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 	}
 })
 
-function submissionHandler() {
-	event.preventDefault() // stops form submission
+function submissionHandler(e: Event) {
+	e.preventDefault() // stops form submission
 	try {
 		const a = ID<Input>('class').value,
 			b = ID<Input>('level').value,
@@ -54,8 +57,8 @@ function submissionHandler() {
 	} catch (err) { console.error(err) }
 }
 
-function removeClassClicker() {
-	event.preventDefault()
+function removeClassClicker(e: Event) {
+	e.preventDefault()
 	loader.style.visibility = 'visible' // show loader
 	setTimeout(() => google.script.host.close(), 1500) // close dialog after 1.5s
 	runGoogle("addEditInfo", ['', '', '', '', '', editrow]) // run addEditInfo with mostly empty arguments

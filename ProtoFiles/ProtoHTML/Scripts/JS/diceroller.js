@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 pg = 'md';
                 break;
         }
+        function _a(o) { }
+        _a(pg);
         const d20 = ID(`d20${pg}`);
         const arr = [d20, ...Array.from(qryA(`.${pg}button, .widebutton`))];
         if (pg != 'md')

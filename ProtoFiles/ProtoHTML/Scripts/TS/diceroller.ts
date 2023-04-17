@@ -3,7 +3,7 @@ import { runGoogle, runGoogleWithReturn, ID, qry, qryA, capitalizer, Button, Inp
 qryA('input').forEach(x => x.autocomplete = 'off') // disable autocomplete for inputs
 const grandTotal = { totals: [0], get final() { return (<number[]>this.totals).reduce((t, c) => t + c, 0) } } as { totals: number[], readonly final: number }
 // ^create grandTotal object for misc dice
-const dice = Array.from(qryA('#diceholder div div.die')) as HTMLDivElement[], // create an array for each die type
+const dice = Array.from(qryA('#diceholder div div.die')), // create an array for each die type
 	d20s = Array.from(qryA('.d20'))
 dice.forEach(die => die.onclick = () => { runSubAnimation(die, true) }) // add an onclick function for each die
 const pages = ["Saving Throw", "Skill Check", "Check Builder", "Misc Dice"] // array containing the page names for each type
@@ -36,6 +36,9 @@ document.addEventListener('DOMContentLoaded', async () => { // on DOM Content Lo
 				pg = 'md'
 				break
 		}
+		function _a<T>(o: T): asserts o is NonNullable<T> {}
+		_a(pg!)
+
 		const d20 = ID(`d20${pg}`)
 		const arr = [d20, ...Array.from(qryA(`.${pg}button, .widebutton`))] as (HTMLDivElement | HTMLButtonElement)[]
 		if (pg != 'md') arr.forEach(n => clicker(n, pg as Exclude<typeof pg, "md">, d20))
@@ -64,13 +67,13 @@ function pageTurner(evt: Event, page: string) {
 			Array.from(ID('diceholder').children).forEach(child => {
 
 				qry('.die svg text', child).innerHTML = '' // clear number in svg circle
-				qry<string, Input>('.dieinputcontainer input', child).value = String(0)// reset number of dice to 0
+				qry('.dieinputcontainer input', child).value = String(0)// reset number of dice to 0
 				qry('.dicerolls', child).innerHTML = 'Rolled:'
 				qry('.dicetotals', child).innerHTML = 'Total:'
 			})
 			dice.forEach(die => {
-				var els = Array.from(qryA('svg polygon,polyline', die))
-				if (die.id == 'd12') els.push(ID('d12a'))
+				var els = Array.from(qryA('svg polygon,polyline', die)) as SVGElement[]
+				if (die.id == 'd12') els.push(ID<SVGElement>('d12a'))
 				els.forEach(x => x.classList.remove(x.id))
 			})
 			break
@@ -87,7 +90,7 @@ function pageTurner(evt: Event, page: string) {
 	d20s.forEach(d20 => {
 		const holder = ID(`rnholder${d20.id.slice(-2)}`), classes = [...Array.from(holder.classList.values())]
 		holder.classList.remove(...classes)
-		holder.classList.add(holder.dataset.initialclass)
+		holder.classList.add(holder.dataset.initialclass!)
 		Array.from(d20.children).forEach(child => child.classList.toggle(child.id, false))
 	})
 	dice
@@ -103,7 +106,7 @@ function clicker(n: HTMLElement, pg: "st" | "sc" | "cb", d20: HTMLElement) {
 			checkSave = (['st', 'cb'].some(x => x == pg) && n.id.slice(0, 1) != 'd'
 			) ? n.id.slice(1) : (pg == 'sc' && n.id != d20.id) ? `${ID<Select>('skill-checks').value}Check` : 'throw',
 			modifier = stats[checkSave],
-			dadv = qry<string, Input>(`input[name="dadv${pg}"]:checked`).value // advantage/disadvantage/normal roll
+			dadv = qry(`input[name="dadv${pg}"]:checked`).value // advantage/disadvantage/normal roll
 		console.log(checkSave, modifier)
 		holder.classList.add('unloadnum')
 		setTimeout(() => {

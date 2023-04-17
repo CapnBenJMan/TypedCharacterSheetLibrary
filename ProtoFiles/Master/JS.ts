@@ -1,6 +1,8 @@
 /// <reference path="google.d.ts" />
 /// <reference path="../ProtoGS/CSCTypes.d.ts"/>
 
+import type { queryElem } from "./queryStringParser"
+
 type CSC = typeof CharacterSheetCode
 
 type csck = keyof CSC
@@ -59,11 +61,11 @@ type HNM = HTMLElementTagNameMap
 
 type Elem<K extends string> = K extends keyof HNM ? HNM[K] : Element
 
-export const ID = <E extends HTMLElement = HTMLElement>(n: string) => document.getElementById(n) as E
+export const ID = <E extends HTMLElement | SVGElement = HTMLElement>(n: string) => document.getElementById(n) as E
 
-export const qry = <K extends string, E extends Element = Elem<K>>(n: K, el: Element | Document = document) => el.querySelector(n) as E
+export const qry = <K extends string>(n: K, el: Element | Document = document) => el.querySelector(n) as queryElem<K>
 
-export const qryA = <K extends string, E extends Element = Elem<K>>(n: K, el: Element | Document = document) => el.querySelectorAll(n) as NodeListOf<E>
+export const qryA = <K extends string>(n: K, el: Element | Document = document) => el.querySelectorAll(n) as NodeListOf<queryElem<K>>
 
 export const capitalizer = (x: string) => {
 	if (x.includes(' ')) { // if v includes spaces

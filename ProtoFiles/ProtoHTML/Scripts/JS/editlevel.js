@@ -9,6 +9,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     runGoogle('clearClassEdit'); // removes the stored class edit in the character sheet
     switch (addedit) {
         case 'edit': // if editing a class
+            function _a(o) { }
+            _a(res.arr[2]);
             ID('class').value = res.arr[2].class; // store class value
             ID('subclass').value = res.arr[2].subclass; // store subclass value
             ID('level').value = res.arr[2].level; // store level
@@ -28,8 +30,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.log("Loaded");
     }
 });
-function submissionHandler() {
-    event.preventDefault(); // stops form submission
+function submissionHandler(e) {
+    e.preventDefault(); // stops form submission
     try {
         const a = ID('class').value, b = ID('level').value, c = ID('hitdie').value;
         if (a != '' && b != '' && c != '') { // if each required input is not blank
@@ -47,8 +49,8 @@ function submissionHandler() {
         console.error(err);
     }
 }
-function removeClassClicker() {
-    event.preventDefault();
+function removeClassClicker(e) {
+    e.preventDefault();
     loader.style.visibility = 'visible'; // show loader
     setTimeout(() => google.script.host.close(), 1500); // close dialog after 1.5s
     runGoogle("addEditInfo", ['', '', '', '', '', editrow]); // run addEditInfo with mostly empty arguments

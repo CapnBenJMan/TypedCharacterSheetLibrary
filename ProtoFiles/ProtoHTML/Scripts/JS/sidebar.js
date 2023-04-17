@@ -20,10 +20,10 @@ async function getCurrent() {
     try {
         loader.classList.remove('magic'); // show loader while code is processing
         ID('ip').style.backgroundImage = "url('data:image/svg+xml;base64," + window.btoa(svg) + "')";
-        qryA('#SR, #LR').forEach(x => x.style.width = `39%`);
-        qryA('#\\+LR, #-LR').forEach(x => x.style.width = `${(80 / 300) * 100}%`);
-        qryA('#setSlots, #spellReturn').forEach(x => x.style.width = `${(95 / 285) * 100}%`);
-        qryA('#bonushp, #bhplimit').forEach(x => x.style.width = `42%`);
+        qryA('button#SR, button#LR').forEach(x => x.style.width = `39%`);
+        qryA('button#\\+LR, button#-LR').forEach((x) => x.style.width = `${(80 / 300) * 100}%`);
+        qryA('button#setSlots, button#spellReturn').forEach(x => x.style.width = `${(95 / 285) * 100}%`);
+        qryA('button#bonushp, button#bhplimit').forEach(x => x.style.width = `42%`);
         const returnVal = await runGoogleWithReturn('getCurrent'); // run code to return values of health cells
         HP.cur = Number(returnVal[0]);
         maximum = Number(returnVal[1]);
@@ -42,21 +42,21 @@ async function getCurrent() {
 }
 const toggles = qryA('.content .toggle input[type=checkbox]');
 toggles.forEach(x => x.onchange = () => toggles.forEach(y => y.checked = x.checked));
-qryA('#main .dbutton').forEach(x => {
+qryA('#main button.dbutton').forEach(x => {
     // for each button, create an onmouseover, onmouseout, onmousedown, and onmouseup listener
     x.onmouseover = () => helptext('on', x.id); // onmouseover, turn on helptext
     x.onmouseout = () => helptext('off'); // onmouseout, turn off helptext
     x.onmousedown = () => animationControl('pause'); // onmousedown, pause scrolling helptext
     x.onmouseup = () => animationControl('resume'); // onmouseup, unpause scrolling helptext
 });
-qryA('#tools .dbutton').forEach(x => {
+qryA('#tools button.dbutton').forEach(x => {
     // for each button, create an onmouseover, onmouseout, onmousedown, and onmouseup listener
     x.onmouseover = () => helptext1('on', x.id); // onmouseover, turn on helptext
     x.onmouseout = () => helptext1('off'); // onmouseout, turn off helptext
     x.onmousedown = () => animationControl('pause'); // onmousedown, pause scrolling helptext
     x.onmouseup = () => animationControl('resume'); // onmouseup, unpause scrolling helptext
 });
-qryA('.content .toggle').forEach(toggle => {
+qryA('.content div.toggle').forEach(toggle => {
     var tip = toggle.children.namedItem('tip'); // define reference to tiptext
     toggle.onmouseover = () => {
         tip.innerHTML = `Tip: You can hold down a button to pause any scrolling 

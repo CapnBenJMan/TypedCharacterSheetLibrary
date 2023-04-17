@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
     ID('loader').classList.add('magic'); // hide loader
 });
-async function submission() {
-    event.preventDefault();
+async function submission(e) {
+    e.preventDefault();
     let val = dx => Number(qry(`#${dx}>td>input`).value);
     // ^arrow function for getting the value of a certain die's input element as a number
     const hitDice = await returns; // get hit dice from returns promise

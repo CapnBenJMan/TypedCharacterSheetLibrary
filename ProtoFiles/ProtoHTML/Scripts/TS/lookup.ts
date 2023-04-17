@@ -14,8 +14,8 @@ function changer() {
 			.split(/(?<=>)(?:\n|\t)+?(?=<)/g)
 			.map(x => x.replace(/(?:\n|\t)/g, ''))
 			.sort((a0, b0) => {
-				const a = a0.match(/(?<=>).*?(?=<)/)[0].toUpperCase()
-				const b = b0.match(/(?<=>).*?(?=<)/)[0].toUpperCase()
+				const a = a0.match(/(?<=>).*?(?=<)/)![0].toUpperCase()
+				const b = b0.match(/(?<=>).*?(?=<)/)![0].toUpperCase()
 				if (a < b) return -1
 				if (a > b) return 1
 				return 0
@@ -36,10 +36,10 @@ function classChange() {
 	}
 }
 
-async function handler() {
+async function handler(e: Event) {
 	ID('loader').style.visibility = 'visible'
 	try {
-		event.preventDefault()
+		e.preventDefault()
 		ID('outputdiv').innerHTML = ''
 		const searches = {
 			"class": "classSearch",
@@ -133,13 +133,13 @@ async function handler() {
 					const features = qry('.feature', el)
 					switch (String(ID<Select>('classSearch').value)) {
 						case 'name': {
-							const [refine] = features.innerHTML.match(Regex.featureNamePt1)
+							const [refine] = features.innerHTML.match(Regex.featureNamePt1)!
 							const parsedHTML = `<h${refine.match(Regex.featureNamePt2)}>${refine.replace(Regex.prettier, '')}`
 							ID('outputdiv').innerHTML = parsedHTML
 							break
 						}
 						case 'level': {
-							const refine = features.innerHTML.match(Regex.featureLevelPt1)
+							const refine = features.innerHTML.match(Regex.featureLevelPt1)!
 								.filter(x => x.length > 10)
 								.map(x => `<h${x.match(Regex.featureLevelPt2)}>${x.replace(Regex.prettier, '')}`)
 								.join('')
@@ -147,7 +147,7 @@ async function handler() {
 							break
 						}
 						case 'sub': {
-							const [refine] = features.innerHTML.match(Regex.featureSubPt1)
+							const [refine] = features.innerHTML.match(Regex.featureSubPt1)!
 							const parsedHTML = `<h${refine.match(Regex.featureSubPt2)}>${refine.replace(Regex.prettier, '')}`
 							ID('outputdiv').innerHTML = parsedHTML
 							break
@@ -203,8 +203,8 @@ async function handler() {
 function clear0() {
 	ID('outputdiv').innerHTML = ''
 	ID('variance').innerHTML = searchOptions['class']
-	document.querySelector('form').style.display = 'block'
-	document.querySelectorAll('input').forEach(x => {
+	qry('form').style.display = 'block'
+	qryA('input').forEach(x => {
 		x.autocomplete = 'off'
 	})
 }

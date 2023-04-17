@@ -24,10 +24,10 @@ async function getCurrent() { // get current values of health cells and update f
 	try {
 		loader.classList.remove('magic') // show loader while code is processing
 		ID<Input>('ip').style.backgroundImage = "url('data:image/svg+xml;base64," + window.btoa(svg) + "')"
-		qryA<string, HTMLElement>('#SR, #LR').forEach(x => x.style.width = `39%`)
-		qryA<string, HTMLElement>('#\\+LR, #-LR').forEach(x => x.style.width = `${(80 / 300) * 100}%`)
-		qryA<string, HTMLElement>('#setSlots, #spellReturn').forEach(x => x.style.width = `${(95 / 285) * 100}%`)
-		qryA<string, HTMLElement>('#bonushp, #bhplimit').forEach(x => x.style.width = `42%`)
+		qryA('button#SR, button#LR').forEach(x => x.style.width = `39%`)
+		qryA('button#\\+LR, button#-LR').forEach((x: Button) => x.style.width = `${(80 / 300) * 100}%`)
+		qryA('button#setSlots, button#spellReturn').forEach(x => x.style.width = `${(95 / 285) * 100}%`)
+		qryA('button#bonushp, button#bhplimit').forEach(x => x.style.width = `42%`)
 		const returnVal = await runGoogleWithReturn('getCurrent') // run code to return values of health cells
 		HP.cur = Number(returnVal[0])
 		maximum = Number(returnVal[1])
@@ -40,26 +40,26 @@ async function getCurrent() { // get current values of health cells and update f
 	} catch (err) { console.error(err) }
 }
 
-const toggles = qryA<string, Input>('.content .toggle input[type=checkbox]')
+const toggles = qryA('.content .toggle input[type=checkbox]')
 
 toggles.forEach(x => x.onchange = () => toggles.forEach(y => y.checked = x.checked))
 
-qryA<string, Button>('#main .dbutton').forEach(x => {
+qryA('#main button.dbutton').forEach(x => {
 	// for each button, create an onmouseover, onmouseout, onmousedown, and onmouseup listener
 	x.onmouseover = () => helptext('on', x.id) // onmouseover, turn on helptext
 	x.onmouseout = () => helptext('off') // onmouseout, turn off helptext
 	x.onmousedown = () => animationControl('pause') // onmousedown, pause scrolling helptext
 	x.onmouseup = () => animationControl('resume') // onmouseup, unpause scrolling helptext
 })
-qryA<string, Button>('#tools .dbutton').forEach(x => {
+qryA('#tools button.dbutton').forEach(x => {
 	// for each button, create an onmouseover, onmouseout, onmousedown, and onmouseup listener
 	x.onmouseover = () => helptext1('on', x.id) // onmouseover, turn on helptext
 	x.onmouseout = () => helptext1('off') // onmouseout, turn off helptext
 	x.onmousedown = () => animationControl('pause') // onmousedown, pause scrolling helptext
 	x.onmouseup = () => animationControl('resume') // onmouseup, unpause scrolling helptext
 })
-qryA<string, Div>('.content .toggle').forEach(toggle => {
-	var tip = toggle.children.namedItem('tip') // define reference to tiptext
+qryA('.content div.toggle').forEach(toggle => {
+	var tip = toggle.children.namedItem('tip')! // define reference to tiptext
 	toggle.onmouseover = () => {
 		tip.innerHTML = `Tip: You can hold down a button to pause any scrolling 
 	      text for ease of reading. If you don't want the button to activate, make sure to release off of the button.` }
@@ -200,7 +200,7 @@ function helptext(ioBool: "on" | "off", buttonType?: string): void { // input/ou
 		}
 		const ht = ID('helptext'), // define reference to helptext div element
 			toh = ID('textofhelp') // define reference to helptext paragraph element
-		const textOfHelp = (ioBool == 'on') ? infoRepository[buttonType] : '' // define paragraph content variable
+		const textOfHelp = (ioBool == 'on') ? infoRepository[buttonType!] : '' // define paragraph content variable
 		if (ioBool == 'on') { // if onmouseover was triggered
 			toh.innerHTML = textOfHelp // set helptext to selected button helptext
 			setTimeout(() => {
@@ -232,7 +232,7 @@ function helptext1(ioBool: "on" | "off", buttonType?: string): void { // input/o
 		}
 		const ht = ID('helptextT'), // define reference to helptext div element
 			toh = ID('textofhelpT') // define reference to helptext paragraph element
-		const textOfHelp = (ioBool == 'on') ? infoRepository[buttonType] : '' // define paragraph content variable
+		const textOfHelp = (ioBool == 'on') ? infoRepository[buttonType!] : '' // define paragraph content variable
 		if (ioBool == 'on') { // if onmouseover was triggered
 			toh.innerHTML = textOfHelp // set helptext to selected button helptext
 			setTimeout(() => {
@@ -250,7 +250,7 @@ function helptext1(ioBool: "on" | "off", buttonType?: string): void { // input/o
 }
 
 function animationControl(a) {
-	qryA<string, HTMLParagraphElement>('.content .toggle .helptext > p').forEach(help => {
+	qryA('.content .toggle .helptext > p').forEach(help => {
 		switch (a) { // switch between onmousedown and onmouseup to pause and unpause scrolling animation
 			case 'pause':
 				help.style.animationPlayState = 'paused'

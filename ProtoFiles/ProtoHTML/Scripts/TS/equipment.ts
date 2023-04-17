@@ -30,8 +30,8 @@ document.addEventListener("DOMContentLoaded", async () => { // on DOM Content Lo
 
 function searcher() {
 	const search = String(ID<Input>('searchbar').value).toLowerCase()
-	for (let tr of Array.from(qryA('tr:has(td)', ID('tbl'))) as HTMLTableRowElement[]) {
-		const category = tr.dataset.category.replace('_', ' ')
+	for (let tr of Array.from(qryA('tr:has(td)', ID('tbl')))) {
+		const category = tr.dataset.category!.replace('_', ' ')
 		const name = qry('*:nth-child(2)', tr).innerHTML
 		if (![name, category].some(x => x.toLowerCase().includes(search))) {
 			tr.style.display = 'none'
@@ -61,7 +61,7 @@ async function apply() {
 	if (Array.from(qryA('tr[data-sel="1"]')).length == 1) { // if there is only 1 selected row
 		ID('loader').classList.remove('magic') // show loader
 		ID<Button>('apply').disabled = true // disable the apply button
-		const selRow = qry<string, HTMLTableRowElement>('tr[data-sel="1"]') // get selected row
+		const selRow = qry('tr[data-sel="1"]') // get selected row
 		const y = { "Category": String(selRow.dataset.category).replace('_', ' ') as Category, "Name": qry('*:nth-child(2)', selRow).innerHTML }
 		// ^get category and name of equipment item
 		const rtrnd = await runGoogleWithReturn('setEquipment', [y.Category, y.Name]) // run setEquipment

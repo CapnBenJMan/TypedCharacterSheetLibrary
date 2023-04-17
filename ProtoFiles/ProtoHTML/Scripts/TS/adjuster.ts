@@ -1,18 +1,18 @@
 import { runGoogle, runGoogleWithReturn, ID, qry, qryA, capitalizer, Button, Input, Select, Div } from "../../../Master/JS"
 
-document.querySelectorAll('input').forEach(x => x.autocomplete = 'off')
+qryA('input').forEach(x => x.autocomplete = 'off')
 var allowedTotal = 0
 document.addEventListener("DOMContentLoaded", async () => {
 	ID('loader').style.visibility = 'visible'
 	const elements = [
-		ID('maxd6') as HTMLDivElement,
-		ID('expendedd6') as HTMLInputElement,
-		ID('maxd8') as HTMLDivElement,
-		ID('expendedd8') as HTMLInputElement,
-		ID('maxd10') as HTMLDivElement,
-		ID('expendedd10') as HTMLInputElement,
-		ID('maxd12') as HTMLDivElement,
-		ID('expendedd12') as HTMLInputElement
+		ID('maxd6') as Div,
+		ID('expendedd6') as Input,
+		ID('maxd8') as Div,
+		ID('expendedd8') as Input,
+		ID('maxd10') as Div,
+		ID('expendedd10') as Input,
+		ID('maxd12') as Div,
+		ID('expendedd12') as Input
 	] satisfies [any, any, any, any, any, any, any, any]
 	const values = await runGoogleWithReturn("getHitDice")
 	allowedTotal = values.maxReplacement
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 			elem.value = values[id]
 		}
 
-		function _a(e: typeof elem, id: string): e is HTMLInputElement {
+		function _a(e: typeof elem, id: string): e is Input {
 			return id.includes('expendedd')
 		}
 	})
@@ -38,8 +38,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function update() {
 	ID('loader').style.visibility = 'visible'
 
-	let parseVal = (id: string) => Number((<HTMLInputElement>ID(id)).value)
-	let parseMin = (id: string) => Number((<HTMLInputElement>ID(id)).min)
+	let parseVal = (id: string) => Number((<Input>ID(id)).value)
+	let parseMin = (id: string) => Number((<Input>ID(id)).min)
 
 	var startingValue = parseMin('expendedd6') + parseMin('expendedd8') + parseMin('expendedd10') + parseMin('expendedd12'),
 		currentValue = parseVal('expendedd6') + parseVal('expendedd8') + parseVal('expendedd10') + parseVal('expendedd12')

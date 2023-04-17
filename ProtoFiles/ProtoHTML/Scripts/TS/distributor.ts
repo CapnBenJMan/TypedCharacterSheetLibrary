@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 	ID<Input>('available').value = String(total) // set available value to total
 })
 
-qryA('div>div>div>input').forEach((x: Input) => { // for each coin input
+qryA('div>div>div>input').forEach(x => { // for each coin input
 	x.onchange = () => { // create onchange listener
 		const plat = Number(ID<Input>('plat').value) * 1000, // get platinum values
 			gold = Number(ID<Input>('gold').value) * 100, // get gold values

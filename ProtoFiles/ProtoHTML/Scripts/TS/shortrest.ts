@@ -9,15 +9,15 @@ document.addEventListener("DOMContentLoaded", async () => { // on DOM Content Lo
 	{
 		[6, 8, 10, 12].forEach(i => { // loop throught dice types
 			qry(`#d${i}>td:nth-child(2)`).innerHTML = hitDice[`expendedd${i}`] // set expended hit dice
-			qry<string, Input>(`#d${i}>td>input`).max = hitDice[`maxd${i}`] // set max hit dice
+			qry(`#d${i}>td>input`).max = hitDice[`maxd${i}`] // set max hit dice
 		})
 	}
 	ID('loader').classList.add('magic') // hide loader
 })
 
-async function submission() {
-	event.preventDefault()
-	let val = dx => Number(qry<string, Input>(`#${dx}>td>input`).value)
+async function submission(e: Event) {
+	e.preventDefault()
+	let val = dx => Number(qry(`#${dx}>td>input`).value)
 	// ^arrow function for getting the value of a certain die's input element as a number
 	const hitDice = await returns // get hit dice from returns promise
 	const dice = { d6: 0, d8: 0, d10: 0, d12: 0 } // dice object for getting the amount of hit dice that should be remaining
