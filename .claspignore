@@ -2,3 +2,4 @@
 !GS/*.js
 !HTML/*.html
 !appsscript.json
+node_modules/**/*

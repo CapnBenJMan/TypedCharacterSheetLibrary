@@ -93,6 +93,7 @@ class Selector<S extends string> {
 		})
 		console.log(grouped.join(", "))
 		console.log()
+		return grouped
 	}
 
 	static groupMatch = /\s*?,\s*?/g
@@ -318,9 +319,13 @@ class Attribute {
 		if (nStr.includes("=")) {
 			const [name, after] = nStr.split("=")
 			const type = name.slice(-1)
-			if (_a(type))
+			if (_a(type)) {
 				this.type = Attribute.swappedPresence[`${type}=`]
-			else this.type = "exact"
+				this.name = name.slice(0, -1)
+			} else {
+				this.type = "exact"
+				this.name = name
+			}
 
 			if (["i", "I", "s", "S"].some(x => after.endsWith(` ${x} `)))
 				this.sensitivity = after.match(/ [is]$/i)![0] as attrSensitive
@@ -423,7 +428,8 @@ const tests = [
 	'svg',
 	'svg rect',
 	'div:has(span)',
-	'div span, span :is(main, section, ) > div'
+	'div span, span :is(main, section, ) > div',
+	'div[selection="any"]'
 ]
 
 for (let test of tests) {
