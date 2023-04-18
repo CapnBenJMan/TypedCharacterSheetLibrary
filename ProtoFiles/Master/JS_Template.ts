@@ -1,24 +1,6 @@
 /// <reference path="google.d.ts" />
-/// <reference path="../ProtoGS/CSCTypes.d.ts"/>
 
-import type { queryElem } from "./queryStringParser"
-
-type CSC = typeof CharacterSheetCode
-
-type csck = keyof CSC
-
-type cscReturn<K extends csck> =
-	CSC[K] extends (...args: any) => any ?
-	ReturnType<CSC[K]> : CSC[K]
-
-type cscParam<K extends csck> =
-	CSC[K] extends (...args: any) => any ?
-	Parameters<CSC[K]> : any[]
-
-export type Button = HTMLButtonElement
-export type Input = HTMLInputElement
-export type Select = HTMLSelectElement
-export type Div = HTMLDivElement
+import type { cscParam, cscReturn, csck } from "./CSC"
 
 /** Returns the value of the function called
  * @param {string} f The function name
@@ -57,9 +39,7 @@ export function runGoogle<T extends csck>(f: T, args?: cscParam<T>): Promise<voi
 	})
 }
 
-type HNM = HTMLElementTagNameMap
-
-type Elem<K extends string> = K extends keyof HNM ? HNM[K] : Element
+import type { queryElem } from "query-shorthand"
 
 export const ID = <E extends HTMLElement | SVGElement = HTMLElement>(n: string) => document.getElementById(n) as E
 
@@ -78,3 +58,8 @@ export const capitalizer = (x: string) => {
 		return arr.join(" ") // return the reformatted array joined by spaces
 	} else return x.charAt(0).toUpperCase() + x.slice(1).toLowerCase() // otherwise, return capitalized word
 }
+
+export type Button = HTMLButtonElement
+export type Input = HTMLInputElement
+export type Select = HTMLSelectElement
+export type Div = HTMLDivElement

@@ -16,5 +16,11 @@
 	"bugs": {
 		"url": "https://github.com/CapnBenJMan/TypedCharacterSheetLibrary/issues"
 	},
-	"homepage": "https://github.com/CapnBenJMan/TypedCharacterSheetLibrary#readme"
+	"homepage": "https://github.com/CapnBenJMan/TypedCharacterSheetLibrary#readme",
+	"devDependencies": {
+		"typescript": "^5.0.4"
+	},
+	"dependencies": {
+		"query-shorthand": "^1.0.0"
+	}
 }

@@ -1,4 +1,5 @@
-import { runGoogle, runGoogleWithReturn, ID, qry, qryA, capitalizer, Button, Input, Select, Div } from "../../../Master/JS"
+import { runGoogle, runGoogleWithReturn, ID, qry, qryA, capitalizer } from "../../../Master/JS_Template"
+import type { Button, Div, Input, Select } from "../../../Master/JS_Template"
 
 const eqNames: ((CharacterSheetCode.Equipment | CharacterSheetCode.EquipmentPack) & { Category: string })[] = [] // equipment names
 const prom = runGoogleWithReturn('equipmentInfo').then(equipment => {

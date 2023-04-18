@@ -1,0 +1,7 @@
+{
+	"compilerOptions": {
+		"target": "ES2019",
+		"module": "NodeNext"
+	},
+	"include": ["./JS_Template.ts"]
+}

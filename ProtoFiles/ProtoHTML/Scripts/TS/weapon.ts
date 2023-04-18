@@ -1,4 +1,5 @@
-import { runGoogle, runGoogleWithReturn, ID, qry, qryA, capitalizer, Button, Input, Select, Div } from "../../../Master/JS"
+import { runGoogle, runGoogleWithReturn, ID, qry, qryA, capitalizer } from "../../../Master/JS_Template"
+import type { Button, Div, Input, Select } from "../../../Master/JS_Template"
 
 qryA('input').forEach(x => x.autocomplete = 'off')
 

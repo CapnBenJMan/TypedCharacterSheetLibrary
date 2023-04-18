@@ -1,10 +1,10 @@
 interface google {
-	script: script
+	readonly script: script
 }
 
 interface script {
-	run: run
-	host: host
+	readonly run: run
+	readonly host: host
 }
 
 interface host {
@@ -18,8 +18,8 @@ interface run {
 
 	withUserObject(): run
 
-	callLibraryFunction(fn: string)
-	callLibraryFunction(fn: string, args: any[])
+	callLibraryFunction(fn: string): any
+	callLibraryFunction(fn: string, args: any[]): any
 }
 
-declare var google: google
+declare const google: google
