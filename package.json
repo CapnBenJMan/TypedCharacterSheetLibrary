@@ -22,6 +22,12 @@
 		"typescript": "^5.0.4"
 	},
 	"dependencies": {
+		"postcss": "^8.4.22",
+		"postcss-calc": "^8.2.4",
+		"postcss-each": "^1.1.0",
+		"postcss-math": "^0.0.10",
+		"postcss-nested": "^6.0.1",
+		"postcss-preset-env": "^8.3.2",
 		"query-shorthand": "^1.0.0"
 	}
 }

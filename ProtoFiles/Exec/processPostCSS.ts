@@ -14,10 +14,10 @@ const preset = postcssPresetEnv({
 
 	}
 })
-const each = postcssEach()
+const each = postcssEach() as postcss.Plugin
 const nested = postcssNested()
 const calc = postcssCalc({})
-const math = postcssMath()
+const math = postcssMath() as postcss.Plugin
 
 const processor = postcss([preset, each, nested, calc])
 const processor1 = postcss([math])
