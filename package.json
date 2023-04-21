@@ -22,13 +22,16 @@
 		"typescript": "^5.0.4"
 	},
 	"dependencies": {
+		"child_process": "^1.0.2",
 		"fs": "^0.0.1-security",
+		"path": "^0.12.7",
 		"postcss": "^8.4.22",
 		"postcss-calc": "^8.2.4",
 		"postcss-each": "^1.1.0",
 		"postcss-math": "^0.0.10",
 		"postcss-nested": "^6.0.1",
 		"postcss-preset-env": "^8.3.2",
+		"prettier": "^2.8.7",
 		"query-shorthand": "^1.0.0"
 	}
 }
