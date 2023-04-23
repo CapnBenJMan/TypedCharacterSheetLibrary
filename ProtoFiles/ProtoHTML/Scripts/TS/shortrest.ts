@@ -1,10 +1,10 @@
-import { runGoogle, runGoogleWithReturn, ID, qry, qryA, capitalizer } from "../../../Master/JS_Template"
+import { runGoogle, runGoogleWithReturn, ID, qry, qryA, capitalizer, show, hide } from "../../../Master/JS_Template"
 import type { Button, Div, Input, Select } from "../../../Master/JS_Template"
 
 const returns = runGoogleWithReturn('getHitDice')
 
 document.addEventListener("DOMContentLoaded", async () => { // on DOM Content Loaded
-	ID('loader').classList.remove('magic') // show loader
+	show(ID('loader')) // show loader
 	const hitDice = await returns // get the return value of the returns promise
 	console.log(hitDice) // log hitDice
 	{
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => { // on DOM Content Lo
 			qry(`#d${i}>td>input`).max = hitDice[`maxd${i}`] // set max hit dice
 		})
 	}
-	ID('loader').classList.add('magic') // hide loader
+	hide(ID('loader')) // hide loader
 })
 
 async function submission(e: Event) {

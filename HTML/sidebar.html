@@ -20,6 +20,10 @@
 			}
 		}
 
+		* {
+			font-family: Georgia;
+		}
+
 		.loader {
 			border: 5px solid #f3f3f3;
 			border-radius: 50%;
@@ -29,159 +33,72 @@
 			animation: spin 2s linear infinite;
 		}
 
+		button,
+		input[type="checkbox"] {
+			cursor: pointer;
+		}
+
 		/* sidebar.css */
 		body {
 			max-width: 300px;
+			display: grid;
+			grid: auto / auto;
+			margin: auto;
+			height: 100vh;
+			justify-items: center;
+			align-items: center;
 		}
 
-		.dbutton {
-			border: 0;
-			line-height: 2em;
-			padding: 0 1em;
-			font-family: Georgia;
-			font-size: 1rem;
+		body:has(.content.needsHelp:not(.magic)) {
+			grid: 1fr auto 1fr / auto;
+			align-items: start;
+		}
+
+		body:has(.content.needsHelp:not(.magic)) .content {
+			grid-row: 2 / 3;
+		}
+
+		body:has(.content.needsHelp:not(.magic)) #helper {
+			grid-row: 3 / 4;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			width: 100%;
+		}
+
+		body:has(.content.needsHelp:not(.magic)) #helper * {
 			text-align: center;
-			color: #fff;
-			text-shadow: 1px 1px 1px #000;
-			border-radius: 10px;
-			background-image: linear-gradient(
-				to top left,
-				rgba(0, 0, 0, 0.2),
-				rgba(0, 0, 0, 0.2) 30%,
-				rgba(0, 0, 0, 0)
-			);
-			box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6),
-				inset -2px -2px 3px rgba(0, 0, 0, 0.6);
-			min-height: 32px;
 		}
 
-		.dbutton:hover {
-			filter: brightness(120%);
+		body:has(.content.needsHelp:not(.magic)) #helper #tip {
+			font-size: 10.5px;
+			max-width: 300px;
+			width: 100%;
 		}
 
-		.dbutton:active {
-			box-shadow: inset -2px -2px 3px rgba(255, 255, 255, 0.6),
-				inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+		body:has(.content.needsHelp:not(.magic)) #helper #helpcontainer {
+			height: 5rem;
+			width: 75%;
+			overflow: hidden;
+			background-color: #eee;
+		}
+
+		body:has(.content.needsHelp:not(.magic)) #helper #helpcontainer > p {
+			margin: 0;
+			width: 100%;
+		}
+
+		body:has(.content.needsHelp:not(.magic)) #helper .toggle {
+			display: flex;
 		}
 
 		.content {
-			width: 95%;
 			max-width: 300px;
+			width: 95%;
 			text-align: center;
 			margin: 0;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			font-family: Georgia;
-		}
-
-		input {
-			font-family: Georgia;
-		}
-
-		.numinp {
-			border: 0;
-			background-image: none;
-			width: 245px;
-			height: 25px;
-			padding: 20px 5px 20px 20px;
-			background-size: 290px 70px;
-			background-position: center;
-			text-align: center;
-			font-size: 20px;
-			border-radius: 45px;
-		}
-
-		.healthbar {
-			position: relative;
-			width: 95%;
-			max-width: 285px;
-		}
-
-		.healthtext {
-			z-index: 1;
-			color: black;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			width: 100%;
-		}
-
-		.back {
-			background-color: #eee;
-			width: 100%;
-			left: 0;
-			height: 1.25rem;
-			border-radius: 1rem;
-			z-index: -1;
-			position: relative;
-		}
-
-		.bar {
-			height: 1.25rem;
-			text-align: center;
-			vertical-align: middle;
-			white-space: nowrap;
-			z-index: 0;
-			transition: width 2s, background-color 2s, border-radius 2s;
-		}
-
-		.barcontainer {
-			position: absolute;
-			width: 100%;
-			top: 0;
-			left: 0;
-		}
-
-		.hp {
-			position: relative;
-			border-radius: 10px 10px 10px 10px;
-		}
-
-		.bhp {
-			position: relative;
-			border-radius: 0px 10px 10px 0px;
-		}
-
-		.thp {
-			background-color: #69ecec;
-			position: relative;
-			border-radius: 0px 10px 10px 0px;
-		}
-
-		.helptext {
-			position: absolute;
-			text-align: center;
-			justify-content: bottom;
-			overflow: hidden;
-			width: 75%;
-			left: 12.5%;
-			height: 5rem;
-			background-color: #eee;
-		}
-
-		.helptext p {
-			transform: translateY(-1rem);
-		}
-
-		@keyframes scroll {
-			0% {
-				transform: translateY(-1rem);
-			}
-
-			15% {
-				transform: translateY(-1rem);
-			}
-
-			100% {
-				transform: translateY(-100%);
-			}
-		}
-
-		.toggle {
-			font-family: Georgia;
+			height: -moz-min-content;
+			height: min-content;
 		}
 
 		.loader {
@@ -192,22 +109,200 @@
 			z-index: 10;
 		}
 
-		.spellrow {
+		.dbutton {
+			background-color: var(--__bg);
+			border: 0;
+			line-height: 2rem;
+			height: 1lh;
+			padding: 0 1em;
+			font-size: 1rem;
+			text-align: center;
+			color: #fff;
+			text-shadow: 1px 1px 1px #000;
+			border-radius: 1rem;
+			background-image: linear-gradient(
+				to top left,
+				rgba(0, 0, 0, 0.2),
+				rgba(0, 0, 0, 0.2) 30%,
+				rgba(0, 0, 0, 0)
+			);
+			box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6),
+				inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+		}
+
+		/* min-height: 32px; */
+
+		.dbutton:hover {
+			filter: brightness(120%);
+		}
+
+		.dbutton:active {
+			box-shadow: inset -2px -2px 3px rgba(255, 255, 255, 0.6),
+				inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+		}
+
+		#main {
+			display: flex;
+			flex-direction: column;
+			gap: 1.5px;
+		}
+
+		#main > .mainRow {
+			display: grid;
+			justify-content: center;
+			margin: auto;
+			grid-gap: 1vw;
+			gap: 1vw;
+		}
+
+		#main > .mainRow:has(button + button) {
+			grid: auto / repeat(2, minmax(min-content, 1fr));
+		}
+
+		#main > .mainRow:has(button + button + button) {
+			grid: auto / minmax(min-content, 1fr) auto minmax(min-content, 1fr);
+		}
+
+		#main .numinp {
+			border: 0;
+			background-image: none;
+			width: 245px;
+			height: 25px;
+			padding: 20px 5px 20px 20px;
+			background-size: 290px 70px;
+			background-position: center;
+			text-align: center;
+			font-size: 20px;
+			border-radius: 45px;
+			align-self: center;
+			margin: 0.75rem 0;
+		}
+
+		#main .healthbar {
+			display: flex;
+			justify-content: center;
+			align-self: center;
+			position: relative;
+			width: 95%;
+			max-width: 95vw;
+		}
+
+		#main .healthbar .back {
+			background-color: #eee;
+			width: 100%;
+			left: 0;
+			height: 1.25rem;
+			border-radius: 1rem;
+			z-index: -1;
+			position: relative;
+		}
+
+		#main .healthbar .bar {
+			height: 1.25rem;
+			text-align: center;
+			vertical-align: middle;
+			white-space: nowrap;
+			z-index: 0;
+			transition: width 2s, background-color 2s, border-radius 2s;
+		}
+
+		#main .healthbar .barcontainer {
+			position: absolute;
+			width: 100%;
+			top: 0;
+			left: 0;
+		}
+
+		#main .healthbar .hp {
+			position: relative;
+			border-radius: 10px 10px 10px 10px;
+		}
+
+		#main .healthbar .bhp {
+			position: relative;
+			border-radius: 0px 10px 10px 0px;
+		}
+
+		#main .healthbar .thp {
+			background-color: #69ecec;
+			position: relative;
+			border-radius: 0px 10px 10px 0px;
+		}
+
+		#main .healthtext {
+			z-index: 1;
+			color: black;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 100%;
+		}
+
+		#spells {
+			display: grid;
+			grid-template-columns: repeat(5, minmax(min-content, auto));
+			grid-auto-rows: auto;
+			justify-content: space-around;
+			align-items: center;
+		}
+
+		#spells > .spellrow {
+			grid-column: 1 / -1;
 			display: flex;
 			text-align: center;
-			width: 100%;
+			/* width: 100%; */
 			align-items: center;
 			justify-content: space-around;
 		}
 
-		.slotnumber {
+		#spells > .spellrow:has(#setSlots + #spellReturn) {
+			display: grid;
+			grid: auto / repeat(2, minmax(min-content, 1fr));
+			margin: auto;
+		}
+
+		#spells .slotnumber {
 			width: 50px;
 			height: 1rem;
 			border-radius: 1rem;
 		}
 
+		#spells .slotnumber + span {
+			font-size: 18px;
+		}
+
+		#tools {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		#tools > * {
+			display: flex;
+			width: -moz-fit-content;
+			width: fit-content;
+		}
+
+		#helper {
+			display: none;
+		}
+
+		@keyframes scroll {
+			0% {
+				transform: translateY(0%);
+			}
+
+			15% {
+				transform: translateY(0%);
+			}
+
+			100% {
+				transform: translateY(calc(-100% + 3lh));
+			}
+		}
+
 		.numinput {
-			font-family: Georgia;
 			text-align: center;
 		}
 
@@ -217,19 +312,24 @@
 
 		.version {
 			position: absolute;
-			bottom: 0;
-			display: flex;
+			bottom: 1vh;
+			display: grid;
+			grid: auto / 25px auto 25px;
 			justify-content: center;
-			width: 95%;
+			align-items: center;
+			justify-self: center;
 		}
 
-		.tip {
-			font-size: 10.5px;
-			position: absolute;
-			max-width: 300px;
-			width: 100%;
-			left: 50%;
-			transform: translate(-50%);
+		.version > * {
+			display: flex;
+			width: -moz-min-content;
+			width: min-content;
+			height: -moz-min-content;
+			height: min-content;
+		}
+
+		.version div#version {
+			text-align: middle;
 		}
 
 		/* @media (prefers-color-scheme: dark) {
@@ -255,7 +355,7 @@
 			<div id="version">vX.Y.Z</div>
 		</div>
 		<!--This is the main page-->
-		<div class="content" id="main">
+		<div class="content needsHelp" id="main">
 			<div
 				id="errormessage"
 				class="magic"
@@ -267,35 +367,26 @@
 				seeing this message, click this message to have it disappear.
 			</div>
 			<!--This is the health bar-->
-			<div style="display: flex; justify-content: center">
-				<div class="healthbar">
-					<div class="back"></div>
-					<span id="healthtext" class="healthtext"
-						>Current Health:/</span
-					>
+			<div class="healthbar">
+				<div class="back"></div>
+				<span id="healthtext" class="healthtext">Current Health:/</span>
+				<div
+					class="barcontainer"
+					style="display: flex; height: inherit"
+				>
 					<div
-						class="barcontainer"
-						style="display: flex; height: inherit"
-					>
-						<div
-							id="hpbar"
-							class="bar hp"
-							style="width: 0%; background-color: red"
-						></div>
-						<div
-							id="bhpbar"
-							class="bar bhp"
-							style="width: 0%; background-color: yellow"
-						></div>
-						<div
-							id="thpbar"
-							class="bar thp"
-							style="width: 0%"
-						></div>
-					</div>
+						id="hpbar"
+						class="bar hp"
+						style="width: 0%; background-color: red"
+					></div>
+					<div
+						id="bhpbar"
+						class="bar bhp"
+						style="width: 0%; background-color: yellow"
+					></div>
+					<div id="thpbar" class="bar thp" style="width: 0%"></div>
 				</div>
 			</div>
-			<br />
 			<!--This is the number input-->
 			<input
 				type="number"
@@ -304,529 +395,307 @@
 				min="1"
 				max="9999999999999999"
 				onkeypress="return event.charCode >= 48 && event.charCode <= 57 && this.value.length <= 16"
-			/><br />
+			/>
 			<!--These are the buttons-->
-			<button
-				id="dmg"
-				class="dbutton"
-				style="background-color: #d00"
-				onclick="health('damage');"
-			>
-				Damage
-			</button>
-			<button
-				id="heal"
-				class="dbutton"
-				style="background-color: #3a6"
-				onclick="health('heal');"
-			>
-				Heal
-			</button>
-			<button
-				id="temphp"
-				class="dbutton"
-				style="background-color: #3cc"
-				onclick="health('temphp');"
-			>
-				TempHP</button
-			><br />
-			<button
-				id="bonushp"
-				class="dbutton"
-				style="background-color: #d6a; max-width: 120px"
-				onclick="health('bheal')"
-			>
-				BonusHp
-			</button>
-			<button
-				id="bhplimit"
-				class="dbutton"
-				style="background-color: #b5c; max-width: 120px"
-				onclick="limit()"
-			>
-				Bonus Limit</button
-			><br />
-			<button
-				id="LR"
-				class="dbutton"
-				style="background-color: #34c; max-width: 110px"
-				onclick="longRest();"
-			>
-				Long Rest
-			</button>
-			<button
-				id="SR"
-				class="dbutton"
-				style="background-color: #63c; max-width: 110px"
-				onclick="shortRest();"
-			>
-				Short Rest</button
-			><br />
-			<button
-				id="+LR"
-				class="dbutton"
-				style="background-color: #da2; max-width: 80px"
-				onclick="addLongRest();"
-			>
-				+Rest
-			</button>
-			<button
-				id="-LR"
-				class="dbutton"
-				style="background-color: #cd2; max-width: 80px"
-				onclick="removeLongRest();"
-			>
-				-Rest</button
-			><br />
-			<button
-				id="level"
-				class="dbutton"
-				style="background-color: #585"
-				onclick="addlevel();"
-			>
-				Add/Edit Level</button
-			><br />
-			<span id="spellcontainer" class="magic"
-				><button
+			<span class="mainRow">
+				<button
+					id="dmg"
+					class="dbutton"
+					style="--__bg: #d00"
+					onclick="health('damage');"
+				>
+					Damage
+				</button>
+				<button
+					id="heal"
+					class="dbutton"
+					style="--__bg: #3a6"
+					onclick="health('heal');"
+				>
+					Heal
+				</button>
+				<button
+					id="temphp"
+					class="dbutton"
+					style="--__bg: #3cc"
+					onclick="health('temphp');"
+				>
+					TempHP
+				</button>
+			</span>
+			<span class="mainRow">
+				<button
+					id="bonushp"
+					class="dbutton"
+					style="--__bg: #d6a"
+					onclick="health('bheal')"
+				>
+					BonusHp
+				</button>
+				<button
+					id="bhplimit"
+					class="dbutton"
+					style="--__bg: #b5c"
+					onclick="limit()"
+				>
+					Bonus Limit
+				</button>
+			</span>
+			<span class="mainRow">
+				<button
+					id="LR"
+					class="dbutton"
+					style="--__bg: #34c; max-width: 110px"
+					onclick="longRest();"
+				>
+					Long Rest
+				</button>
+				<button
+					id="SR"
+					class="dbutton"
+					style="--__bg: #63c; max-width: 110px"
+					onclick="shortRest();"
+				>
+					Short Rest
+				</button>
+			</span>
+			<span class="mainRow">
+				<button
+					id="+LR"
+					class="dbutton"
+					style="--__bg: #da2; max-width: 80px"
+					onclick="addLongRest();"
+				>
+					+Rest
+				</button>
+				<button
+					id="-LR"
+					class="dbutton"
+					style="--__bg: #cd2; max-width: 80px"
+					onclick="removeLongRest();"
+				>
+					-Rest
+				</button>
+			</span>
+			<span class="mainRow">
+				<button
+					id="level"
+					class="dbutton"
+					style="--__bg: #585"
+					onclick="addlevel();"
+				>
+					Add/Edit Level
+				</button>
+			</span>
+			<span id="spellcontainer" class="mainRow magic">
+				<button
 					id="spellcast"
 					class="dbutton"
-					style="background-color: #815"
+					style="--__bg: #815"
 					onclick="openSpells(this)"
 				>
-					Spellcasting</button
-				><br
-			/></span>
-			<button
-				id="diceroll"
-				class="dbutton"
-				style="background-color: #92d"
-				onclick="rollSomeDice();"
-			>
-				Diceroller</button
-			><br />
-			<button
-				id="btools"
-				class="dbutton"
-				style="background-color: #299"
-				onclick="openTools()"
-			>
-				Tools
-			</button>
-			<button
-				id="reload"
-				class="dbutton"
-				style="background-color: #02f"
-				onclick="reload();"
-			>
-				Reload
-			</button>
-			<!--This is the help text toggle-->
-			<div class="toggle">
-				<input type="checkbox" id="togglehelp" />
-				<label for="togglehelp">Enable Help Text</label>
-				<div id="tip" name="tip" class="tip"></div>
-				<div id="helptext" class="helptext magic">
-					<p id="textofhelp" name="textofhelp"></p>
-				</div>
-			</div>
+					Spellcasting
+				</button>
+			</span>
+			<span class="mainRow">
+				<button
+					id="diceroll"
+					class="dbutton"
+					style="--__bg: #92d"
+					onclick="rollSomeDice();"
+				>
+					Diceroller
+				</button>
+			</span>
+			<span class="mainRow">
+				<button
+					id="btools"
+					class="dbutton"
+					style="--__bg: #299"
+					onclick="openTools()"
+				>
+					Tools
+				</button>
+				<button
+					id="reload"
+					class="dbutton"
+					style="--__bg: #02f"
+					onclick="reload();"
+				>
+					Reload
+				</button>
+			</span>
+			<span class="magic">
+				<svg
+					id="inputBG"
+					xmlns="http://www.w3.org/2000/svg"
+					viewBox="0 0 290 70"
+				>
+					<style>
+						path {
+							fill: none;
+							stroke: black;
+						}
+
+						/* @media (prefers-color-scheme: light) {
+					path { stroke: black; }
+				}
+		
+				@media (prefers-color-scheme: dark) {
+				path { stroke: white; }
+			} */
+					</style>
+					<g id="paths">
+						<path
+							d="
+				M145,15
+				l20,-10
+				Q240,32.5 280,35
+				"
+						/>
+						<path
+							d="
+				M155,5
+				Q192.5,30 230,5
+				q20,10 20,30
+				"
+						/>
+						<path
+							d="
+				M145,5
+				Q192.5,35 240,5
+				q20,10 20,30
+			"
+						/>
+						<path
+							d="
+				M135,5
+				Q192.5,40 250,5
+				q20,10 20,30
+				"
+						/>
+					</g>
+					<use
+						href="#paths"
+						transform="scale(-1,1)"
+						transform-origin="145 35"
+					/>
+					<use
+						href="#paths"
+						transform="scale(1,-1)"
+						transform-origin="145 35"
+					/>
+					<use
+						href="#paths"
+						transform="scale(-1,-1)"
+						transform-origin="145 35"
+					/>
+				</svg>
+			</span>
 		</div>
 		<!--This is the spellcasting page-->
 		<div class="content magic" id="spells" style="z-index: 9">
-			<div
-				style="
-					display: flex;
-					flex-direction: column;
-					justify-content: space-evenly;
-				"
-			>
-				<div class="spellrow" style="justify-content: space-around">
-					<div>Spellcasting</div>
-					<div>Slot Level</div>
-					<div>Pact Magic</div>
-				</div>
-				<div class="spellrow" style="justify-content: space-evenly">
-					<div>Slots Remaining</div>
-					<div>Slots Remaining</div>
-				</div>
-				<div class="spellrow">
-					<button
-						id="usesc1"
-						class="dbutton"
-						style="background-color: #0f0"
-						onclick="useSlot(1, 'sc')"
-					>
-						Use
-					</button>
-					<input
-						id="cursc1"
-						class="slotnumber numinput"
-						type="number"
-						min="0"
-						value="0"
-					/>
-					<span style="font-size: 18px">1</span>
-					<input
-						id="curpm1"
-						class="slotnumber numinput"
-						type="number"
-						min="0"
-						value="0"
-					/>
-					<button
-						id="usepm1"
-						class="dbutton"
-						style="background-color: #0f0"
-						onclick="useSlot(1, 'pm')"
-					>
-						Use
-					</button>
-				</div>
-				<div class="spellrow">
-					<button
-						id="usesc2"
-						class="dbutton"
-						style="background-color: #4f0"
-						onclick="useSlot(2, 'sc')"
-					>
-						Use
-					</button>
-					<input
-						id="cursc2"
-						class="slotnumber numinput"
-						type="number"
-						min="0"
-						value="0"
-					/>
-					<span style="font-size: 18px">2</span>
-					<input
-						id="curpm2"
-						class="slotnumber numinput"
-						type="number"
-						min="0"
-						value="0"
-					/>
-					<button
-						id="usepm2"
-						class="dbutton"
-						style="background-color: #4f0"
-						onclick="useSlot(2, 'pm')"
-					>
-						Use
-					</button>
-				</div>
-				<div class="spellrow">
-					<button
-						id="usesc3"
-						class="dbutton"
-						style="background-color: #8f0"
-						onclick="useSlot(3, 'sc')"
-					>
-						Use
-					</button>
-					<input
-						id="cursc3"
-						class="slotnumber numinput"
-						type="number"
-						min="0"
-						value="0"
-					/>
-					<span style="font-size: 18px">3</span>
-					<input
-						id="curpm3"
-						class="slotnumber numinput"
-						type="number"
-						min="0"
-						value="0"
-					/>
-					<button
-						id="usepm3"
-						class="dbutton"
-						style="background-color: #8f0"
-						onclick="useSlot(3, 'pm')"
-					>
-						Use
-					</button>
-				</div>
-				<div class="spellrow">
-					<button
-						id="usesc4"
-						class="dbutton"
-						style="background-color: #bf0"
-						onclick="useSlot(4, 'sc')"
-					>
-						Use
-					</button>
-					<input
-						id="cursc4"
-						class="slotnumber numinput"
-						type="number"
-						min="0"
-						value="0"
-					/>
-					<span style="font-size: 18px">4</span>
-					<input
-						id="curpm4"
-						class="slotnumber numinput"
-						type="number"
-						min="0"
-						value="0"
-					/>
-					<button
-						id="usepm4"
-						class="dbutton"
-						style="background-color: #bf0"
-						onclick="useSlot(4, 'pm')"
-					>
-						Use
-					</button>
-				</div>
-				<div class="spellrow">
-					<button
-						id="usesc5"
-						class="dbutton"
-						style="background-color: #ff0"
-						onclick="useSlot(5, 'sc')"
-					>
-						Use
-					</button>
-					<input
-						id="cursc5"
-						class="slotnumber numinput"
-						type="number"
-						min="0"
-						value="0"
-					/>
-					<span style="font-size: 18px">5</span>
-					<input
-						id="curpm5"
-						class="slotnumber numinput"
-						type="number"
-						min="0"
-						value="0"
-					/>
-					<button
-						id="usepm5"
-						class="dbutton"
-						style="background-color: #ff0"
-						onclick="useSlot(5, 'pm')"
-					>
-						Use
-					</button>
-				</div>
-				<div class="spellrow">
-					<button
-						id="usesc6"
-						class="dbutton"
-						style="background-color: #fb0"
-						onclick="useSlot(6, 'sc')"
-					>
-						Use
-					</button>
-					<input
-						id="cursc6"
-						class="slotnumber numinput"
-						type="number"
-						min="0"
-						value="0"
-					/>
-					<span style="font-size: 18px">6</span>
-					<input
-						id="curpm6"
-						class="slotnumber numinput"
-						type="number"
-						min="0"
-						value="0"
-					/>
-					<button
-						id="usepm6"
-						class="dbutton"
-						style="background-color: #fb0"
-						onclick="useSlot(6, 'pm')"
-					>
-						Use
-					</button>
-				</div>
-				<div class="spellrow">
-					<button
-						id="usesc7"
-						class="dbutton"
-						style="background-color: #f80"
-						onclick="useSlot(7, 'sc')"
-					>
-						Use
-					</button>
-					<input
-						id="cursc7"
-						class="slotnumber numinput"
-						type="number"
-						min="0"
-						value="0"
-					/>
-					<span style="font-size: 18px">7</span>
-					<input
-						id="curpm7"
-						class="slotnumber numinput"
-						type="number"
-						min="0"
-						value="0"
-					/>
-					<button
-						id="usepm7"
-						class="dbutton"
-						style="background-color: #f80"
-						onclick="useSlot(7, 'pm')"
-					>
-						Use
-					</button>
-				</div>
-				<div class="spellrow">
-					<button
-						id="usesc8"
-						class="dbutton"
-						style="background-color: #f40"
-						onclick="useSlot(8, 'sc')"
-					>
-						Use
-					</button>
-					<input
-						id="cursc8"
-						class="slotnumber numinput"
-						type="number"
-						min="0"
-						value="0"
-					/>
-					<span style="font-size: 18px">8</span>
-					<input
-						id="curpm8"
-						class="slotnumber numinput"
-						type="number"
-						min="0"
-						value="0"
-					/>
-					<button
-						id="usepm8"
-						class="dbutton"
-						style="background-color: #f40"
-						onclick="useSlot(8, 'pm')"
-					>
-						Use
-					</button>
-				</div>
-				<div class="spellrow">
-					<button
-						id="usesc9"
-						class="dbutton"
-						style="background-color: #f00"
-						onclick="useSlot(9, 'sc')"
-					>
-						Use
-					</button>
-					<input
-						id="cursc9"
-						class="slotnumber numinput"
-						type="number"
-						min="0"
-						value="0"
-					/>
-					<span style="font-size: 18px">9</span>
-					<input
-						id="curpm9"
-						class="slotnumber numinput"
-						type="number"
-						min="0"
-						value="0"
-					/>
-					<button
-						id="usepm9"
-						class="dbutton"
-						style="background-color: #f00"
-						onclick="useSlot(9, 'pm')"
-					>
-						Use
-					</button>
-				</div>
+			<div class="spellrow" style="justify-content: space-around">
+				<div>Spellcasting</div>
+				<div>Slot Level</div>
+				<div>Pact Magic</div>
 			</div>
-			<button
-				id="setSlots"
-				class="dbutton"
-				style="max-width: 95px; background-color: teal"
-				onclick="setSlots()"
-			>
-				Set Slots</button
-			><button
-				id="spellReturn"
-				class="dbutton"
-				style="max-width: 95px; background-color: black"
-				onclick="closeSpells()"
-			>
-				Return
-			</button>
+			<div class="spellrow" style="justify-content: space-evenly">
+				<div>Slots Remaining</div>
+				<div>Slots Remaining</div>
+			</div>
+			<!-- Buttons Generated by script -->
+			<div class="spellrow">
+				<button
+					id="setSlots"
+					class="dbutton"
+					style="--__bg: teal"
+					onclick="setSlots()"
+				>
+					Set Slots
+				</button>
+				<button
+					id="spellReturn"
+					class="dbutton"
+					style="--__bg: black"
+					onclick="closeSpells()"
+				>
+					Return
+				</button>
+			</div>
 		</div>
 		<!--This is the tools page-->
-		<div class="content magic" id="tools">
+		<div class="content magic needsHelp" id="tools">
 			<button
 				id="formulas"
 				class="dbutton"
-				style="background-color: #4d5"
+				style="--__bg: #4d5"
 				onclick="runGoogle('openHTML', ['formulas'])"
 			>
-				Formula Library</button
-			><br />
+				Formula Library
+			</button>
 			<button
 				id="distributor"
 				class="dbutton"
-				style="background-color: #55d"
+				style="--__bg: #55d"
 				onclick="runGoogle('openHTML', ['distributor'])"
 			>
-				Coin Distributor</button
-			><br />
+				Coin Distributor
+			</button>
 			<button
 				id="calculator"
 				class="dbutton"
-				style="background-color: #e75"
+				style="--__bg: #e75"
 				onclick="runGoogle('openHTML', ['calculator'])"
 			>
-				Coin Calculator</button
-			><br />
+				Coin Calculator
+			</button>
 			<button
 				id="sethitdice"
 				class="dbutton"
-				style="background-color: pink"
+				style="--__bg: pink"
 				onclick="runGoogle('openHTML', ['hitdice'])"
 			>
-				Set Hit Dice</button
-			><br />
+				Set Hit Dice
+			</button>
 			<button
 				id="equipment"
 				class="dbutton"
-				style="background-color: #bb0"
+				style="--__bg: #bb0"
 				onclick="runGoogle('openHTML', ['equipment'])"
 			>
-				Equipment</button
-			><br />
+				Equipment
+			</button>
 			<button
 				id="featurelookup"
 				class="dbutton"
-				style="background-color: orange"
+				style="--__bg: orange"
 				onclick="runGoogle('openHTML', ['lookup'])"
 			>
-				Lookup</button
-			><br />
+				Lookup
+			</button>
 			<button
 				id="returnTools"
 				class="dbutton"
-				style="background-color: black"
+				style="--__bg: black"
 				onclick="closeTools()"
 			>
 				Return
 			</button>
-			<div class="toggle">
-				<input type="checkbox" id="togglehelpT" />
-				<label for="togglehelpT">Enable Help Text</label>
-				<div id="tip1" name="tip" class="tip"></div>
-				<div id="helptextT" class="helptext magic">
-					<p id="textofhelpT" name="textofhelp"></p>
-				</div>
+		</div>
+		<!-- This is the helptext container -->
+		<div id="helper">
+			<span class="toggle">
+				<input type="checkbox" id="togglehelp" />
+				<label for="togglehelp">Enable Help Text</label>
+			</span>
+			<div id="tip" class="tip magic">
+				Tip: You can hold down a button to pause any scrolling text for
+				ease of reading. If you don't want the button to activate, make
+				sure to release off of the button.
+			</div>
+			<div id="helpcontainer" class="helptext magic">
+				<p id="helptext"></p>
 			</div>
 		</div>
 	</body>
@@ -842,15 +711,15 @@
 		            google.script.run
 		                .withSuccessHandler(stuff => resolve(stuff))
 		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`);
-		        });
+		                .callLibraryFunction(`CharacterSheetCode.${f}`)
+		        })
 		    else if (arguments.length == 2)
 		        return new Promise((resolve, reject) => {
 		            google.script.run
 		                .withSuccessHandler(stuff => resolve(stuff))
 		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`, args);
-		        });
+		                .callLibraryFunction(`CharacterSheetCode.${f}`, args)
+		        })
 		}
 		/** Simply calls a function with no return value
 		 * @param {string} f The function name
@@ -862,58 +731,94 @@
 		            google.script.run
 		                .withSuccessHandler(() => resolve())
 		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`);
-		        });
+		                .callLibraryFunction(`CharacterSheetCode.${f}`)
+		        })
 		    else if (arguments.length == 2)
 		        return new Promise((resolve, reject) => {
 		            google.script.run
 		                .withSuccessHandler(() => resolve())
 		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`, args);
-		        });
+		                .callLibraryFunction(`CharacterSheetCode.${f}`, args)
+		        })
 		}
-		const ID = (n) => document.getElementById(n);
-		const qry = (n, el = document) => el.querySelector(n);
-		const qryA = (n, el = document) => el.querySelectorAll(n);
+		const ID = (n) => document.getElementById(n)
+		const qry = (n, el = document) => el.querySelector(n)
+		const qryA = (n, el = document) => el.querySelectorAll(n)
 		const capitalizer = (x) => {
 			if (x.includes(' ')) { // if v includes spaces
-				const arr = x.split(" "); // split v on spaces
+				const arr = x.split(" ") // split v on spaces
 				for (let j in arr) { // loop through arr
-					if (arr[j].includes('\n')) break; // break the loop if arr[j] includes \n
-					else arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1).toLowerCase();
+					if (arr[j].includes('\n')) break // break the loop if arr[j] includes \n
+					else arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1).toLowerCase()
 					// ^otherwise set arr[j] to itself capitalized
 				}
-				return arr.join(" "); // return the reformatted array joined by spaces
-			} else return x.charAt(0).toUpperCase() + x.slice(1).toLowerCase(); // otherwise, return capitalized word
+				return arr.join(" ") // return the reformatted array joined by spaces
+			} else return x.charAt(0).toUpperCase() + x.slice(1).toLowerCase() // otherwise, return capitalized word
+		}
+		function show(el) {
+			el.classList.remove("magic")
+		}
+		function hide(el) {
+			el.classList.add("magic")
 		}
 
 		// sidebar.js
-		const svg = svgReturn();
-		qryA('input').forEach(x => x.autocomplete = 'off');
 		const loader = ID('loader'); // define loader element
 		var maximum = 0;
 		const HP = { cur: 0, temp: 0, bonus: 0, limit: 0, get max() { return maximum + this.temp + this.bonus; } };
 		var spellsIsRunning = false;
-		function reload() {
-		    loader.classList.remove('magic'); // shows loader
-		    runGoogle("sideBarLoader"); // runs the sidebar loader
-		}
 		document.addEventListener('DOMContentLoaded', () => {
 		    getCurrent();
 		    setTimeout(() => {
 		        if (loader.style.visibility == 'visible')
-		            ID('errormessage').classList.remove('magic');
-		    }, 20000);
+		            show(ID('errormessage'));
+		    }, 20_000);
 		});
-		ID('errormessage').onclick = () => ID('errormessage').classList.add('magic');
+		{
+		    const lstSpellRow = qry("#spells div.spellrow:last-child");
+		    const colors = ["#0f0", "#4f0", "#8f0", "#bf0", "#ff0", "#fb0", "#f80", "#f40", "#f00"];
+		    for (let i = 1; i <= 9; i++) {
+		        const color = colors[i - 1];
+		        lstSpellRow.insertAdjacentHTML("beforebegin", `<!-- Level ${i} Slots -->
+			<button id="usesc${i}" class="dbutton" style="--__bg: ${color};"
+				onclick="useSlot(${i}, 'sc')">Use</button>
+			<input id="cursc${i}" class="slotnumber numinput" type="number" min="0" value="0">
+			<span>${i}</span>
+			<input id="curpm${i}" class="slotnumber numinput" type="number" min="0" value="0">
+			<button id="usepm${i}" class="dbutton" style="--__bg: ${color};"
+				onclick="useSlot(${i}, 'pm')">Use</button>`);
+		    }
+		}
+		{
+		    const toggleDesc = qryA("div#helper *");
+		    const tip = qry("div#tip");
+		    toggleDesc.forEach((toggle) => {
+		        toggle.onmouseover = () => {
+		            show(tip);
+		            hide(qry("#helpcontainer"));
+		        };
+		        toggle.onmouseout = () => hide(tip);
+		    });
+		}
+		ID('errormessage').onclick = () => hide(ID('errormessage'));
+		qryA('input').forEach(x => x.autocomplete = 'off');
+		qryA('button.dbutton').forEach(x => {
+		    // for each button, create an onmouseover, onmouseout, onmousedown, and onmouseup listener
+		    x.onmouseover = () => helptext(true, x.id); // onmouseover, turn on helptext
+		    x.onmouseout = () => helptext(false); // onmouseout, turn off helptext
+		    x.onmousedown = () => animationControl('pause'); // onmousedown, pause scrolling helptext
+		    x.onmouseup = () => animationControl('resume'); // onmouseup, unpause scrolling helptext
+		});
 		async function getCurrent() {
 		    try {
-		        loader.classList.remove('magic'); // show loader while code is processing
-		        ID('ip').style.backgroundImage = "url('data:image/svg+xml;base64," + window.btoa(svg) + "')";
-		        qryA('button#SR, button#LR').forEach(x => x.style.width = `39%`);
-		        qryA('button#\\+LR, button#-LR').forEach((x) => x.style.width = `${(80 / 300) * 100}%`);
-		        qryA('button#setSlots, button#spellReturn').forEach(x => x.style.width = `${(95 / 285) * 100}%`);
-		        qryA('button#bonushp, button#bhplimit').forEach(x => x.style.width = `42%`);
+		        show(loader); // show loader while code is processing
+		        ID('ip').style.backgroundImage = "url('data:image/svg+xml;base64," +
+		            window.btoa(ID("inputBG").outerHTML)
+		            + "')";
+		        // qryA('button#SR, button#LR').forEach(x => x.style.width = `39%`)
+		        // qryA('button#\\+LR, button#-LR').forEach((x: Button) => x.style.width = `${(80 / 300) * 100}%`)
+		        // qryA('button#setSlots, button#spellReturn').forEach(x => x.style.width = `${(95 / 285) * 100}%`)
+		        // qryA('button#bonushp, button#bhplimit').forEach(x => x.style.width = `42%`)
 		        const returnVal = await runGoogleWithReturn('getCurrent'); // run code to return values of health cells
 		        HP.cur = Number(returnVal[0]);
 		        maximum = Number(returnVal[1]);
@@ -924,37 +829,12 @@
 		        ID('version').innerHTML = returnVal[5];
 		        updateHealth();
 		        if (!spellsIsRunning)
-		            loader.classList.add('magic');
+		            hide(loader);
 		    }
 		    catch (err) {
 		        console.error(err);
 		    }
 		}
-		const toggles = qryA('.content .toggle input[type=checkbox]');
-		toggles.forEach(x => x.onchange = () => toggles.forEach(y => y.checked = x.checked));
-		qryA('#main button.dbutton').forEach(x => {
-		    // for each button, create an onmouseover, onmouseout, onmousedown, and onmouseup listener
-		    x.onmouseover = () => helptext('on', x.id); // onmouseover, turn on helptext
-		    x.onmouseout = () => helptext('off'); // onmouseout, turn off helptext
-		    x.onmousedown = () => animationControl('pause'); // onmousedown, pause scrolling helptext
-		    x.onmouseup = () => animationControl('resume'); // onmouseup, unpause scrolling helptext
-		});
-		qryA('#tools button.dbutton').forEach(x => {
-		    // for each button, create an onmouseover, onmouseout, onmousedown, and onmouseup listener
-		    x.onmouseover = () => helptext1('on', x.id); // onmouseover, turn on helptext
-		    x.onmouseout = () => helptext1('off'); // onmouseout, turn off helptext
-		    x.onmousedown = () => animationControl('pause'); // onmousedown, pause scrolling helptext
-		    x.onmouseup = () => animationControl('resume'); // onmouseup, unpause scrolling helptext
-		});
-		qryA('.content div.toggle').forEach(toggle => {
-		    var tip = toggle.children.namedItem('tip'); // define reference to tiptext
-		    toggle.onmouseover = () => {
-		        tip.innerHTML = `Tip: You can hold down a button to pause any scrolling
-			      text for ease of reading. If you don't want the button to activate, make sure to release off of the button.`;
-		    };
-		    // onmouseover for toggle button, show tiptext
-		    toggle.onmouseout = () => tip.innerHTML = ''; // onmouseout, hide tiptext
-		});
 		async function updateHealth() {
 		    // This is where the references are defined
 		    const hpbar = ID('hpbar'), bhpbar = ID('bhpbar'), thpbar = ID('thpbar'), healthText = ID('healthtext');
@@ -987,7 +867,7 @@
 		    const nue = [null, undefined, ''];
 		    // if input is not null, undefined, or an empty string and if input is greater than 0
 		    if (nue.every(x => x != ID('ip').value) && Number(ID('ip').value) > 0) {
-		        var input = parseInt(ID('ip').value);
+		        const input = parseInt(ID('ip').value);
 		        switch (button) {
 		            case 'damage': {
 		                var damage = input;
@@ -1046,90 +926,73 @@
 		    }
 		}
 		async function longRest() {
-		    loader.classList.remove('magic'); // set loader to visible while processing
+		    show(loader); // set loader to visible while processing
 		    ID('spellcast').readonly = true;
 		    await runGoogle('longRest'); // run long rest code
 		    getCurrent(); // run getCurrent
 		}
 		async function shortRest() {
-		    loader.classList.remove('magic'); // set loader to visible while processing
+		    show(loader); // set loader to visible while processing
 		    ID('spellcast').readonly = true;
 		    await runGoogle('shortRest'); // run short rest code
 		    getCurrent(); // run getCurrent
 		}
 		async function addLongRest() {
-		    loader.classList.remove('magic'); // set loader to visible while processing
+		    show(loader); // set loader to visible while processing
 		    await runGoogle('addLongRest'); // run add rest code
-		    loader.classList.add('magic'); // set loader to hidden as processing ends
+		    hide(loader); // set loader to hidden as processing ends
 		}
 		async function removeLongRest() {
-		    loader.classList.remove('magic'); // set loader to visible while processing
+		    show(loader); // set loader to visible while processing
 		    await runGoogle('removeLongRest'); // run remove rest code
-		    loader.classList.add('magic'); // set loader to hidden as processing ends
+		    hide(loader); // set loader to hidden as processing ends
 		}
+		var helpTextHovering = false;
+		const infoRepository = {
+		    'dmg': 'Enter a value in the input box and press this button to have the program calculate damage.',
+		    'heal': 'Enter a value in the input box and press this button to have the program calculate healing.',
+		    'temphp': 'Enter a value in the input box and press this button to have the program add TempHP.<br>NOTE: TempHP is not cumulative, and this program will not add to the previous TempHP value.',
+		    'reload': `Use this button to refresh the HTML content of this sidebar in case it isn't working properly.`,
+		    'LR': 'Use this button when you take a long rest. It will automatically reset your health, tempHP, spells, and any other value set with the +Rest button.',
+		    'SR': 'Use this button when you take a short rest. It will automatically ask you if you rolled hit dice, the total rolled, and reset any value set with the +Rest button.',
+		    '+LR': 'Use this button to apply a rest rule to a cell or modify an existing rule.',
+		    '-LR': 'Use this button to remove a rest rule from a cell.',
+		    'diceroll': 'Use this button to perform a dice roll.',
+		    'level': 'Use this button to add or edit a level in a class.',
+		    'spellcast': 'Use this button to use your spell slots or edit how many you have of each.',
+		    'btools': 'Use this button to access a couple of tools, such as a coin calculator or converter, a formula generator, and more.',
+		    'bonushp': 'Enter a value in the input box and press this button to have the program calculate BonusHP for things like Wild Shape Health, Abjuration Wizard\'s Arcane Ward, Polymorph Health, etc.',
+		    'bhplimit': 'Use this button to apply a limit to the amount of BonusHP the character can have. Enter 0 to remove the limit.',
+		    'returnTools': 'Use this button to return to the main page.',
+		    'featurelookup': 'Use this button to search for a feature, feat, magic item, or spell.',
+		    'calculator': 'Use this button to manually calculate coin totals.',
+		    'distributor': 'Use this button to redistribute your coin totals.',
+		    'formulas': 'Use this button to open up a library that contains a series of formulas for the different class features.',
+		    'sethitdice': 'Use this button to override your current amount of hit dice.',
+		    'equipment': 'Use this button to copy a piece of equipment to the sheet.'
+		};
 		function helptext(ioBool, buttonType) {
-		    if (ID('togglehelp').checked == true) { // if enable helptext is checked
-		        const infoRepository = {
-		            'dmg': 'Enter a value in the input box and press this button to have the program calculate damage.',
-		            'heal': 'Enter a value in the input box and press this button to have the program calculate healing.',
-		            'temphp': 'Enter a value in the input box and press this button to have the program add TempHP.<br>NOTE: TempHP is not cumulative, and this program will not add to the previous TempHP value.',
-		            'reload': `Use this button to refresh the HTML content of this sidebar in case it isn't working properly.`,
-		            'LR': 'Use this button when you take a long rest. It will automatically reset your health, tempHP, spells, and any other value set with the +Rest button.',
-		            'SR': 'Use this button when you take a short rest. It will automatically ask you if you rolled hit dice, the total rolled, and reset any value set with the +Rest button.',
-		            '+LR': 'Use this button to apply a rest rule to a cell or modify an existing rule.',
-		            '-LR': 'Use this button to remove a rest rule from a cell.',
-		            'diceroll': 'Use this button to perform a dice roll.',
-		            'level': 'Use this button to add or edit a level in a class.',
-		            'spellcast': 'Use this button to use your spell slots or edit how many you have of each.',
-		            'btools': 'Use this button to access a couple of tools, such as a coin calculator or converter, a formula generator, and more.',
-		            'bonushp': 'Enter a value in the input box and press this button to have the program calculate BonusHP for things like Wild Shape Health, Abjuration Wizard\'s Arcane Ward, Polymorph Health, etc.',
-		            'bhplimit': 'Use this button to apply a limit to the amount of BonusHP the character can have. Enter 0 to remove the limit.'
-		        };
-		        const ht = ID('helptext'), // define reference to helptext div element
-		        toh = ID('textofhelp'); // define reference to helptext paragraph element
-		        const textOfHelp = (ioBool == 'on') ? infoRepository[buttonType] : ''; // define paragraph content variable
-		        if (ioBool == 'on') { // if onmouseover was triggered
-		            toh.innerHTML = textOfHelp; // set helptext to selected button helptext
+		    if (ID('togglehelp').checked) { // if enable helptext is checked
+		        helpTextHovering = ioBool;
+		        const helpContainer = ID('helpcontainer'); // define reference to helptext div element
+		        const helpTextElem = ID('helptext'); // define reference to helptext paragraph element
+		        const helpText = (ioBool) ? infoRepository[buttonType] : ''; // define paragraph content variable
+		        if (ioBool) { // if onmouseover was triggered
+		            helpTextElem.innerHTML = helpText;
 		            setTimeout(() => {
-		                if (parseFloat(getComputedStyle(ht).height) < parseFloat(getComputedStyle(toh).height)) // if helptext is greater than 115 in length
-		                    toh.style.animation = 'scroll 5s linear 1s infinite alternate'; // create scrolling animation
+		                if (parseFloat(getComputedStyle(helpContainer).height) < parseFloat(getComputedStyle(helpTextElem).height))
+		                    helpTextElem.style.animation = 'scroll 4s linear 1s infinite alternate'; // create scrolling animation
 		            }, 1);
-		            ht.classList.toggle('magic', false);
+		            show(helpContainer);
 		        }
-		        else if (ioBool == 'off') { // if onmouseout was triggered
-		            toh.innerHTML = ''; // set helptext to empty string
-		            toh.style.animation = ''; // end animation
-		            ht.classList.toggle('magic', true);
-		        }
-		    }
-		}
-		function helptext1(ioBool, buttonType) {
-		    if (ID('togglehelpT').checked == true) { // if enable helptext is checked
-		        const infoRepository = {
-		            'returnTools': 'Use this button to return to the main page.',
-		            'featurelookup': 'Use this button to search for a feature, feat, magic item, or spell.',
-		            'calculator': 'Use this button to manually calculate coin totals.',
-		            'distributor': 'Use this button to redistribute your coin totals.',
-		            'formulas': 'Use this button to open up a library that contains a series of formulas for the different class features.',
-		            'sethitdice': 'Use this button to override your current amount of hit dice.',
-		            'equipment': 'Use this button to copy a piece of equipment to the sheet.'
-		        };
-		        const ht = ID('helptextT'), // define reference to helptext div element
-		        toh = ID('textofhelpT'); // define reference to helptext paragraph element
-		        const textOfHelp = (ioBool == 'on') ? infoRepository[buttonType] : ''; // define paragraph content variable
-		        if (ioBool == 'on') { // if onmouseover was triggered
-		            toh.innerHTML = textOfHelp; // set helptext to selected button helptext
+		        else { // if onmouseout was triggered
 		            setTimeout(() => {
-		                if (parseFloat(getComputedStyle(ht).height) < parseFloat(getComputedStyle(toh).height)) { // if helptext is greater than 115 in length
-		                    toh.style.animation = 'scroll 5s linear 1s infinite alternate'; // create scrolling animation
+		                if (!helpTextHovering) {
+		                    helpTextElem.innerHTML = helpText;
+		                    helpTextElem.style.animation = ''; // end animation
+		                    hide(helpContainer);
 		                }
-		            }, 1);
-		            ht.classList.toggle('magic', false);
-		        }
-		        else if (ioBool == 'off') { // if onmouseout was triggered
-		            toh.innerHTML = ''; // set helptext to empty string
-		            toh.style.animation = ''; // end animation
-		            ht.classList.toggle('magic', true);
+		            }, 100);
 		        }
 		    }
 		}
@@ -1146,13 +1009,13 @@
 		    });
 		}
 		async function rollSomeDice() {
-		    loader.classList.remove('magic'); // set loader to visible while processing
+		    show(loader); // set loader to visible while processing
 		    await runGoogle('openHTML', ['diceroller']); // run dice roller code
 		    getCurrent(); // run getCurrent
-		    loader.classList.add('magic'); // set loader to hidden as processing ends
+		    hide(loader); // set loader to hidden as processing ends
 		}
 		function addlevel() {
-		    loader.classList.remove('magic');
+		    show(loader);
 		    runGoogle("openHTML", ['level']);
 		}
 		async function getSpells(bool = false) {
@@ -1184,34 +1047,34 @@
 		            }
 		        }
 		    }
-		    ID('spellcast').readonly = false;
-		    if (ID('spellcast').classList.contains('grayout'))
-		        ID('spellcast').classList.remove('grayout');
-		    loader.classList.add('magic');
+		    const spellcast = ID('spellcast');
+		    spellcast.readonly = false;
+		    spellcast.classList.toggle('grayout', false);
+		    hide(loader);
 		    spellsIsRunning = false;
 		}
 		function openSpells(n) {
 		    if (!n.readonly) {
-		        ID("main").classList.add('magic');
-		        ID("spells").classList.remove('magic');
+		        hide(ID("main"));
+		        show(ID("spells"));
 		    }
 		    else
 		        alert("Please allow the code a few seconds to process before trying again.");
 		}
 		function closeSpells() {
-		    ID("spells").classList.add('magic');
-		    ID("main").classList.remove('magic');
+		    hide(ID("spells"));
+		    show(ID("main"));
 		    ID('spellcast').readonly = true;
 		    ID('spellcast').classList.add('grayout');
 		    getSpells();
 		}
 		function openTools() {
-		    ID("main").classList.add('magic');
-		    ID("tools").classList.remove('magic');
+		    hide(ID("main"));
+		    show(ID("tools"));
 		}
 		function closeTools() {
-		    ID("tools").classList.add('magic');
-		    ID("main").classList.remove('magic');
+		    hide(ID("tools"));
+		    show(ID("main"));
 		}
 		function useSlot(n, type) {
 		    const current = ID(`cur${type}${n}`);
@@ -1228,26 +1091,34 @@
 		    }
 		}
 		function setSlots() {
-		    const obj = {
-		        sc1: { dis: (Number(ID('cursc1').value) > 0 || ID('cursc1').dataset.ignore == "false") ? true : false, val: Number(ID('cursc1').value) },
-		        sc2: { dis: (Number(ID('cursc2').value) > 0 || ID('cursc2').dataset.ignore == "false") ? true : false, val: Number(ID('cursc2').value) },
-		        sc3: { dis: (Number(ID('cursc3').value) > 0 || ID('cursc3').dataset.ignore == "false") ? true : false, val: Number(ID('cursc3').value) },
-		        sc4: { dis: (Number(ID('cursc4').value) > 0 || ID('cursc4').dataset.ignore == "false") ? true : false, val: Number(ID('cursc4').value) },
-		        sc5: { dis: (Number(ID('cursc5').value) > 0 || ID('cursc5').dataset.ignore == "false") ? true : false, val: Number(ID('cursc5').value) },
-		        sc6: { dis: (Number(ID('cursc6').value) > 0 || ID('cursc6').dataset.ignore == "false") ? true : false, val: Number(ID('cursc6').value) },
-		        sc7: { dis: (Number(ID('cursc7').value) > 0 || ID('cursc7').dataset.ignore == "false") ? true : false, val: Number(ID('cursc7').value) },
-		        sc8: { dis: (Number(ID('cursc8').value) > 0 || ID('cursc8').dataset.ignore == "false") ? true : false, val: Number(ID('cursc8').value) },
-		        sc9: { dis: (Number(ID('cursc9').value) > 0 || ID('cursc9').dataset.ignore == "false") ? true : false, val: Number(ID('cursc9').value) },
-		        pm1: { dis: (Number(ID('curpm1').value) > 0 || ID('curpm1').dataset.ignore == "false") ? true : false, val: Number(ID('curpm1').value) },
-		        pm2: { dis: (Number(ID('curpm2').value) > 0 || ID('curpm2').dataset.ignore == "false") ? true : false, val: Number(ID('curpm2').value) },
-		        pm3: { dis: (Number(ID('curpm3').value) > 0 || ID('curpm3').dataset.ignore == "false") ? true : false, val: Number(ID('curpm3').value) },
-		        pm4: { dis: (Number(ID('curpm4').value) > 0 || ID('curpm4').dataset.ignore == "false") ? true : false, val: Number(ID('curpm4').value) },
-		        pm5: { dis: (Number(ID('curpm5').value) > 0 || ID('curpm5').dataset.ignore == "false") ? true : false, val: Number(ID('curpm5').value) },
-		        pm6: { dis: (Number(ID('curpm6').value) > 0 || ID('curpm6').dataset.ignore == "false") ? true : false, val: Number(ID('curpm6').value) },
-		        pm7: { dis: (Number(ID('curpm7').value) > 0 || ID('curpm7').dataset.ignore == "false") ? true : false, val: Number(ID('curpm7').value) },
-		        pm8: { dis: (Number(ID('curpm8').value) > 0 || ID('curpm8').dataset.ignore == "false") ? true : false, val: Number(ID('curpm8').value) },
-		        pm9: { dis: (Number(ID('curpm9').value) > 0 || ID('curpm9').dataset.ignore == "false") ? true : false, val: Number(ID('curpm9').value) }
-		    };
+		    const obj = {};
+		    for (let i = 1; i <= 9; i++)
+		        for (const slot of ["sc", "pm"]) {
+		            const input = ID(`cur${slot}${i}`);
+		            const val = Number(input.value);
+		            const ign = input.dataset.ignore == "false";
+		            obj[`${slot}${i}`] = { dis: val > 0 || ign, val };
+		        }
+		    // const obj = {
+		    // 	sc1: { dis: (Number(ID<Input>('cursc1').value) > 0 || ID<Input>('cursc1').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc1').value) },
+		    // 	sc2: { dis: (Number(ID<Input>('cursc2').value) > 0 || ID<Input>('cursc2').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc2').value) },
+		    // 	sc3: { dis: (Number(ID<Input>('cursc3').value) > 0 || ID<Input>('cursc3').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc3').value) },
+		    // 	sc4: { dis: (Number(ID<Input>('cursc4').value) > 0 || ID<Input>('cursc4').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc4').value) },
+		    // 	sc5: { dis: (Number(ID<Input>('cursc5').value) > 0 || ID<Input>('cursc5').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc5').value) },
+		    // 	sc6: { dis: (Number(ID<Input>('cursc6').value) > 0 || ID<Input>('cursc6').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc6').value) },
+		    // 	sc7: { dis: (Number(ID<Input>('cursc7').value) > 0 || ID<Input>('cursc7').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc7').value) },
+		    // 	sc8: { dis: (Number(ID<Input>('cursc8').value) > 0 || ID<Input>('cursc8').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc8').value) },
+		    // 	sc9: { dis: (Number(ID<Input>('cursc9').value) > 0 || ID<Input>('cursc9').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc9').value) },
+		    // 	pm1: { dis: (Number(ID<Input>('curpm1').value) > 0 || ID<Input>('curpm1').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm1').value) },
+		    // 	pm2: { dis: (Number(ID<Input>('curpm2').value) > 0 || ID<Input>('curpm2').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm2').value) },
+		    // 	pm3: { dis: (Number(ID<Input>('curpm3').value) > 0 || ID<Input>('curpm3').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm3').value) },
+		    // 	pm4: { dis: (Number(ID<Input>('curpm4').value) > 0 || ID<Input>('curpm4').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm4').value) },
+		    // 	pm5: { dis: (Number(ID<Input>('curpm5').value) > 0 || ID<Input>('curpm5').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm5').value) },
+		    // 	pm6: { dis: (Number(ID<Input>('curpm6').value) > 0 || ID<Input>('curpm6').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm6').value) },
+		    // 	pm7: { dis: (Number(ID<Input>('curpm7').value) > 0 || ID<Input>('curpm7').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm7').value) },
+		    // 	pm8: { dis: (Number(ID<Input>('curpm8').value) > 0 || ID<Input>('curpm8').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm8').value) },
+		    // 	pm9: { dis: (Number(ID<Input>('curpm9').value) > 0 || ID<Input>('curpm9').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm9').value) }
+		    // }
 		    runGoogle('setSpellSlots', [obj]);
 		}
 		function colorArray(percent) {
@@ -1299,46 +1170,13 @@
 		    }
 		    HP.limit = res;
 		}
-		function svgReturn() {
-		    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 290 70">
-				<style>
-					path { fill: none; stroke: black; }
-
-					/* @media (prefers-color-scheme: light) {
-					path { stroke: black; }
-					}
-
-					@media (prefers-color-scheme: dark) {
-					path { stroke: white; }
-					} */
-				</style>
-				<g id="paths">
-					<path d="
-					M145,15
-					l20,-10
-					Q240,32.5 280,35
-				" />
-					<path d="
-					M155,5
-					Q192.5,30 230,5
-					q20,10 20,30
-				" />
-					<path d="
-					M145,5
-					Q192.5,35 240,5
-					q20,10 20,30
-				" />
-					<path d="
-					M135,5
-					Q192.5,40 250,5
-					q20,10 20,30
-				" />
-				</g>
-				<use href="#paths" transform="scale(-1,1)" transform-origin="145 35" />
-				<use href="#paths" transform="scale(1,-1)" transform-origin="145 35" />
-				<use href="#paths" transform="scale(-1,-1)" transform-origin="145 35" />
-			</svg>
-			`;
+		function reload() {
+		    show(loader); // shows loader
+		    runGoogle("sideBarLoader"); // runs the sidebar loader
+		}
+		function __devShowSpells() {
+		    qry("div#main").classList.toggle("magic", true);
+		    qry("div#spells").classList.toggle("magic", false);
 		}
 	</script>
 </html>

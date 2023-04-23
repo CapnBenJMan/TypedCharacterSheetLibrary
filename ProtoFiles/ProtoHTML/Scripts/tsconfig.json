@@ -6,7 +6,8 @@
 			"DOM",
 			"DOM.Iterable"
 		],
-		"strictNullChecks": true
+		"strictNullChecks": true,
+		"module": "nodeNext"
 	},
 	"include": [
 		"TS/*.ts"

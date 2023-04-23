@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 		<td>${cur.Cost}</td>
 		<td>${("Weight" in cur) ? cur.Weight : '-'}</td>
 	</tr>`, ih); // reduce through eqNames and generate tr elements based on equipment items
-    ID('loader').classList.add('magic'); // hide loader
+    hide(ID('loader')); // hide loader
     addRowHandlers(); // run addRowHandlers
 });
 function searcher() {
@@ -59,7 +59,7 @@ function addRowHandlers() {
 }
 async function apply() {
     if (Array.from(qryA('tr[data-sel="1"]')).length == 1) { // if there is only 1 selected row
-        ID('loader').classList.remove('magic'); // show loader
+        show(ID('loader')); // show loader
         ID('apply').disabled = true; // disable the apply button
         const selRow = qry('tr[data-sel="1"]'); // get selected row
         const y = { "Category": String(selRow.dataset.category).replace('_', ' '), "Name": qry('*:nth-child(2)', selRow).innerHTML };
@@ -78,7 +78,7 @@ async function apply() {
             alert(`Error: Something went wrong that wasn't accounted for.`); // alert user of unaccounted for error
             console.error(rtrnd); // log returned value as an error
         }
-        ID('loader').classList.add('magic'); // hide loader
+        hide(ID('loader')); // hide loader
         ID('apply').disabled = false; // enable apply button
     }
 }

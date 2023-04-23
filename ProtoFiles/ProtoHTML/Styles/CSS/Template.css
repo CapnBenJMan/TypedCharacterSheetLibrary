@@ -4,7 +4,6 @@ body {
 }
 
 .content {
-	font-family: Georgia;
 	font-size: 16px;
 	background-color: white;
 	color: black;
@@ -15,7 +14,6 @@ input,
 select,
 button,
 label {
-	font-family: inherit;
 	font-size: inherit;
 	vertical-align: middle;
 }

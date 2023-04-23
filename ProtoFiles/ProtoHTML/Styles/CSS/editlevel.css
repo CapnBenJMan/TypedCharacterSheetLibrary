@@ -3,7 +3,6 @@
 	padding: 15px;
 	height: 200px;
 	width: 300px;
-	font-family: Georgia;
 	color: black;
 	font-size: 15px;
 	position: absolute;
@@ -21,7 +20,6 @@ input,
 select,
 button {
 	border-radius: 1em;
-	font-family: Georgia;
 	font-size: 15px;
 }
 

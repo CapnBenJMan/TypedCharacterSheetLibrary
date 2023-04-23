@@ -1,7 +1,6 @@
 .content {
 	text-align: center;
 	vertical-align: middle;
-	font-family: Georgia;
 	background-color: white;
 	color: black;
 	width: 450px;
@@ -10,7 +9,6 @@
 input,
 select,
 label {
-	font-family: inherit;
 	font-size: inherit;
 	vertical-align: middle;
 }

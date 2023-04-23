@@ -1,10 +1,14 @@
 {
 	"name": "typedcsc",
 	"version": "3.7.0",
+	"latestLibraryVersion": 38,
 	"description": "",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"tsp": "cd ProtoFiles/Exec/ && transpile.bat"
+		"transpile": "cd ProtoFiles/Exec/ && transpile.bat",
+		"typeify": "cd ProtoFiles/Exec/ && typeify.bat",
+		"ver:major": "cd ProtoFiles/Exec/ && ",
+		"ver:minor": "cd ProtoFiles/Exec/ && ",
+		"ver:patch": "cd ProtoFiles/Exec/ && "
 	},
 	"repository": {
 		"type": "git",
@@ -32,6 +36,6 @@
 		"postcss-nested": "^6.0.1",
 		"postcss-preset-env": "^8.3.2",
 		"prettier": "^2.8.7",
-		"query-shorthand": "^1.0.0"
+		"query-shorthand": "^1.0.4"
 	}
 }

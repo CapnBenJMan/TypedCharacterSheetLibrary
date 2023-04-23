@@ -1,4 +1,4 @@
-const CoinSet = coinClass(); // define reference to coin class
+// const CoinSet = coinClass() // define reference to coin class
 function accounting(e) {
     const accounting = e.source.getSheetByName('Accounting'); // define reference to accounting sheet
     const row = e.range.getRow(); // edited row number

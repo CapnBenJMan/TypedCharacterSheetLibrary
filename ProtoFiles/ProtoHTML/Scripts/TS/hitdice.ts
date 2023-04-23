@@ -1,9 +1,9 @@
-import { runGoogle, runGoogleWithReturn, ID, qry, qryA, capitalizer } from "../../../Master/JS_Template"
+import { runGoogle, runGoogleWithReturn, ID, qry, qryA, capitalizer, show, hide } from "../../../Master/JS_Template"
 import type { Button, Div, Input, Select } from "../../../Master/JS_Template"
 
 qryA('input').forEach(x => x.autocomplete = 'off') // disable autocomplete for each input element
 document.addEventListener("DOMContentLoaded", async () => { // on DOM Content Loaded
-	ID('loader').classList.remove('magic') // show loader
+	show(ID('loader')) // show loader
 
 	const values = await runGoogleWithReturn("getHitDice") // get hit dice values
 	{
@@ -15,11 +15,11 @@ document.addEventListener("DOMContentLoaded", async () => { // on DOM Content Lo
 			expended.value = values[`expendedd${n}`] // set the value for expended input
 		})
 	}
-	ID('loader').classList.add('magic') // hide loader
+	hide(ID('loader')) // hide loader
 })
 
 async function update() {
-	ID('loader').classList.remove('magic') // show loader
+	show(ID('loader')) // show loader
 	let parseVal = (id: string) => Number(ID<Input>(id).value)
 	await runGoogle("updateHitDice", [parseVal('expendedd6'), parseVal('expendedd8'), parseVal('expendedd10'), parseVal('expendedd12')])
 	// ^update hit dice with inputted values

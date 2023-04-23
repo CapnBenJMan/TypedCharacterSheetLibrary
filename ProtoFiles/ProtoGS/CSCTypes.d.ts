@@ -3,6 +3,8 @@
 declare namespace CharacterSheetCode {
 	// 00-Main.d.ts
 
+	export const libraryVersion = "v3.7.0"
+	export const deploymentVersion = 38
 	export function version(i: GoogleAppsScript.Events.SheetsOnOpen): void
 	export function trigger(
 		e: GoogleAppsScript.Events.SheetsOnEdit,
@@ -15,134 +17,6 @@ declare namespace CharacterSheetCode {
 
 	// 01-Accounting.d.ts
 
-	export const CoinSet: {
-		new (
-			platinum?: number,
-			gold?: number,
-			silver?: number,
-			copper?: number,
-			platChange?: number,
-			goldChange?: number,
-			silvChange?: number,
-			coppChange?: number
-		): {
-			plat: Coin
-			gold: Coin
-			silv: Coin
-			copp: Coin
-			name: string
-			setRaw(coin: ShortCoin, val: number): any
-			setPoints(coin: ShortCoin, val: number): any
-			setChange(arr?: any[]): any
-			getRaw(container?: any[]): number[]
-			getRaw(container: {}): {
-				plat: number
-				gold: number
-				silv: number
-				copp: number
-			}
-			getPoints(): number
-			getPoints(container: any[]): number[]
-			getPoints(container: {}): {
-				plat: number
-				gold: number
-				silv: number
-				copp: number
-			}
-			getChange(container?: any[]): number[]
-			getChange(container: {}): {
-				plat: number
-				gold: number
-				silv: number
-				copp: number
-			}
-			copy(): any
-			logVals(): void
-			applyChange(): any
-			distribute(
-				coppLMin?: number,
-				silvLMin?: number,
-				goldLMin?: number,
-				platLMin?: number
-			): any
-			finalize(): {
-				plat: number
-				gold: number
-				silv: number
-				copp: number
-			}
-			getFormattedPoints(): string
-			readonly coins: Coin[]
-			readonly points: number
-		}
-		fromRaw(
-			container:
-				| any[]
-				| {
-						plat: any
-						gold: any
-						silv: any
-						copp: any
-				  },
-			changer?:
-				| any[]
-				| {
-						plat: any
-						gold: any
-						silv: any
-						copp: any
-				  }
-		): {
-			plat: Coin
-			gold: Coin
-			silv: Coin
-			copp: Coin
-			name: string
-			setRaw(coin: ShortCoin, val: number): any
-			setPoints(coin: ShortCoin, val: number): any
-			setChange(arr?: any[]): any
-			getRaw(container?: any[]): number[]
-			getRaw(container: {}): {
-				plat: number
-				gold: number
-				silv: number
-				copp: number
-			}
-			getPoints(): number
-			getPoints(container: any[]): number[]
-			getPoints(container: {}): {
-				plat: number
-				gold: number
-				silv: number
-				copp: number
-			}
-			getChange(container?: any[]): number[]
-			getChange(container: {}): {
-				plat: number
-				gold: number
-				silv: number
-				copp: number
-			}
-			copy(): any
-			logVals(): void
-			applyChange(): any
-			distribute(
-				coppLMin?: number,
-				silvLMin?: number,
-				goldLMin?: number,
-				platLMin?: number
-			): any
-			finalize(): {
-				plat: number
-				gold: number
-				silv: number
-				copp: number
-			}
-			getFormattedPoints(): string
-			readonly coins: Coin[]
-			readonly points: number
-		}
-	}
 	export function accounting(e: GoogleAppsScript.Events.SheetsOnEdit): void
 
 	// 02-Accounting_Functions.d.ts
@@ -164,66 +38,39 @@ declare namespace CharacterSheetCode {
 		set change(c: number)
 		get mod(): 1 | 10 | 1000 | 100
 	}
-	export function coinClass(): {
-		new (
+	export class CoinSet {
+		plat: Coin
+		gold: Coin
+		silv: Coin
+		copp: Coin
+		name: string
+		constructor(
 			platinum?: number,
 			gold?: number,
 			silver?: number,
-			copper?: number,
+			copper?: number, // constructor: coin values and change values can be
 			platChange?: number,
 			goldChange?: number,
 			silvChange?: number,
 			coppChange?: number
-		): {
-			plat: Coin
-			gold: Coin
-			silv: Coin
-			copp: Coin
-			name: string
-			setRaw(coin: ShortCoin, val: number): any
-			setPoints(coin: ShortCoin, val: number): any
-			setChange(arr?: any[]): any
-			getRaw(container?: any[]): number[]
-			getRaw(container: {}): {
-				plat: number
-				gold: number
-				silv: number
-				copp: number
-			}
-			getPoints(): number
-			getPoints(container: any[]): number[]
-			getPoints(container: {}): {
-				plat: number
-				gold: number
-				silv: number
-				copp: number
-			}
-			getChange(container?: any[]): number[]
-			getChange(container: {}): {
-				plat: number
-				gold: number
-				silv: number
-				copp: number
-			}
-			copy(): any
-			logVals(): void
-			applyChange(): any
-			distribute(
-				coppLMin?: number,
-				silvLMin?: number,
-				goldLMin?: number,
-				platLMin?: number
-			): any
-			finalize(): {
-				plat: number
-				gold: number
-				silv: number
-				copp: number
-			}
-			getFormattedPoints(): string
-			readonly coins: Coin[]
-			readonly points: number
+		)
+		setRaw(coin: ShortCoin, val: number): this
+		setPoints(coin: ShortCoin, val: number): this
+		setChange(arr?: any[]): this
+		getRaw(container?: any[]): number[]
+		getRaw(container: {}): {
+			[K in ShortCoin]: number
 		}
+		getPoints(): number
+		getPoints(container: any[]): number[]
+		getPoints(container: {}): {
+			[K in ShortCoin]: number
+		}
+		getChange(container?: any[]): number[]
+		getChange(container: {}): {
+			[K in ShortCoin]: number
+		}
+		copy(): CoinSet
 		/**
 		 * Returns a new CoinSet using the values from the container.
 		 * If the container or changer is an array, it must be organized (from lowest index to highest)
@@ -233,73 +80,35 @@ declare namespace CharacterSheetCode {
 		 * The parameters should be able to be coerced into numbers without throwing an error
 		 * (ex. "20" and 20 are both acceptable). Otherwise, all undefined values are set to 0.
 		 */
-		fromRaw(
+		static fromRaw(
 			container:
-				| any[]
 				| {
-						plat: any
-						gold: any
-						silv: any
-						copp: any
-				  },
-			changer?:
-				| any[]
-				| {
-						plat: any
-						gold: any
-						silv: any
-						copp: any
+						[K in ShortCoin]: any
 				  }
-		): {
-			plat: Coin
-			gold: Coin
-			silv: Coin
-			copp: Coin
-			name: string
-			setRaw(coin: ShortCoin, val: number): any
-			setPoints(coin: ShortCoin, val: number): any
-			setChange(arr?: any[]): any
-			getRaw(container?: any[]): number[]
-			getRaw(container: {}): {
-				plat: number
-				gold: number
-				silv: number
-				copp: number
-			}
-			getPoints(): number
-			getPoints(container: any[]): number[]
-			getPoints(container: {}): {
-				plat: number
-				gold: number
-				silv: number
-				copp: number
-			}
-			getChange(container?: any[]): number[]
-			getChange(container: {}): {
-				plat: number
-				gold: number
-				silv: number
-				copp: number
-			}
-			copy(): any
-			logVals(): void
-			applyChange(): any
-			distribute(
-				coppLMin?: number,
-				silvLMin?: number,
-				goldLMin?: number,
-				platLMin?: number
-			): any
-			finalize(): {
-				plat: number
-				gold: number
-				silv: number
-				copp: number
-			}
-			getFormattedPoints(): string
-			readonly coins: Coin[]
-			readonly points: number
+				| any[],
+			changer?:
+				| {
+						[K in ShortCoin]: any
+				  }
+				| any[]
+		): CoinSet
+		logVals(): void
+		applyChange(): this
+		distribute(
+			coppLMin?: number,
+			silvLMin?: number,
+			goldLMin?: number,
+			platLMin?: number
+		): this
+		finalize(): {
+			plat: number
+			gold: number
+			silv: number
+			copp: number
 		}
+		getFormattedPoints(): string
+		get coins(): Coin[]
+		get points(): number
 	}
 	export function getCurrency(): number[]
 	export function runManualDistributor(arr: number[]): void

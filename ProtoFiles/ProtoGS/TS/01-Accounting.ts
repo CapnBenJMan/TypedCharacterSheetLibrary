@@ -1,4 +1,4 @@
-const CoinSet = coinClass() // define reference to coin class
+// const CoinSet = coinClass() // define reference to coin class
 
 function accounting(e: GoogleAppsScript.Events.SheetsOnEdit) {
 	const accounting = e.source.getSheetByName('Accounting')! // define reference to accounting sheet

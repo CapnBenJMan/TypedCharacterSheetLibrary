@@ -1,34 +1,68 @@
-import { runGoogle, runGoogleWithReturn, ID, qry, qryA, capitalizer } from "../../../Master/JS_Template"
+import { runGoogle, runGoogleWithReturn, ID, qry, qryA, capitalizer, show, hide } from "../../../Master/JS_Template"
 import type { Button, Div, Input, Select } from "../../../Master/JS_Template"
 
-const svg = svgReturn()
-
-qryA('input').forEach(x => x.autocomplete = 'off')
 const loader = ID('loader') // define loader element
 var maximum = 0
 const HP = { cur: 0, temp: 0, bonus: 0, limit: 0, get max(): number { return maximum + this.temp + this.bonus } }
 var spellsIsRunning = false
 
-function reload() { // reload button code
-	loader.classList.remove('magic') // shows loader
-	runGoogle("sideBarLoader") // runs the sidebar loader
-}
 document.addEventListener('DOMContentLoaded', () => { // when the sidebar finishes loading
 	getCurrent()
 	setTimeout(() => {
-		if (loader.style.visibility == 'visible') ID('errormessage').classList.remove('magic')
-	}, 20000)
+		if (loader.style.visibility == 'visible') show(ID('errormessage'))
+	}, 20_000)
 })
-ID('errormessage').onclick = () => ID('errormessage').classList.add('magic')
+
+{
+	const lstSpellRow = qry("#spells div.spellrow:last-child")
+	const colors = ["#0f0", "#4f0", "#8f0", "#bf0", "#ff0", "#fb0", "#f80", "#f40", "#f00"]
+	for (let i = 1; i <= 9; i++) {
+		const color = colors[i - 1]
+		lstSpellRow.insertAdjacentHTML("beforebegin",
+			`<!-- Level ${i} Slots -->
+	<button id="usesc${i}" class="dbutton" style="--__bg: ${color};"
+		onclick="useSlot(${i}, 'sc')">Use</button>
+	<input id="cursc${i}" class="slotnumber numinput" type="number" min="0" value="0">
+	<span>${i}</span>
+	<input id="curpm${i}" class="slotnumber numinput" type="number" min="0" value="0">
+	<button id="usepm${i}" class="dbutton" style="--__bg: ${color};"
+		onclick="useSlot(${i}, 'pm')">Use</button>`)
+
+	}
+}
+
+{
+	const toggleDesc = qryA("div#helper *")
+	const tip = qry("div#tip")
+	toggleDesc.forEach((toggle: HTMLElement) => {
+		toggle.onmouseover = () => {
+			show(tip)
+			hide(qry("#helpcontainer"))
+		}
+		toggle.onmouseout = () => hide(tip)
+	})
+}
+
+ID('errormessage').onclick = () => hide(ID('errormessage'))
+qryA('input').forEach(x => x.autocomplete = 'off')
+qryA('button.dbutton').forEach(x => {
+	// for each button, create an onmouseover, onmouseout, onmousedown, and onmouseup listener
+	x.onmouseover = () => helptext(true, x.id) // onmouseover, turn on helptext
+	x.onmouseout = () => helptext(false) // onmouseout, turn off helptext
+	x.onmousedown = () => animationControl('pause') // onmousedown, pause scrolling helptext
+	x.onmouseup = () => animationControl('resume') // onmouseup, unpause scrolling helptext
+})
 
 async function getCurrent() { // get current values of health cells and update formatting to match
 	try {
-		loader.classList.remove('magic') // show loader while code is processing
-		ID<Input>('ip').style.backgroundImage = "url('data:image/svg+xml;base64," + window.btoa(svg) + "')"
-		qryA('button#SR, button#LR').forEach(x => x.style.width = `39%`)
-		qryA('button#\\+LR, button#-LR').forEach((x: Button) => x.style.width = `${(80 / 300) * 100}%`)
-		qryA('button#setSlots, button#spellReturn').forEach(x => x.style.width = `${(95 / 285) * 100}%`)
-		qryA('button#bonushp, button#bhplimit').forEach(x => x.style.width = `42%`)
+		show(loader) // show loader while code is processing
+		ID<Input>('ip').style.backgroundImage = "url('data:image/svg+xml;base64," +
+			window.btoa(ID("inputBG").outerHTML)
+			+ "')"
+		// qryA('button#SR, button#LR').forEach(x => x.style.width = `39%`)
+		// qryA('button#\\+LR, button#-LR').forEach((x: Button) => x.style.width = `${(80 / 300) * 100}%`)
+		// qryA('button#setSlots, button#spellReturn').forEach(x => x.style.width = `${(95 / 285) * 100}%`)
+		// qryA('button#bonushp, button#bhplimit').forEach(x => x.style.width = `42%`)
 		const returnVal = await runGoogleWithReturn('getCurrent') // run code to return values of health cells
 		HP.cur = Number(returnVal[0])
 		maximum = Number(returnVal[1])
@@ -37,36 +71,9 @@ async function getCurrent() { // get current values of health cells and update f
 		if (returnVal[3]) getSpells(returnVal[3]) // run get spells
 		ID('version').innerHTML = returnVal[5]
 		updateHealth()
-		if (!spellsIsRunning) loader.classList.add('magic')
+		if (!spellsIsRunning) hide(loader)
 	} catch (err) { console.error(err) }
 }
-
-const toggles = qryA('.content .toggle input[type=checkbox]')
-
-toggles.forEach(x => x.onchange = () => toggles.forEach(y => y.checked = x.checked))
-
-qryA('#main button.dbutton').forEach(x => {
-	// for each button, create an onmouseover, onmouseout, onmousedown, and onmouseup listener
-	x.onmouseover = () => helptext('on', x.id) // onmouseover, turn on helptext
-	x.onmouseout = () => helptext('off') // onmouseout, turn off helptext
-	x.onmousedown = () => animationControl('pause') // onmousedown, pause scrolling helptext
-	x.onmouseup = () => animationControl('resume') // onmouseup, unpause scrolling helptext
-})
-qryA('#tools button.dbutton').forEach(x => {
-	// for each button, create an onmouseover, onmouseout, onmousedown, and onmouseup listener
-	x.onmouseover = () => helptext1('on', x.id) // onmouseover, turn on helptext
-	x.onmouseout = () => helptext1('off') // onmouseout, turn off helptext
-	x.onmousedown = () => animationControl('pause') // onmousedown, pause scrolling helptext
-	x.onmouseup = () => animationControl('resume') // onmouseup, unpause scrolling helptext
-})
-qryA('.content div.toggle').forEach(toggle => {
-	var tip = toggle.children.namedItem('tip')! // define reference to tiptext
-	toggle.onmouseover = () => {
-		tip.innerHTML = `Tip: You can hold down a button to pause any scrolling 
-	      text for ease of reading. If you don't want the button to activate, make sure to release off of the button.` }
-	// onmouseover for toggle button, show tiptext
-	toggle.onmouseout = () => tip.innerHTML = ''  // onmouseout, hide tiptext
-})
 
 async function updateHealth() {
 	// This is where the references are defined
@@ -93,14 +100,15 @@ async function updateHealth() {
 	const max = `${maximum}${HP.bonus > 0 ? `+${HP.bonus}` : ''}${HP.temp > 0 ? `+${HP.temp}` : ''}`
 	healthText.innerHTML = `Current Health: ${cur}/${max}`
 	healthText.style.fontSize = '16px'
-	for (let i = 16; getComputedStyle(qry('.back')).height <= getComputedStyle(qry('.healthtext')).height; i -= 0.01) healthText.style.fontSize = `${i}px`
+	for (let i = 16; getComputedStyle(qry('.back')).height <= getComputedStyle(qry('.healthtext')).height; i -= 0.01)
+		healthText.style.fontSize = `${i}px`
 }
 
 async function health(button: string) {
 	const nue = [null, undefined, '']
 	// if input is not null, undefined, or an empty string and if input is greater than 0
 	if (nue.every(x => x != ID<Input>('ip').value) && Number(ID<Input>('ip').value) > 0) {
-		var input = parseInt(ID<Input>('ip').value)
+		const input = parseInt(ID<Input>('ip').value)
 		switch (button) {
 			case 'damage': {
 				var damage = input
@@ -154,103 +162,88 @@ async function health(button: string) {
 type Spellcast = Button & { readonly: boolean }
 
 async function longRest() {
-	loader.classList.remove('magic') // set loader to visible while processing
+	show(loader) // set loader to visible while processing
 	ID<Spellcast>('spellcast').readonly = true
 	await runGoogle('longRest') // run long rest code
 	getCurrent() // run getCurrent
 }
 
 async function shortRest() {
-	loader.classList.remove('magic') // set loader to visible while processing
+	show(loader) // set loader to visible while processing
 	ID<Spellcast>('spellcast').readonly = true
 	await runGoogle('shortRest') // run short rest code
 	getCurrent() // run getCurrent
 }
 
 async function addLongRest() {
-	loader.classList.remove('magic') // set loader to visible while processing
+	show(loader) // set loader to visible while processing
 	await runGoogle('addLongRest') // run add rest code
-	loader.classList.add('magic') // set loader to hidden as processing ends
+	hide(loader) // set loader to hidden as processing ends
 }
 
 async function removeLongRest() {
-	loader.classList.remove('magic') // set loader to visible while processing
+	show(loader) // set loader to visible while processing
 	await runGoogle('removeLongRest') // run remove rest code
-	loader.classList.add('magic') // set loader to hidden as processing ends
+	hide(loader) // set loader to hidden as processing ends
 }
 
-function helptext(ioBool: "off"): void
-function helptext(ioBool: "on", buttonType: string): void
-function helptext(ioBool: "on" | "off", buttonType?: string): void { // input/output Boolean, button id
-	if (ID<Input>('togglehelp').checked == true) { // if enable helptext is checked
-		const infoRepository = {
-			'dmg': 'Enter a value in the input box and press this button to have the program calculate damage.',
-			'heal': 'Enter a value in the input box and press this button to have the program calculate healing.',
-			'temphp': 'Enter a value in the input box and press this button to have the program add TempHP.<br>NOTE: TempHP is not cumulative, and this program will not add to the previous TempHP value.',
-			'reload': `Use this button to refresh the HTML content of this sidebar in case it isn't working properly.`,
-			'LR': 'Use this button when you take a long rest. It will automatically reset your health, tempHP, spells, and any other value set with the +Rest button.',
-			'SR': 'Use this button when you take a short rest. It will automatically ask you if you rolled hit dice, the total rolled, and reset any value set with the +Rest button.',
-			'+LR': 'Use this button to apply a rest rule to a cell or modify an existing rule.',
-			'-LR': 'Use this button to remove a rest rule from a cell.',
-			'diceroll': 'Use this button to perform a dice roll.',
-			'level': 'Use this button to add or edit a level in a class.',
-			'spellcast': 'Use this button to use your spell slots or edit how many you have of each.',
-			'btools': 'Use this button to access a couple of tools, such as a coin calculator or converter, a formula generator, and more.',
-			'bonushp': 'Enter a value in the input box and press this button to have the program calculate BonusHP for things like Wild Shape Health, Abjuration Wizard\'s Arcane Ward, Polymorph Health, etc.',
-			'bhplimit': 'Use this button to apply a limit to the amount of BonusHP the character can have. Enter 0 to remove the limit.'
-		}
-		const ht = ID('helptext'), // define reference to helptext div element
-			toh = ID('textofhelp') // define reference to helptext paragraph element
-		const textOfHelp = (ioBool == 'on') ? infoRepository[buttonType!] : '' // define paragraph content variable
-		if (ioBool == 'on') { // if onmouseover was triggered
-			toh.innerHTML = textOfHelp // set helptext to selected button helptext
+var helpTextHovering = false
+
+const infoRepository = {
+	'dmg': 'Enter a value in the input box and press this button to have the program calculate damage.',
+	'heal': 'Enter a value in the input box and press this button to have the program calculate healing.',
+	'temphp': 'Enter a value in the input box and press this button to have the program add TempHP.<br>NOTE: TempHP is not cumulative, and this program will not add to the previous TempHP value.',
+	'reload': `Use this button to refresh the HTML content of this sidebar in case it isn't working properly.`,
+	'LR': 'Use this button when you take a long rest. It will automatically reset your health, tempHP, spells, and any other value set with the +Rest button.',
+	'SR': 'Use this button when you take a short rest. It will automatically ask you if you rolled hit dice, the total rolled, and reset any value set with the +Rest button.',
+	'+LR': 'Use this button to apply a rest rule to a cell or modify an existing rule.',
+	'-LR': 'Use this button to remove a rest rule from a cell.',
+	'diceroll': 'Use this button to perform a dice roll.',
+	'level': 'Use this button to add or edit a level in a class.',
+	'spellcast': 'Use this button to use your spell slots or edit how many you have of each.',
+	'btools': 'Use this button to access a couple of tools, such as a coin calculator or converter, a formula generator, and more.',
+	'bonushp': 'Enter a value in the input box and press this button to have the program calculate BonusHP for things like Wild Shape Health, Abjuration Wizard\'s Arcane Ward, Polymorph Health, etc.',
+	'bhplimit': 'Use this button to apply a limit to the amount of BonusHP the character can have. Enter 0 to remove the limit.',
+	'returnTools': 'Use this button to return to the main page.',
+	'featurelookup': 'Use this button to search for a feature, feat, magic item, or spell.',
+	'calculator': 'Use this button to manually calculate coin totals.',
+	'distributor': 'Use this button to redistribute your coin totals.',
+	'formulas': 'Use this button to open up a library that contains a series of formulas for the different class features.',
+	'sethitdice': 'Use this button to override your current amount of hit dice.',
+	'equipment': 'Use this button to copy a piece of equipment to the sheet.'
+}
+
+function helptext(ioBool: false): void
+function helptext(ioBool: true, buttonType: string): void
+function helptext(ioBool: boolean, buttonType?: string): void { // input/output Boolean, button id
+	if (ID<Input>('togglehelp').checked) { // if enable helptext is checked
+		helpTextHovering = ioBool
+		
+		const helpContainer = ID('helpcontainer') // define reference to helptext div element
+		const helpTextElem = ID('helptext') // define reference to helptext paragraph element
+		const helpText = (ioBool) ? infoRepository[buttonType! as keyof typeof infoRepository] : '' // define paragraph content variable
+
+
+		if (ioBool) { // if onmouseover was triggered
+			helpTextElem.innerHTML = helpText
 			setTimeout(() => {
-				if (parseFloat(getComputedStyle(ht).height) < parseFloat(getComputedStyle(toh).height)) // if helptext is greater than 115 in length
-					toh.style.animation = 'scroll 5s linear 1s infinite alternate' // create scrolling animation
+				if (parseFloat(getComputedStyle(helpContainer).height) < parseFloat(getComputedStyle(helpTextElem).height))
+					helpTextElem.style.animation = 'scroll 4s linear 1s infinite alternate' // create scrolling animation
 			}, 1)
-			ht.classList.toggle('magic', false)
-		} else if (ioBool == 'off') { // if onmouseout was triggered
-			toh.innerHTML = '' // set helptext to empty string
-			toh.style.animation = '' // end animation
-			ht.classList.toggle('magic', true)
-		}
-	}
-}
-
-
-function helptext1(ioBool: "off"): void
-function helptext1(ioBool: "on", buttonType: string): void
-function helptext1(ioBool: "on" | "off", buttonType?: string): void { // input/output Boolean, button id
-	if (ID<Input>('togglehelpT').checked == true) { // if enable helptext is checked
-		const infoRepository = {
-			'returnTools': 'Use this button to return to the main page.',
-			'featurelookup': 'Use this button to search for a feature, feat, magic item, or spell.',
-			'calculator': 'Use this button to manually calculate coin totals.',
-			'distributor': 'Use this button to redistribute your coin totals.',
-			'formulas': 'Use this button to open up a library that contains a series of formulas for the different class features.',
-			'sethitdice': 'Use this button to override your current amount of hit dice.',
-			'equipment': 'Use this button to copy a piece of equipment to the sheet.'
-		}
-		const ht = ID('helptextT'), // define reference to helptext div element
-			toh = ID('textofhelpT') // define reference to helptext paragraph element
-		const textOfHelp = (ioBool == 'on') ? infoRepository[buttonType!] : '' // define paragraph content variable
-		if (ioBool == 'on') { // if onmouseover was triggered
-			toh.innerHTML = textOfHelp // set helptext to selected button helptext
+			show(helpContainer)
+		} else { // if onmouseout was triggered
 			setTimeout(() => {
-				if (parseFloat(getComputedStyle(ht).height) < parseFloat(getComputedStyle(toh).height)) { // if helptext is greater than 115 in length
-					toh.style.animation = 'scroll 5s linear 1s infinite alternate' // create scrolling animation
+				if (!helpTextHovering) {
+					helpTextElem.innerHTML = helpText
+					helpTextElem.style.animation = '' // end animation
+					hide(helpContainer)
 				}
-			}, 1)
-			ht.classList.toggle('magic', false)
-		} else if (ioBool == 'off') { // if onmouseout was triggered
-			toh.innerHTML = '' // set helptext to empty string
-			toh.style.animation = '' // end animation
-			ht.classList.toggle('magic', true)
+			}, 100)
 		}
 	}
 }
 
-function animationControl(a) {
+function animationControl(a: string) {
 	qryA('.content .toggle .helptext > p').forEach(help => {
 		switch (a) { // switch between onmousedown and onmouseup to pause and unpause scrolling animation
 			case 'pause':
@@ -264,14 +257,14 @@ function animationControl(a) {
 }
 
 async function rollSomeDice() {
-	loader.classList.remove('magic') // set loader to visible while processing
+	show(loader) // set loader to visible while processing
 	await runGoogle('openHTML', ['diceroller']) // run dice roller code
 	getCurrent() // run getCurrent
-	loader.classList.add('magic') // set loader to hidden as processing ends
+	hide(loader) // set loader to hidden as processing ends
 }
 
 function addlevel() {
-	loader.classList.remove('magic')
+	show(loader)
 	runGoogle("openHTML", ['level'])
 }
 
@@ -301,38 +294,39 @@ async function getSpells(bool = false) {
 			}
 		}
 	}
-	ID<Spellcast>('spellcast').readonly = false
-	if (ID<Spellcast>('spellcast').classList.contains('grayout')) ID<Spellcast>('spellcast').classList.remove('grayout')
-	loader.classList.add('magic')
+	const spellcast = ID<Spellcast>('spellcast')
+	spellcast.readonly = false
+	spellcast.classList.toggle('grayout', false)
+	hide(loader)
 	spellsIsRunning = false
 }
 
 function openSpells(n) {
 	if (!n.readonly) {
-		ID("main").classList.add('magic')
-		ID("spells").classList.remove('magic')
+		hide(ID("main"))
+		show(ID("spells"))
 	} else alert("Please allow the code a few seconds to process before trying again.")
 }
 
 function closeSpells() {
-	ID("spells").classList.add('magic')
-	ID("main").classList.remove('magic')
+	hide(ID("spells"))
+	show(ID("main"))
 	ID<Spellcast>('spellcast').readonly = true
 	ID<Spellcast>('spellcast').classList.add('grayout')
 	getSpells()
 }
 
 function openTools() {
-	ID("main").classList.add('magic')
-	ID("tools").classList.remove('magic')
+	hide(ID("main"))
+	show(ID("tools"))
 }
 
 function closeTools() {
-	ID("tools").classList.add('magic')
-	ID("main").classList.remove('magic')
+	hide(ID("tools"))
+	show(ID("main"))
 }
 
-function useSlot(n, type) {
+function useSlot(n: number, type: "sc" | "pm") {
 	const current = ID<Input>(`cur${type}${n}`)
 	ID<Button>(`use${type}${n}`).disabled = true
 	ID<Button>(`use${type}${n}`).classList.add('grayout')
@@ -348,26 +342,33 @@ function useSlot(n, type) {
 }
 
 function setSlots() {
-	const obj = {
-		sc1: { dis: (Number(ID<Input>('cursc1').value) > 0 || ID<Input>('cursc1').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc1').value) },
-		sc2: { dis: (Number(ID<Input>('cursc2').value) > 0 || ID<Input>('cursc2').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc2').value) },
-		sc3: { dis: (Number(ID<Input>('cursc3').value) > 0 || ID<Input>('cursc3').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc3').value) },
-		sc4: { dis: (Number(ID<Input>('cursc4').value) > 0 || ID<Input>('cursc4').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc4').value) },
-		sc5: { dis: (Number(ID<Input>('cursc5').value) > 0 || ID<Input>('cursc5').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc5').value) },
-		sc6: { dis: (Number(ID<Input>('cursc6').value) > 0 || ID<Input>('cursc6').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc6').value) },
-		sc7: { dis: (Number(ID<Input>('cursc7').value) > 0 || ID<Input>('cursc7').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc7').value) },
-		sc8: { dis: (Number(ID<Input>('cursc8').value) > 0 || ID<Input>('cursc8').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc8').value) },
-		sc9: { dis: (Number(ID<Input>('cursc9').value) > 0 || ID<Input>('cursc9').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc9').value) },
-		pm1: { dis: (Number(ID<Input>('curpm1').value) > 0 || ID<Input>('curpm1').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm1').value) },
-		pm2: { dis: (Number(ID<Input>('curpm2').value) > 0 || ID<Input>('curpm2').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm2').value) },
-		pm3: { dis: (Number(ID<Input>('curpm3').value) > 0 || ID<Input>('curpm3').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm3').value) },
-		pm4: { dis: (Number(ID<Input>('curpm4').value) > 0 || ID<Input>('curpm4').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm4').value) },
-		pm5: { dis: (Number(ID<Input>('curpm5').value) > 0 || ID<Input>('curpm5').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm5').value) },
-		pm6: { dis: (Number(ID<Input>('curpm6').value) > 0 || ID<Input>('curpm6').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm6').value) },
-		pm7: { dis: (Number(ID<Input>('curpm7').value) > 0 || ID<Input>('curpm7').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm7').value) },
-		pm8: { dis: (Number(ID<Input>('curpm8').value) > 0 || ID<Input>('curpm8').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm8').value) },
-		pm9: { dis: (Number(ID<Input>('curpm9').value) > 0 || ID<Input>('curpm9').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm9').value) }
+	const obj = {} as { [K in `${"pm" | "sc"}${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}`]: CharacterSheetCode.Slot }
+	for (let i = 1; i <= 9; i++) for (const slot of ["sc", "pm"] as const) {
+		const input = ID<Input>(`cur${slot}${i}`)
+		const val = Number(input.value)
+		const ign = input.dataset.ignore == "false"
+		obj[`${slot}${i}`] = { dis: val > 0 || ign, val }
 	}
+	// const obj = {
+	// 	sc1: { dis: (Number(ID<Input>('cursc1').value) > 0 || ID<Input>('cursc1').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc1').value) },
+	// 	sc2: { dis: (Number(ID<Input>('cursc2').value) > 0 || ID<Input>('cursc2').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc2').value) },
+	// 	sc3: { dis: (Number(ID<Input>('cursc3').value) > 0 || ID<Input>('cursc3').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc3').value) },
+	// 	sc4: { dis: (Number(ID<Input>('cursc4').value) > 0 || ID<Input>('cursc4').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc4').value) },
+	// 	sc5: { dis: (Number(ID<Input>('cursc5').value) > 0 || ID<Input>('cursc5').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc5').value) },
+	// 	sc6: { dis: (Number(ID<Input>('cursc6').value) > 0 || ID<Input>('cursc6').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc6').value) },
+	// 	sc7: { dis: (Number(ID<Input>('cursc7').value) > 0 || ID<Input>('cursc7').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc7').value) },
+	// 	sc8: { dis: (Number(ID<Input>('cursc8').value) > 0 || ID<Input>('cursc8').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc8').value) },
+	// 	sc9: { dis: (Number(ID<Input>('cursc9').value) > 0 || ID<Input>('cursc9').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('cursc9').value) },
+	// 	pm1: { dis: (Number(ID<Input>('curpm1').value) > 0 || ID<Input>('curpm1').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm1').value) },
+	// 	pm2: { dis: (Number(ID<Input>('curpm2').value) > 0 || ID<Input>('curpm2').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm2').value) },
+	// 	pm3: { dis: (Number(ID<Input>('curpm3').value) > 0 || ID<Input>('curpm3').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm3').value) },
+	// 	pm4: { dis: (Number(ID<Input>('curpm4').value) > 0 || ID<Input>('curpm4').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm4').value) },
+	// 	pm5: { dis: (Number(ID<Input>('curpm5').value) > 0 || ID<Input>('curpm5').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm5').value) },
+	// 	pm6: { dis: (Number(ID<Input>('curpm6').value) > 0 || ID<Input>('curpm6').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm6').value) },
+	// 	pm7: { dis: (Number(ID<Input>('curpm7').value) > 0 || ID<Input>('curpm7').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm7').value) },
+	// 	pm8: { dis: (Number(ID<Input>('curpm8').value) > 0 || ID<Input>('curpm8').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm8').value) },
+	// 	pm9: { dis: (Number(ID<Input>('curpm9').value) > 0 || ID<Input>('curpm9').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm9').value) }
+	// }
 	runGoogle('setSpellSlots', [obj])
 }
 
@@ -408,7 +409,7 @@ function colorArrayB(percent) {
 }
 
 function limit() {
-	var res
+	var res: number
 	while (true) {
 		res = Number(prompt('Enter the upper limit of your bonus health.\nEnter 0 to remove that limit\n(No Decimals)'))
 		if (Number.isNaN(res) || res.toString().includes('.')) alert('ERROR: You must enter an integer. Letters and decimals will be rejected.')
@@ -417,43 +418,12 @@ function limit() {
 	HP.limit = res
 }
 
-function svgReturn() {
-	return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 290 70">
-		<style>
-			path { fill: none; stroke: black; }
-	
-			/* @media (prefers-color-scheme: light) {
-			path { stroke: black; }
-			}
-	
-			@media (prefers-color-scheme: dark) {
-			path { stroke: white; }
-			} */
-		</style>
-		<g id="paths">
-			<path d="
-			M145,15
-			l20,-10
-			Q240,32.5 280,35
-		" />
-			<path d="
-			M155,5
-			Q192.5,30 230,5
-			q20,10 20,30
-		" />
-			<path d="
-			M145,5
-			Q192.5,35 240,5
-			q20,10 20,30
-		" />
-			<path d="
-			M135,5
-			Q192.5,40 250,5
-			q20,10 20,30
-		" />
-		</g>
-		<use href="#paths" transform="scale(-1,1)" transform-origin="145 35" />
-		<use href="#paths" transform="scale(1,-1)" transform-origin="145 35" />
-		<use href="#paths" transform="scale(-1,-1)" transform-origin="145 35" />
-	</svg>
-	`}
+function reload() { // reload button code
+	show(loader) // shows loader
+	runGoogle("sideBarLoader") // runs the sidebar loader
+}
+
+function __devShowSpells() {
+	qry("div#main").classList.toggle("magic", true)
+	qry("div#spells").classList.toggle("magic", false)
+}

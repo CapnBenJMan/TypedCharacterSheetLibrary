@@ -1,11 +1,11 @@
-import { runGoogle, runGoogleWithReturn, ID, qry, qryA, capitalizer } from "../../../Master/JS_Template"
+import { runGoogle, runGoogleWithReturn, ID, qry, qryA, capitalizer, show, hide } from "../../../Master/JS_Template"
 import type { Button, Div, Input, Select } from "../../../Master/JS_Template"
 
 const formattedIDs = [] as [string, string][]
 
 
 async function closer(evt: Button) {
-	ID('loader').classList.remove('magic') // show loader
+	show(ID('loader')) // show loader
 	if (evt.id == "addlevel") {
 		await runGoogle("levelBuffer", ['addlevel']) // add this to level buffer
 		google.script.host.close() // close the dialog
@@ -17,7 +17,7 @@ async function closer(evt: Button) {
 }
 qryA('input').forEach(x => x.autocomplete = 'off')
 document.addEventListener("DOMContentLoaded", async () => { // on DOM Content Loaded
-	ID('loader').classList.remove('magic') // show loader
+	show(ID('loader')) // show loader
 	const className = await runGoogleWithReturn("getLevels") // get Levels and their info
 
 	const formattedNames = className.arr.map(x => capitalizer(x).replace(/ /g, "")), // get formatted names
@@ -29,5 +29,5 @@ document.addEventListener("DOMContentLoaded", async () => { // on DOM Content Lo
 			(className.lvl < 20 ? `\n<button id="addlevel" class="option" onclick="closer(this);">Add New Class</button>` : '')
 	// ^generate html with reduce function while also creating formattedIDs array
 	ID('container').innerHTML = html // assign generated html to container innerHTML
-	ID('loader').classList.add('magic') // hide loader
+	hide(ID('loader')) // hide loader
 })

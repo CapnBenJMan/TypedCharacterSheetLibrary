@@ -6,17 +6,18 @@ The license in its entirety can be found at https://creativecommons.org/licenses
 This library and its source code can be found at https://github.com/CapnBenJMan/TypedCharacterSheetLibrary.
 */
 
+const libraryVersion = "v3.7.0"
+const deploymentVersion = 38
+
 function version(i: GoogleAppsScript.Events.SheetsOnOpen) {
 	//version update
-	const v1 = "v3.7.0" // sheet/code version
 	var rangeLHT = i.source.getRange("Legal and How-to!M4")
 	var rangeLBV = i.source.getRange('Legal and How-to!AC5')
-	const v2 = 38 // compatible library version. CHECK WHENEVER YOU UPDATE AND MAKE SURE THIS NUMBER IS 1 + WHATEVER THE LATEST VERSION WHEN YOU DEPLOY A NEW VERSION
-	if (rangeLHT.getValue() != v1) {
-		rangeLHT.setValue(v1) // set sheet version to current value if different
+	if (rangeLHT.getValue() != libraryVersion) {
+		rangeLHT.setValue(libraryVersion) // set sheet version to current value if different
 	}
-	if (rangeLBV.getValue() != v2) {
-		rangeLBV.setValue(v2) // set library version to current value if different
+	if (rangeLBV.getValue() != deploymentVersion) {
+		rangeLBV.setValue(deploymentVersion) // set library version to current value if different
 	}
 }
 

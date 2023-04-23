@@ -12,6 +12,10 @@
 	}
 }
 
+* {
+	font-family: Georgia;
+}
+
 .loader {
 	border: 5px solid #f3f3f3;
 	border-radius: 50%;
@@ -19,4 +23,9 @@
 	border-bottom: 5px solid #3498db;
 	position: absolute;
 	animation: spin 2s linear infinite;
+}
+
+button,
+input[type=checkbox] {
+	cursor: pointer;
 }

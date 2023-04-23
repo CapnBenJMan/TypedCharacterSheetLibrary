@@ -1,6 +1,6 @@
 const returns = runGoogleWithReturn('getHitDice');
 document.addEventListener("DOMContentLoaded", async () => {
-    ID('loader').classList.remove('magic'); // show loader
+    show(ID('loader')); // show loader
     const hitDice = await returns; // get the return value of the returns promise
     console.log(hitDice); // log hitDice
     {
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             qry(`#d${i}>td>input`).max = hitDice[`maxd${i}`]; // set max hit dice
         });
     }
-    ID('loader').classList.add('magic'); // hide loader
+    hide(ID('loader')); // hide loader
 });
 async function submission(e) {
     e.preventDefault();

@@ -19,6 +19,10 @@
 			}
 		}
 
+		* {
+			font-family: Georgia;
+		}
+
 		.loader {
 			border: 5px solid #f3f3f3;
 			border-radius: 50%;
@@ -28,13 +32,17 @@
 			animation: spin 2s linear infinite;
 		}
 
+		button,
+		input[type="checkbox"] {
+			cursor: pointer;
+		}
+
 		/* level.css */
 		.container {
 			background-color: white;
 			padding: 15px;
 			height: 200px;
 			width: 300px;
-			font-family: Georgia;
 			color: black;
 			font-size: 25px;
 			position: absolute;
@@ -46,7 +54,6 @@
 
 		.option {
 			border-radius: 1em;
-			font-family: Georgia;
 			font-size: 20px;
 		}
 
@@ -84,15 +91,15 @@
 		            google.script.run
 		                .withSuccessHandler(stuff => resolve(stuff))
 		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`);
-		        });
+		                .callLibraryFunction(`CharacterSheetCode.${f}`)
+		        })
 		    else if (arguments.length == 2)
 		        return new Promise((resolve, reject) => {
 		            google.script.run
 		                .withSuccessHandler(stuff => resolve(stuff))
 		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`, args);
-		        });
+		                .callLibraryFunction(`CharacterSheetCode.${f}`, args)
+		        })
 		}
 		/** Simply calls a function with no return value
 		 * @param {string} f The function name
@@ -104,35 +111,41 @@
 		            google.script.run
 		                .withSuccessHandler(() => resolve())
 		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`);
-		        });
+		                .callLibraryFunction(`CharacterSheetCode.${f}`)
+		        })
 		    else if (arguments.length == 2)
 		        return new Promise((resolve, reject) => {
 		            google.script.run
 		                .withSuccessHandler(() => resolve())
 		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`, args);
-		        });
+		                .callLibraryFunction(`CharacterSheetCode.${f}`, args)
+		        })
 		}
-		const ID = (n) => document.getElementById(n);
-		const qry = (n, el = document) => el.querySelector(n);
-		const qryA = (n, el = document) => el.querySelectorAll(n);
+		const ID = (n) => document.getElementById(n)
+		const qry = (n, el = document) => el.querySelector(n)
+		const qryA = (n, el = document) => el.querySelectorAll(n)
 		const capitalizer = (x) => {
 			if (x.includes(' ')) { // if v includes spaces
-				const arr = x.split(" "); // split v on spaces
+				const arr = x.split(" ") // split v on spaces
 				for (let j in arr) { // loop through arr
-					if (arr[j].includes('\n')) break; // break the loop if arr[j] includes \n
-					else arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1).toLowerCase();
+					if (arr[j].includes('\n')) break // break the loop if arr[j] includes \n
+					else arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1).toLowerCase()
 					// ^otherwise set arr[j] to itself capitalized
 				}
-				return arr.join(" "); // return the reformatted array joined by spaces
-			} else return x.charAt(0).toUpperCase() + x.slice(1).toLowerCase(); // otherwise, return capitalized word
+				return arr.join(" ") // return the reformatted array joined by spaces
+			} else return x.charAt(0).toUpperCase() + x.slice(1).toLowerCase() // otherwise, return capitalized word
+		}
+		function show(el) {
+			el.classList.remove("magic")
+		}
+		function hide(el) {
+			el.classList.add("magic")
 		}
 
 		// level.js
 		const formattedIDs = [];
 		async function closer(evt) {
-		    ID('loader').classList.remove('magic'); // show loader
+		    show(ID('loader')); // show loader
 		    if (evt.id == "addlevel") {
 		        await runGoogle("levelBuffer", ['addlevel']); // add this to level buffer
 		        google.script.host.close(); // close the dialog
@@ -145,7 +158,7 @@
 		}
 		qryA('input').forEach(x => x.autocomplete = 'off');
 		document.addEventListener("DOMContentLoaded", async () => {
-		    ID('loader').classList.remove('magic'); // show loader
+		    show(ID('loader')); // show loader
 		    const className = await runGoogleWithReturn("getLevels"); // get Levels and their info
 		    const formattedNames = className.arr.map(x => capitalizer(x).replace(/ /g, "")), // get formatted names
 		    html = formattedNames.reduce((tot, name, i) => {
@@ -156,7 +169,7 @@
 		        (className.lvl < 20 ? `\n<button id="addlevel" class="option" onclick="closer(this);">Add New Class</button>` : '');
 		    // ^generate html with reduce function while also creating formattedIDs array
 		    ID('container').innerHTML = html; // assign generated html to container innerHTML
-		    ID('loader').classList.add('magic'); // hide loader
+		    hide(ID('loader')); // hide loader
 		});
 	</script>
 </html>

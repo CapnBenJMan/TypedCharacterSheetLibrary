@@ -19,6 +19,10 @@
 			}
 		}
 
+		* {
+			font-family: Georgia;
+		}
+
 		.loader {
 			border: 5px solid #f3f3f3;
 			border-radius: 50%;
@@ -28,6 +32,11 @@
 			animation: spin 2s linear infinite;
 		}
 
+		button,
+		input[type="checkbox"] {
+			cursor: pointer;
+		}
+
 		/* equipment.css */
 		html,
 		body {
@@ -35,7 +44,6 @@
 		}
 
 		.content {
-			font-family: Georgia;
 			font-size: 16px;
 			background-color: white;
 			color: black;
@@ -47,7 +55,6 @@
 		select,
 		button,
 		label {
-			font-family: inherit;
 			font-size: inherit;
 			vertical-align: middle;
 		}
@@ -87,10 +94,6 @@
 		.searchcont {
 			display: flex;
 			justify-content: center;
-		}
-
-		table tr[\:has\(td\)]:nth-child(odd) {
-			background-color: #eee;
 		}
 
 		table tr:has(td):nth-child(odd) {
@@ -155,15 +158,15 @@
 		            google.script.run
 		                .withSuccessHandler(stuff => resolve(stuff))
 		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`);
-		        });
+		                .callLibraryFunction(`CharacterSheetCode.${f}`)
+		        })
 		    else if (arguments.length == 2)
 		        return new Promise((resolve, reject) => {
 		            google.script.run
 		                .withSuccessHandler(stuff => resolve(stuff))
 		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`, args);
-		        });
+		                .callLibraryFunction(`CharacterSheetCode.${f}`, args)
+		        })
 		}
 		/** Simply calls a function with no return value
 		 * @param {string} f The function name
@@ -175,29 +178,35 @@
 		            google.script.run
 		                .withSuccessHandler(() => resolve())
 		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`);
-		        });
+		                .callLibraryFunction(`CharacterSheetCode.${f}`)
+		        })
 		    else if (arguments.length == 2)
 		        return new Promise((resolve, reject) => {
 		            google.script.run
 		                .withSuccessHandler(() => resolve())
 		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`, args);
-		        });
+		                .callLibraryFunction(`CharacterSheetCode.${f}`, args)
+		        })
 		}
-		const ID = (n) => document.getElementById(n);
-		const qry = (n, el = document) => el.querySelector(n);
-		const qryA = (n, el = document) => el.querySelectorAll(n);
+		const ID = (n) => document.getElementById(n)
+		const qry = (n, el = document) => el.querySelector(n)
+		const qryA = (n, el = document) => el.querySelectorAll(n)
 		const capitalizer = (x) => {
 			if (x.includes(' ')) { // if v includes spaces
-				const arr = x.split(" "); // split v on spaces
+				const arr = x.split(" ") // split v on spaces
 				for (let j in arr) { // loop through arr
-					if (arr[j].includes('\n')) break; // break the loop if arr[j] includes \n
-					else arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1).toLowerCase();
+					if (arr[j].includes('\n')) break // break the loop if arr[j] includes \n
+					else arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1).toLowerCase()
 					// ^otherwise set arr[j] to itself capitalized
 				}
-				return arr.join(" "); // return the reformatted array joined by spaces
-			} else return x.charAt(0).toUpperCase() + x.slice(1).toLowerCase(); // otherwise, return capitalized word
+				return arr.join(" ") // return the reformatted array joined by spaces
+			} else return x.charAt(0).toUpperCase() + x.slice(1).toLowerCase() // otherwise, return capitalized word
+		}
+		function show(el) {
+			el.classList.remove("magic")
+		}
+		function hide(el) {
+			el.classList.add("magic")
 		}
 
 		// equipment.js
@@ -229,7 +238,7 @@
 				<td>${cur.Cost}</td>
 				<td>${("Weight" in cur) ? cur.Weight : '-'}</td>
 			</tr>`, ih); // reduce through eqNames and generate tr elements based on equipment items
-		    ID('loader').classList.add('magic'); // hide loader
+		    hide(ID('loader')); // hide loader
 		    addRowHandlers(); // run addRowHandlers
 		});
 		function searcher() {
@@ -262,7 +271,7 @@
 		}
 		async function apply() {
 		    if (Array.from(qryA('tr[data-sel="1"]')).length == 1) { // if there is only 1 selected row
-		        ID('loader').classList.remove('magic'); // show loader
+		        show(ID('loader')); // show loader
 		        ID('apply').disabled = true; // disable the apply button
 		        const selRow = qry('tr[data-sel="1"]'); // get selected row
 		        const y = { "Category": String(selRow.dataset.category).replace('_', ' '), "Name": qry('*:nth-child(2)', selRow).innerHTML };
@@ -281,7 +290,7 @@
 		            alert(`Error: Something went wrong that wasn't accounted for.`); // alert user of unaccounted for error
 		            console.error(rtrnd); // log returned value as an error
 		        }
-		        ID('loader').classList.add('magic'); // hide loader
+		        hide(ID('loader')); // hide loader
 		        ID('apply').disabled = false; // enable apply button
 		    }
 		}

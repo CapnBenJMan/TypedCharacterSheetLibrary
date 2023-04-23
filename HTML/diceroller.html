@@ -20,6 +20,10 @@
 			}
 		}
 
+		* {
+			font-family: Georgia;
+		}
+
 		.loader {
 			border: 5px solid #f3f3f3;
 			border-radius: 50%;
@@ -29,9 +33,13 @@
 			animation: spin 2s linear infinite;
 		}
 
+		button,
+		input[type="checkbox"] {
+			cursor: pointer;
+		}
+
 		/* diceroller.css */
 		body {
-			font-family: Georgia;
 			width: 600px;
 			height: 300px;
 			margin: 0px;
@@ -41,7 +49,6 @@
 		button,
 		select {
 			border-radius: 1em;
-			font-family: Georgia;
 		}
 
 		.tab {
@@ -61,7 +68,6 @@
 			padding: 15px;
 			transition: 0.3s;
 			font-size: 15px;
-			font-family: Georgia;
 		}
 
 		.tab button:hover {
@@ -87,10 +93,6 @@
 		.skillcheck,
 		.checkbuilder {
 			display: inherit;
-		}
-
-		.scbutton {
-			font-family: Georgia;
 		}
 
 		.stbutton,
@@ -262,7 +264,6 @@
 		}
 
 		.inputmod {
-			font-family: Georgia;
 			width: 73px;
 			text-align: center;
 		}
@@ -598,7 +599,6 @@
 
 		.dieinput {
 			width: 32px;
-			font-family: Georgia;
 		}
 
 		.dieinputcontainer {
@@ -817,11 +817,7 @@
 						<option value="stealth">Stealth</option>
 						<option value="survival">Survival</option>
 					</select>
-					<button
-						style="font-family: Georgia; width: 66px"
-						class="scbutton"
-					>
-						Roll</button
+					<button style="width: 66px" class="scbutton">Roll</button
 					><br />
 					<label for="inputmodifiersc">Other Modifier:</label>
 					<input
@@ -1087,20 +1083,10 @@
 						class="dieinput"
 						onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
 					/>
-					<button
-						style="font-family: Georgia"
-						onclick="resetMiscDice();"
-					>
-						Reset
-					</button>
+					<button style="" onclick="resetMiscDice();">Reset</button>
 				</div>
 				<div>
-					<button
-						style="font-family: Georgia"
-						onclick="multiroller();"
-					>
-						Roll
-					</button>
+					<button style="" onclick="multiroller();">Roll</button>
 					<span id="grandtotal">Total: 0</span>
 				</div>
 			</div>
@@ -1772,15 +1758,15 @@
 		            google.script.run
 		                .withSuccessHandler(stuff => resolve(stuff))
 		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`);
-		        });
+		                .callLibraryFunction(`CharacterSheetCode.${f}`)
+		        })
 		    else if (arguments.length == 2)
 		        return new Promise((resolve, reject) => {
 		            google.script.run
 		                .withSuccessHandler(stuff => resolve(stuff))
 		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`, args);
-		        });
+		                .callLibraryFunction(`CharacterSheetCode.${f}`, args)
+		        })
 		}
 		/** Simply calls a function with no return value
 		 * @param {string} f The function name
@@ -1792,29 +1778,35 @@
 		            google.script.run
 		                .withSuccessHandler(() => resolve())
 		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`);
-		        });
+		                .callLibraryFunction(`CharacterSheetCode.${f}`)
+		        })
 		    else if (arguments.length == 2)
 		        return new Promise((resolve, reject) => {
 		            google.script.run
 		                .withSuccessHandler(() => resolve())
 		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`, args);
-		        });
+		                .callLibraryFunction(`CharacterSheetCode.${f}`, args)
+		        })
 		}
-		const ID = (n) => document.getElementById(n);
-		const qry = (n, el = document) => el.querySelector(n);
-		const qryA = (n, el = document) => el.querySelectorAll(n);
+		const ID = (n) => document.getElementById(n)
+		const qry = (n, el = document) => el.querySelector(n)
+		const qryA = (n, el = document) => el.querySelectorAll(n)
 		const capitalizer = (x) => {
 			if (x.includes(' ')) { // if v includes spaces
-				const arr = x.split(" "); // split v on spaces
+				const arr = x.split(" ") // split v on spaces
 				for (let j in arr) { // loop through arr
-					if (arr[j].includes('\n')) break; // break the loop if arr[j] includes \n
-					else arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1).toLowerCase();
+					if (arr[j].includes('\n')) break // break the loop if arr[j] includes \n
+					else arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1).toLowerCase()
 					// ^otherwise set arr[j] to itself capitalized
 				}
-				return arr.join(" "); // return the reformatted array joined by spaces
-			} else return x.charAt(0).toUpperCase() + x.slice(1).toLowerCase(); // otherwise, return capitalized word
+				return arr.join(" ") // return the reformatted array joined by spaces
+			} else return x.charAt(0).toUpperCase() + x.slice(1).toLowerCase() // otherwise, return capitalized word
+		}
+		function show(el) {
+			el.classList.remove("magic")
+		}
+		function hide(el) {
+			el.classList.add("magic")
 		}
 
 		// diceroller.js

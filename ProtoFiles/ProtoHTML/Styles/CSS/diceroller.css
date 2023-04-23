@@ -1,5 +1,4 @@
 body {
-	font-family: Georgia;
 	width: 600px;
 	height: 300px;
 	margin: 0px;
@@ -9,7 +8,6 @@ input,
 button,
 select {
 	border-radius: 1em;
-	font-family: Georgia;
 }
 
 .tab {
@@ -29,7 +27,6 @@ select {
 	padding: 15px;
 	transition: 0.3s;
 	font-size: 15px;
-	font-family: Georgia;
 }
 
 .tab button:hover {
@@ -55,10 +52,6 @@ select {
 .skillcheck,
 .checkbuilder {
 	display: inherit;
-}
-
-.scbutton {
-	font-family: Georgia;
 }
 
 .stbutton,
@@ -230,7 +223,6 @@ select {
 }
 
 .inputmod {
-	font-family: Georgia;
 	width: 73px;
 	text-align: center;
 }
@@ -566,7 +558,6 @@ select {
 
 .dieinput {
 	width: 32px;
-	font-family: Georgia;
 }
 
 .dieinputcontainer {

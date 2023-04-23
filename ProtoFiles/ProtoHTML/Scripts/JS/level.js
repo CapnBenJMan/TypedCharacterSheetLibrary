@@ -1,6 +1,6 @@
 const formattedIDs = [];
 async function closer(evt) {
-    ID('loader').classList.remove('magic'); // show loader
+    show(ID('loader')); // show loader
     if (evt.id == "addlevel") {
         await runGoogle("levelBuffer", ['addlevel']); // add this to level buffer
         google.script.host.close(); // close the dialog
@@ -13,7 +13,7 @@ async function closer(evt) {
 }
 qryA('input').forEach(x => x.autocomplete = 'off');
 document.addEventListener("DOMContentLoaded", async () => {
-    ID('loader').classList.remove('magic'); // show loader
+    show(ID('loader')); // show loader
     const className = await runGoogleWithReturn("getLevels"); // get Levels and their info
     const formattedNames = className.arr.map(x => capitalizer(x).replace(/ /g, "")), // get formatted names
     html = formattedNames.reduce((tot, name, i) => {
@@ -24,5 +24,5 @@ document.addEventListener("DOMContentLoaded", async () => {
         (className.lvl < 20 ? `\n<button id="addlevel" class="option" onclick="closer(this);">Add New Class</button>` : '');
     // ^generate html with reduce function while also creating formattedIDs array
     ID('container').innerHTML = html; // assign generated html to container innerHTML
-    ID('loader').classList.add('magic'); // hide loader
+    hide(ID('loader')); // hide loader
 });

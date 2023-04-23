@@ -1,4 +1,4 @@
-import { runGoogle, runGoogleWithReturn, ID, qry, qryA, capitalizer } from "../../../Master/JS_Template"
+import { runGoogle, runGoogleWithReturn, ID, qry, qryA, capitalizer, show, hide } from "../../../Master/JS_Template"
 import type { Button, Div, Input, Select } from "../../../Master/JS_Template"
 
 const eqNames: ((CharacterSheetCode.Equipment | CharacterSheetCode.EquipmentPack) & { Category: string })[] = [] // equipment names
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => { // on DOM Content Lo
 		<td>${cur.Cost}</td>
 		<td>${("Weight" in cur) ? cur.Weight : '-'}</td>
 	</tr>`, ih) // reduce through eqNames and generate tr elements based on equipment items
-	ID('loader').classList.add('magic') // hide loader
+	hide(ID('loader')) // hide loader
 	addRowHandlers() // run addRowHandlers
 })
 
@@ -60,7 +60,7 @@ type Category = keyof ReturnType<typeof CharacterSheetCode.equipmentInfo>
 
 async function apply() {
 	if (Array.from(qryA('tr[data-sel="1"]')).length == 1) { // if there is only 1 selected row
-		ID('loader').classList.remove('magic') // show loader
+		show(ID('loader')) // show loader
 		ID<Button>('apply').disabled = true // disable the apply button
 		const selRow = qry('tr[data-sel="1"]') // get selected row
 		const y = { "Category": String(selRow.dataset.category).replace('_', ' ') as Category, "Name": qry('*:nth-child(2)', selRow).innerHTML }
@@ -78,7 +78,7 @@ async function apply() {
 			alert(`Error: Something went wrong that wasn't accounted for.`) // alert user of unaccounted for error
 			console.error(rtrnd) // log returned value as an error
 		}
-		ID('loader').classList.add('magic') // hide loader
+		hide(ID('loader')) // hide loader
 		ID<Button>('apply').disabled = false // enable apply button
 	}
 }

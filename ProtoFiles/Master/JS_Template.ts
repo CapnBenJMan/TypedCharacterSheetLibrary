@@ -2,6 +2,8 @@
 
 import type { cscParam, cscReturn, csck } from "./CSC"
 
+export function runGoogleWithReturn<T extends csck>(f: T): Promise<cscReturn<T>>
+export function runGoogleWithReturn<T extends csck>(f: T, args: cscParam<T>): Promise<cscReturn<T>>
 /** Returns the value of the function called
  * @param {string} f The function name
  * @param {any[]} [args] The arguments to be passed to the function
@@ -20,6 +22,9 @@ export function runGoogleWithReturn<T extends csck>(f: T, args?: cscParam<T>): P
 			.callLibraryFunction(`CharacterSheetCode.${f}`, args!)
 	})
 }
+
+export function runGoogle<T extends csck>(f: T): Promise<void>
+export function runGoogle<T extends csck>(f: T, args: cscParam<T>): Promise<void>
 /** Simply calls a function with no return value
  * @param {string} f The function name
  * @param {any[]} [args] The arguments to be passed to the function
@@ -57,6 +62,14 @@ export const capitalizer = (x: string) => {
 		}
 		return arr.join(" ") // return the reformatted array joined by spaces
 	} else return x.charAt(0).toUpperCase() + x.slice(1).toLowerCase() // otherwise, return capitalized word
+}
+
+export function show(el: Element) {
+	el.classList.remove("magic")
+}
+
+export function hide(el: Element) {
+	el.classList.add("magic")
 }
 
 export type Button = HTMLButtonElement

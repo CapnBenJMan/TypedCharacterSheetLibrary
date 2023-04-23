@@ -3,7 +3,6 @@
 	padding: 15px;
 	height: 200px;
 	width: 400px;
-	font-family: Georgia;
 	color: black;
 	position: absolute;
 	top: 50%;
@@ -22,12 +21,10 @@
 	width: 50px;
 	border-radius: 1em;
 	text-align: center;
-	font-family: Georgia;
 }
 
 .submit {
 	border-radius: 1em;
-	font-family: Georgia;
 	font-size: 15px;
 }
 
