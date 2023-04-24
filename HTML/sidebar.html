@@ -58,12 +58,18 @@
 			align-items: start;
 		}
 
+		@media (max-height: calc(378.5px + 10rem)) {
+			body:has(.content.needsHelp:not(.magic)) {
+				grid: 1rem auto 1fr / auto;
+			}
+		}
+
 		body:has(.content.needsHelp:not(.magic)) .content {
-			grid-row: 2 / 3;
+			grid-row: -3 / -2;
 		}
 
 		body:has(.content.needsHelp:not(.magic)) #helper {
-			grid-row: 3 / 4;
+			grid-row: -2 / -1;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
