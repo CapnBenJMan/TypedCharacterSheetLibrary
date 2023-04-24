@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 ID('errormessage').onclick = () => hide(ID('errormessage'));
 qryA('input').forEach(x => x.autocomplete = 'off');
-qryA('button.dbutton').forEach(x => {
+qryA('.content.needsHelp button.dbutton').forEach(x => {
     // for each button, create an onmouseover, onmouseout, onmousedown, and onmouseup listener
     x.onmouseover = () => helptext(true, x.id); // onmouseover, turn on helptext
     x.onmouseout = () => helptext(false); // onmouseout, turn off helptext
@@ -232,16 +232,15 @@ function helptext(ioBool, buttonType) {
     }
 }
 function animationControl(a) {
-    qryA('.content .toggle .helptext > p').forEach(help => {
-        switch (a) { // switch between onmousedown and onmouseup to pause and unpause scrolling animation
-            case 'pause':
-                help.style.animationPlayState = 'paused';
-                break;
-            case 'resume':
-                help.style.animationPlayState = 'running';
-                break;
-        }
-    });
+    const help = qry('#helpcontainer > p');
+    switch (a) { // switch between onmousedown and onmouseup to pause and unpause scrolling animation
+        case 'pause':
+            help.style.animationPlayState = 'paused';
+            break;
+        case 'resume':
+            help.style.animationPlayState = 'running';
+            break;
+    }
 }
 async function rollSomeDice() {
     show(loader); // set loader to visible while processing

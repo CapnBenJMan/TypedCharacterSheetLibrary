@@ -38,6 +38,10 @@
 			cursor: pointer;
 		}
 
+		button:focus {
+			outline: solid red;
+		}
+
 		/* sidebar.css */
 		body {
 			max-width: 300px;
@@ -90,6 +94,24 @@
 
 		body:has(.content.needsHelp:not(.magic)) #helper .toggle {
 			display: flex;
+		}
+
+		@keyframes scroll {
+			0% {
+				transform: translateY(0%);
+			}
+
+			15% {
+				transform: translateY(0%);
+			}
+
+			85% {
+				transform: translateY(calc(-100% + 3lh));
+			}
+
+			100% {
+				transform: translateY(calc(-100% + 3lh));
+			}
 		}
 
 		.content {
@@ -286,20 +308,6 @@
 
 		#helper {
 			display: none;
-		}
-
-		@keyframes scroll {
-			0% {
-				transform: translateY(0%);
-			}
-
-			15% {
-				transform: translateY(0%);
-			}
-
-			100% {
-				transform: translateY(calc(-100% + 3lh));
-			}
 		}
 
 		.numinput {
@@ -802,7 +810,7 @@
 		}
 		ID('errormessage').onclick = () => hide(ID('errormessage'));
 		qryA('input').forEach(x => x.autocomplete = 'off');
-		qryA('button.dbutton').forEach(x => {
+		qryA('.content.needsHelp button.dbutton').forEach(x => {
 		    // for each button, create an onmouseover, onmouseout, onmousedown, and onmouseup listener
 		    x.onmouseover = () => helptext(true, x.id); // onmouseover, turn on helptext
 		    x.onmouseout = () => helptext(false); // onmouseout, turn off helptext
@@ -997,16 +1005,15 @@
 		    }
 		}
 		function animationControl(a) {
-		    qryA('.content .toggle .helptext > p').forEach(help => {
-		        switch (a) { // switch between onmousedown and onmouseup to pause and unpause scrolling animation
-		            case 'pause':
-		                help.style.animationPlayState = 'paused';
-		                break;
-		            case 'resume':
-		                help.style.animationPlayState = 'running';
-		                break;
-		        }
-		    });
+		    const help = qry('#helpcontainer > p');
+		    switch (a) { // switch between onmousedown and onmouseup to pause and unpause scrolling animation
+		        case 'pause':
+		            help.style.animationPlayState = 'paused';
+		            break;
+		        case 'resume':
+		            help.style.animationPlayState = 'running';
+		            break;
+		    }
 		}
 		async function rollSomeDice() {
 		    show(loader); // set loader to visible while processing

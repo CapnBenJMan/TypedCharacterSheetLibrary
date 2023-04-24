@@ -11,7 +11,7 @@ async function main() {
 
 	console.log(await promExec(`call ${R(__dirname, "./transpile.bat")}`))
 
-	console.log(await promExec(`git add .`))
+	console.log(await promExec(`git add ${R(__dirname, "./../..")}`))
 
 	console.log(await promExec(`git commit -m "v${version}"`))
 }

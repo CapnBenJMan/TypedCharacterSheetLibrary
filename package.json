@@ -1,27 +1,30 @@
 {
 	"name": "typedcsc",
-	"version": "3.7.0",
+	"version": "3.7.1",
 	"latestLibraryVersion": 38,
 	"description": "",
 	"scripts": {
 		"transpile": "cd ProtoFiles/Exec/ && transpile.bat",
 		"typeify": "cd ProtoFiles/Exec/ && typeify.bat",
-		"ver:major": "cd ProtoFiles/Exec/ && ",
-		"ver:minor": "cd ProtoFiles/Exec/ && ",
-		"ver:patch": "cd ProtoFiles/Exec/ && "
+		"push:dev:msg": "cd ProtoFiles/Exec/ && push.bat",
+		"push:dev": "clasp push",
+		"version": "cd ProtoFiles/Exec && ts-node version.ts",
+		"postversion": "cd ProtoFiles/Exec && ts-node postversion.ts"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/CapnBenJMan/TypedCharacterSheetLibrary.git"
 	},
 	"keywords": [],
-	"author": "",
+	"author": "Ben Craven",
 	"license": "ISC",
 	"bugs": {
 		"url": "https://github.com/CapnBenJMan/TypedCharacterSheetLibrary/issues"
 	},
 	"homepage": "https://github.com/CapnBenJMan/TypedCharacterSheetLibrary#readme",
 	"devDependencies": {
+		"@google/clasp": "^2.4.2",
+		"@types/google-apps-script": "^1.0.62",
 		"ts-node": "^10.9.1",
 		"typescript": "^5.0.4"
 	},

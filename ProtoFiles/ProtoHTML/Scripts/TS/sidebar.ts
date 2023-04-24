@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => { // when the sidebar finish
 
 ID('errormessage').onclick = () => hide(ID('errormessage'))
 qryA('input').forEach(x => x.autocomplete = 'off')
-qryA('button.dbutton').forEach(x => {
+qryA('.content.needsHelp button.dbutton').forEach(x => {
 	// for each button, create an onmouseover, onmouseout, onmousedown, and onmouseup listener
 	x.onmouseover = () => helptext(true, x.id) // onmouseover, turn on helptext
 	x.onmouseout = () => helptext(false) // onmouseout, turn off helptext
@@ -218,7 +218,7 @@ function helptext(ioBool: true, buttonType: string): void
 function helptext(ioBool: boolean, buttonType?: string): void { // input/output Boolean, button id
 	if (ID<Input>('togglehelp').checked) { // if enable helptext is checked
 		helpTextHovering = ioBool
-		
+
 		const helpContainer = ID('helpcontainer') // define reference to helptext div element
 		const helpTextElem = ID('helptext') // define reference to helptext paragraph element
 		const helpText = (ioBool) ? infoRepository[buttonType! as keyof typeof infoRepository] : '' // define paragraph content variable
@@ -243,17 +243,17 @@ function helptext(ioBool: boolean, buttonType?: string): void { // input/output 
 	}
 }
 
+
 function animationControl(a: string) {
-	qryA('.content .toggle .helptext > p').forEach(help => {
-		switch (a) { // switch between onmousedown and onmouseup to pause and unpause scrolling animation
-			case 'pause':
-				help.style.animationPlayState = 'paused'
-				break
-			case 'resume':
-				help.style.animationPlayState = 'running'
-				break
-		}
-	})
+	const help = qry('#helpcontainer > p')
+	switch (a) { // switch between onmousedown and onmouseup to pause and unpause scrolling animation
+		case 'pause':
+			help.style.animationPlayState = 'paused'
+			break
+		case 'resume':
+			help.style.animationPlayState = 'running'
+			break
+	}
 }
 
 async function rollSomeDice() {

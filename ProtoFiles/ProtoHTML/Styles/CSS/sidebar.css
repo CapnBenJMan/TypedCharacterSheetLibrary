@@ -51,6 +51,24 @@ body:has(.content.needsHelp:not(.magic)) #helper .toggle {
 	display: flex;
 }
 
+@keyframes scroll {
+	0% {
+		transform: translateY(0%);
+	}
+
+	15% {
+		transform: translateY(0%);
+	}
+
+	85% {
+		transform: translateY(calc(-100% + 3lh));
+	}
+
+	100% {
+		transform: translateY(calc(-100% + 3lh));
+	}
+}
+
 .content {
 	max-width: 300px;
 	width: 95%;
@@ -245,20 +263,6 @@ body:has(.content.needsHelp:not(.magic)) #helper .toggle {
 
 #helper {
 	display: none;
-}
-
-@keyframes scroll {
-	0% {
-		transform: translateY(0%);
-	}
-
-	15% {
-		transform: translateY(0%);
-	}
-
-	100% {
-		transform: translateY(calc(-100% + 3lh));
-	}
 }
 
 .numinput {

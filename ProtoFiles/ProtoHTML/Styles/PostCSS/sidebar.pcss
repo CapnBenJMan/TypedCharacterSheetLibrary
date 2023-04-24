@@ -46,7 +46,24 @@ body {
 
 			& .toggle {
 				display: flex;
+			}
 
+			@keyframes scroll {
+				0% {
+					transform: translateY(0%);
+				}
+
+				15% {
+					transform: translateY(0%);
+				}
+
+				85% {
+					transform: translateY(calc(-100% + 3lh));
+				}
+				
+				100% {
+					transform: translateY(calc(-100% + 3lh));
+				}
 			}
 		}
 	}
@@ -58,7 +75,6 @@ body {
 	text-align: center;
 	margin: 0;
 	height: min-content;
-	
 }
 
 .loader {
@@ -244,20 +260,6 @@ body {
 
 #helper {
 	display: none;
-}
-
-@keyframes scroll {
-	0% {
-		transform: translateY(0%);
-	}
-
-	15% {
-		transform: translateY(0%);
-	}
-
-	100% {
-		transform: translateY(calc(-100% + 3lh));
-	}
 }
 
 .numinput {

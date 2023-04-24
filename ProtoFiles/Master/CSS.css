@@ -29,3 +29,7 @@ button,
 input[type=checkbox] {
 	cursor: pointer;
 }
+
+button:focus {
+	outline: solid red;
+}

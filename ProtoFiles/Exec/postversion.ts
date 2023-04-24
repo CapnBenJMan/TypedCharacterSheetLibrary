@@ -10,7 +10,15 @@ async function main() {
 
 	console.log(await promExec("clasp push"))
 
-	console.log(await promExec(`clasp deploy -d "v${version}"`))
+	const latestVersion = (await promExec("clasp versions"))
+		.split("\n")
+		.filter(({ length }) => length)
+		.at(-1).match(/(\d+) - /)?.[1]
+
+	console.log(await promExec(`clasp deploy${(latestVersion &&
+		Number(latestVersion) == latestLibraryVersion) ?
+		"" : ` -V ${latestVersion}`
+		} -d "v${version}"`))
 }
 
 main()
