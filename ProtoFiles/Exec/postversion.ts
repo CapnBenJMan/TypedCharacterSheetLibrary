@@ -2,7 +2,16 @@ import promExec from "./promExec"
 import { version, latestLibraryVersion } from "../../package.json"
 
 async function main() {
-	console.log(await promExec(`git tag v${version}`))
+	const verString = `v${version}`
+
+	const tags = await promExec(`git tag -l`)
+
+	if (tags.includes(verString)) {
+		await promExec(`git tag -d ${verString}`)
+		await promExec(`git push origin --delete ${verString}`)
+	}
+
+	console.log(await promExec(`git tag ${verString}`))
 
 	console.log(await promExec("git push"))
 
@@ -18,7 +27,7 @@ async function main() {
 	console.log(await promExec(`clasp deploy${(latestVersion &&
 		Number(latestVersion) == latestLibraryVersion) ?
 		"" : ` -V ${latestVersion}`
-		} -d "v${version}"`))
+		} -d "${verString}"`))
 }
 
 main()
