@@ -1,13 +1,15 @@
 @echo off
 
-@REM call git add .
-
-@REM if "%1" == "" (
-@REM 	call git commit
-@REM ) else (
-@REM 	call git commit -m "%1"
-@REM )
-
 echo %~0
 echo %cd%
 echo %__CD__%
+
+call git add .
+
+set /p "message=Enter commit message: "
+
+call git commit -m "%message%"
+
+call git push
+
+call clasp push

@@ -1,5 +1,6 @@
 import { readFile, writeFile } from "fs/promises"
 import { resolve as R } from "path"
+import { argv } from "process"
 import json from "../../package.json"
 
 const path = R(__dirname, "../ProtoGS/TS/00-Main.ts")
@@ -12,7 +13,8 @@ async function main() {
 	// const dep = Number(file.match(depRe)?.[1])
 
 	const nFile = file.replace(libRe, `const libraryVersion = "v${json.version}"`)
-		.replace(depRe, `const deploymentVersion = ${json.latestLibraryVersion}`)
+		.replace(depRe, `const deploymentVersion = ${json.latestLibraryVersion + (argv[2] == "next" ? 1 : 0)
+			}`)
 
 	await writeFile(path, nFile)
 }
