@@ -44,13 +44,13 @@ export function runGoogle<T extends csck>(f: T, args?: cscParam<T>): Promise<voi
 	})
 }
 
-import type { queryElem } from "query-shorthand"
+import type { QueryElem } from "query-shorthand"
 
 export const ID = <E extends HTMLElement | SVGElement = HTMLElement>(n: string) => document.getElementById(n) as E
 
-export const qry = <K extends string>(n: K, el: Element | Document = document) => el.querySelector(n) as queryElem<K>
+export const qry = <K extends string>(n: K, el: Element | Document = document) => el.querySelector(n) as QueryElem<K>
 
-export const qryA = <K extends string>(n: K, el: Element | Document = document) => el.querySelectorAll(n) as NodeListOf<queryElem<K>>
+export const qryA = <K extends string>(n: K, el: Element | Document = document) => el.querySelectorAll(n) as NodeListOf<QueryElem<K>>
 
 export const capitalizer = (x: string) => {
 	if (x.includes(' ')) { // if v includes spaces
