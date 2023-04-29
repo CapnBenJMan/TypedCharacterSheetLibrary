@@ -66,7 +66,7 @@ function getStats() {
 		.reduce((obj, cur) => { // reduces filtered array
 			obj[cur.getName()] = Number(cur.getRange().getValue()) // set a property of obj as the value of the current range
 			return obj // return object
-		}, {}) as { [K in 'Str' | 'Dex' | 'Con' | 'Int' | 'Wis' | 'Cha' | 'Prof'] }
+		}, {} as { [k: string]: number }) as { [K in 'Str' | 'Dex' | 'Con' | 'Int' | 'Wis' | 'Cha' | 'Prof']: number }
 	/* 
 	.forEach(nrange => {
 		switch (nrange.getName()) {
@@ -129,6 +129,10 @@ function getStats() {
 	}
 }
 
+type SpellType = "sc" | "pm"
+type SpellLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+type SpellSlotString = `${SpellType}${SpellLevel}`
+
 /** Returns the values of each spell slot type and level */
 function getSpells() {
 	const ss = SpreadsheetApp.getActiveSpreadsheet() // define spreadsheet reference
@@ -139,10 +143,12 @@ function getSpells() {
 		return { name: x.getName(), range: x.getRange() }
 	})
 	// ^get the names of each named range on the Master Spells sheet
-	const slotValues = { scLvl: Number(scVal), pmLvl: Number(pmVal) } // define object containing caster levels
+	const slotValues = { scLvl: Number(scVal), pmLvl: Number(pmVal) } as  // define object containing caster levels
+		{ [K in `${SpellType}Lvl`]: number } &
+		{ [K in SpellSlotString]?: number }
 	for (let x of slotRangeNames) // loop through range names
 		if (!isEmptyish(x.range.getValue())) // if isEmptyish doesn't return true
-			slotValues[x.name.replace(/Master|L|Slots/g, "").toLowerCase()] = // set new property to slotValues
+			slotValues[x.name.replace(/Master|L|Slots/g, "").toLowerCase() as keyof typeof slotValues] = // set new property to slotValues
 				x.range.getValue() // ^^equal to the value of the range
 	return slotValues // return slot values
 }
@@ -161,10 +167,10 @@ interface Slot {
 }
 
 /** Takes in an object containing the spell slot values for each type and level and sets them to the sheet */
-function setSpellSlots(slots: { [K in `${"sc" | "pm"}${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}`]: Slot }) {
+function setSpellSlots(slots: { [K in SpellSlotString]: Slot }) {
 	const ss = SpreadsheetApp.getActiveSpreadsheet() // define spreadsheet reference
-	for (let a in slots) // loop through slots
-		if (slots[a].dis) // if this is true
+	for (const [a, slot] of Object.entries(slots)) // loop through slots
+		if (slot.dis) // if this is true
 			ss.getRangeByName(`Master${a.toUpperCase().slice(0, 2)}L${a.slice(-1)}Slots`)!
-				.setValue(slots[a].val == 0 ? '' : slots[a].val) // set the value
+				.setValue(slot.val || "") // set the value
 }

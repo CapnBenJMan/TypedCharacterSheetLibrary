@@ -77,6 +77,7 @@ function restCompiler(range: string, type: string, sr: boolean, rest: string) { 
 				else throw 'exists' // otherwise, throw error
 			}
 		} catch (err) { // error handler
+			_a(err)
 			const errs = {
 				'multi': 'Error: Please only input the reference to a single cell.',
 				'exists': 'Error: The cell reference you entered does not refer to a cell that exists'
@@ -84,6 +85,8 @@ function restCompiler(range: string, type: string, sr: boolean, rest: string) { 
 			ui.alert(errs[err] || `Error: Something went wrong that wasn't accounted for.`)
 			// ^alerts user to an error
 			return 'return' // makes sure the rule isn't saved to the sheet
+
+			function _a(x: unknown): asserts x is "multi" | "exists" { }
 		}
 	}
 

@@ -3,7 +3,7 @@ const EquipmentInfo = equipmentInfo()
 function setEquipment(category: keyof typeof EquipmentInfo, name: string): string {
 	const ss = SpreadsheetApp.getActiveSpreadsheet() // define spreadsheet reference
 	const cell = ss.getActiveCell() // define reference to selected cell
-	let GR = n => ss.getRange(n) // define arrow function to easily get a range
+	let GR = (n: string) => ss.getRange(n) // define arrow function to easily get a range
 	try {
 		const sheetName = cell.getSheet().getName() // define the sheet name of the current cell
 		if (['Character', 'Storage'].every(x => x != sheetName)) throw 'sheet'

@@ -12,7 +12,11 @@ function validationBuilder(
 			case 'VALUE_IN_RANGE':
 				return dv().requireValueInRange(ss.getRange(y[1][0])).setAllowInvalid(y[1][1]).build()
 			default:
-				return dv().withCriteria(SpreadsheetApp.DataValidationCriteria[y[0]], y[1]).build()
+				return dv()
+					.withCriteria(
+						SpreadsheetApp.DataValidationCriteria[y[0] as keyof typeof SpreadsheetApp.DataValidationCriteria],
+						y[1]
+					).build()
 		}
 	}))
 }

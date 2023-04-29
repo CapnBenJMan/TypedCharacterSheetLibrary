@@ -1,7 +1,7 @@
 /** This function handles the execution of the long rest code */
 function longRest() {
 	var curr = 'Save Weapons' // variable for stopStart timelogging
-	let stopStart = x => { // arrow function to keep track of execution time in the logger
+	let stopStart = (x: string) => { // arrow function to keep track of execution time in the logger
 		console.timeEnd(curr) // end current timer
 		console.time(x) // start new timer
 		curr = x // set current to x
@@ -172,7 +172,7 @@ function updateHitDice(
 ) {
 	const ss = SpreadsheetApp.getActiveSpreadsheet() // define spreadsheet reference
 	/** @param {string} range */
-	let setVal = (range: string, value) => ss.getRange(range).setValue(value) // arrow function to set a value to a specific range
+	let setVal = (range: string, value: any) => ss.getRange(range).setValue(value) // arrow function to set a value to a specific range
 	for (let range of [['Character!AQ6', d6], ['Character!AR6', d8], ['Character!AS6', d10], ['Character!AT6', d12]] as const)
 		setVal(range[0], range[1]) // loop through each range and set their associated value
 	if (bool) { // if bool is set to true

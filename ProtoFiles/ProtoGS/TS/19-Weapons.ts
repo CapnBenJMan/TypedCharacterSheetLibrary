@@ -99,7 +99,7 @@ function weaponSetter(
 	/** Returns a number compiled as a string that begins with either + or -
 	 * @param {number} n */
 	let bonusCompiler = (n: number, i = false) => n != 0 ? `${i ? '(' : ''}${(n < 0 ? `${n}` : n > 0 ? `+${n}` : '')}${i ? ')' : ''}` : ''
-	let noteBuilder = x => {
+	let noteBuilder = (x: Weapon) => {
 		/** Capitalizes the traits of the weapon */
 		let capitalizer = (v: string) => {
 			if (v.includes(' ')) { // if v includes spaces
