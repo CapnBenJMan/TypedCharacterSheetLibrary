@@ -90,20 +90,20 @@ class Coin {
 	setRaw(coin: ShortCoin, val: number) { // sets the raw value of a certain coin type
 		const bool1 = (coin == "plat" || coin == "gold" || coin == "silv" || coin == "copp")
 		// ^checks if coin equals plat, gold, silv, or copp
-		const bool2 = typeof val == 'number' // checks if val is type Number
+		const bool2 = typeof val == "number" // checks if val is type Number
 		try {
 			if (bool1 && bool2) { // if bool1 and bool2 return true
 				this[coin].raw = val // set raw value of the inputted coin type to val
 				// this.rawToPoints() // adjusts pts properties based on new raw values
 				// this.updatePoints() // adjust points property based on new point values
 				return this // return this object
-			} else throw '' // otherwise throw error
+			} else throw "" // otherwise throw error
 		} catch {
-			const e = 'Error: ' + // error text defined with a series of ternaries
-				bool1 ? '' : (`Param 'coin' must be equal to "plat", "gold", "silv", or "copp"; ` +
+			const e = "Error: " + // error text defined with a series of ternaries
+				bool1 ? "" : (`Param 'coin' must be equal to "plat", "gold", "silv", or "copp"; ` +
 					`"${coin}" is not an acceptable value`) + // if bool1 returns false
-					!bool1 && !bool2 ? ' and ' : '' + // if bool1 and bool2 return false
-						bool2 ? '' : `Param 'val' is not a number` // if bool2 returns false
+					!bool1 && !bool2 ? " and " : "" + // if bool1 and bool2 return false
+						bool2 ? "" : `Param 'val' is not a number` // if bool2 returns false
 			console.error(e) // log the error
 		}
 	}
@@ -111,7 +111,7 @@ class Coin {
 	setPoints(coin: ShortCoin, val: number) { // if bool1 and bool2 return true
 		const bool1 = (coin == "plat" || coin == "gold" || coin == "silv" || coin == "copp")
 		// ^checks if coin equals plat, gold, silv, or copp
-		const bool2 = typeof val == 'number' // checks if val is type Number
+		const bool2 = typeof val == "number" // checks if val is type Number
 		try {
 			if (bool1 && bool2) { // if bool1 and bool2 return true
 				this[coin].pts = val - (val % this[coin].mod)
@@ -119,19 +119,19 @@ class Coin {
 				// this.pointsToRaw() // adjusts raw properties based on new pts values
 				// this.updatePoints() // adjust points property based on new point values
 				return this // return this object
-			} else throw '' // otherwise throw error
+			} else throw "" // otherwise throw error
 		} catch (error) {
-			const e = 'Error: ' + // error text defined with a series of ternaries
-				bool1 ? '' : (`Param 'coin' must be equal to "plat", "gold", "silv", or "copp"; ` +
+			const e = "Error: " + // error text defined with a series of ternaries
+				bool1 ? "" : (`Param 'coin' must be equal to "plat", "gold", "silv", or "copp"; ` +
 					`"${coin}" is not an acceptable value`) + // if bool1 returns false
-					!bool1 && !bool2 ? ' and ' : '' + // if bool1 and bool2 return false
-						bool2 ? '' : `Param 'val' is not a number` // if bool2 returns false
+					!bool1 && !bool2 ? " and " : "" + // if bool1 and bool2 return false
+						bool2 ? "" : `Param 'val' is not a number` // if bool2 returns false
 			console.error(e) // log the error
 		}
 	}
 
-	setChange(arr = [, , ,]) {
-		const [plat, gold, silv, copp] = [...Array(4)].map((x, i) => Boolean(arr[i]) ? Number(arr[i]) : 0)
+	setChange(arr = Array(4)) {
+		const [plat, gold, silv, copp] = [...Array(4)].map((x, i) => arr[i] ? Number(arr[i]) : 0)
 		// ^define plat, gold, silv, and copp as numbers
 		this.plat.change = plat // set change values accordingly
 		this.gold.change = gold // ^^^
@@ -147,11 +147,11 @@ class Coin {
 			if (arguments.length > 0) { // if container is not undefined
 				if (Array.isArray(container)) return this.coins.map(x => x.raw)
 				// ^if container is an array, return raw values in an array
-				else if (typeof container == 'object') return {
+				else if (typeof container == "object") return {
 					plat: this.plat.raw, gold: this.gold.raw,
 					silv: this.silv.raw, copp: this.copp.raw
 				} // else if container is an object, return raw values in an object
-				else throw 'Error: Your container is not an object or array.'
+				else throw "Error: Your container is not an object or array."
 				// ^else throw an error
 			} else return this.coins.map(x => x.raw)
 			// ^else return raw values in array
@@ -166,11 +166,11 @@ class Coin {
 			if (arguments.length > 0) { // if container is not undefined
 				if (Array.isArray(container)) return this.coins.map(x => x.pts)
 				// ^if container is an array, return pts values in an array
-				else if (typeof container == 'object') return {
+				else if (typeof container == "object") return {
 					plat: this.plat.pts, gold: this.gold.pts,
 					silv: this.silv.pts, copp: this.copp.pts
 				} // else if container is an object, return pts values in an object
-				else throw 'Error: Your container is not an object or array.'
+				else throw "Error: Your container is not an object or array."
 				// ^else throw an error
 			} else return this.points // else return points property
 		} catch (error) { console.error(error) } // log error
@@ -183,11 +183,11 @@ class Coin {
 			if (arguments.length > 0) { // if container is not undefined
 				if (Array.isArray(container)) return this.coins.map(x => x.change)
 				// ^if container is array, return change values in an array
-				else if (typeof container == 'object') return {
+				else if (typeof container == "object") return {
 					plat: this.plat.change, gold: this.gold.change,
 					silv: this.silv.change, copp: this.copp.change
 				} // else if container is an object, return change values in an object
-				else throw 'Error: Your container is not an object or array.'
+				else throw "Error: Your container is not an object or array."
 				// ^else throw error
 			} else return this.coins.map(x => x.change)
 			// ^else return change values in an array
@@ -214,7 +214,7 @@ class Coin {
 		try {
 			const coinset = new CoinSet() // define new coinset
 			const change: number[] = [] // define storage for change values
-			if (!Array.isArray(changer) && typeof changer == 'object') for (const [_key, value] of Object.entries(changer)) change.push(Number(value))
+			if (!Array.isArray(changer) && typeof changer == "object") for (const [_key, value] of Object.entries(changer)) change.push(Number(value))
 			// ^if changer is not an array and changer is an object, loop through the entries and push them to change
 			else changer.forEach(x => change.push(Number(x))) // otherwise loop through changer and push the values to change
 			if (Array.isArray(container)) { // if container is array
@@ -265,21 +265,33 @@ class Coin {
 		return this // return this object
 	}
 
-	distribute(coppLMin = 1, silvLMin = 1, goldLMin = 1, platLMin = 1) { // distributes coins so that there are no negative values
+	distribute(): this
+	distribute({ coppMinDigits, silvMinDigits, goldMinDigits, platMinDigits }: { [K in `${ShortCoin}MinDigits`]?: number }): this
+	distribute({
+		coppMinDigits: cMD,
+		silvMinDigits: sMD,
+		goldMinDigits: gMD,
+		platMinDigits: pMD
+	}: { [K in `${ShortCoin}MinDigits`]?: number } = {}
+	) { // distributes coins so that there are no negative values
+		const coppMinDigits = cMD ?? 1
+		const silvMinDigits = sMD ?? 1
+		const goldMinDigits = gMD ?? 1
+		const platMinDigits = pMD ?? 1
 		try {
-			const coppMin = arguments[0] === undefined || this.copp.raw < 0 ? 0 : 1
+			const coppMin = cMD === undefined || this.copp.raw < 0 ? 0 : 1
 			// ^defines copper minimum as 0 or 1 depending on whether or not a value for copper was passed in the arguments or if
 			// ^copper's raw value is less than 0 (those 2 yield 0, otherwise 1)
-			const silvMin = arguments[1] === undefined || this.silv.raw < 0 ? 0 : 1 // ^^^
-			const goldMin = arguments[2] === undefined || this.gold.raw < 0 ? 0 : 1 // ^^^
-			const platMin = arguments[3] === undefined || this.plat.raw < 0 ? 0 : 1 // ^^^
-			let checker = () => [ // checks if all the raw vals have enough digits and are a minimum value
-				this.copp.raw.toString().length >= coppLMin && this.copp.raw >= coppMin,
-				this.silv.raw.toString().length >= silvLMin && this.silv.raw >= silvMin,
-				this.gold.raw.toString().length >= goldLMin && this.gold.raw >= goldMin,
-				this.plat.raw.toString().length >= platLMin && this.plat.raw >= platMin
-			].every(x => x === true)
-			console.time('distribute') // time log
+			const silvMin = sMD === undefined || this.silv.raw < 0 ? 0 : 1 // ^^^
+			const goldMin = gMD === undefined || this.gold.raw < 0 ? 0 : 1 // ^^^
+			const platMin = pMD === undefined || this.plat.raw < 0 ? 0 : 1 // ^^^
+			const checker = () => [ // checks if all the raw vals have enough digits and are a minimum value
+				this.copp.raw.toString().length >= coppMinDigits && this.copp.raw >= coppMin,
+				this.silv.raw.toString().length >= silvMinDigits && this.silv.raw >= silvMin,
+				this.gold.raw.toString().length >= goldMinDigits && this.gold.raw >= goldMin,
+				this.plat.raw.toString().length >= platMinDigits && this.plat.raw >= platMin
+			].every(x => x)
+			console.time("distribute") // time log
 			const start = Date.now() // define start time
 			if (this.points < 0) throw `Error: You don't have enough coin to complete this transaction.` +
 				` You still need ${this.getFormattedPoints()} cp worth of coins to afford it.`
@@ -308,11 +320,11 @@ class Coin {
 					}
 				}
 				const rawVals = [this.copp.raw, this.silv.raw, this.gold.raw, this.plat.raw]
-				if (Date.now() - start > 1500 && rawVals.every(x => x >= 0)) throw 'time'
+				if (Date.now() - start > 1500 && rawVals.every(x => x >= 0)) throw "time"
 				// ^if time elapsed is less than 1.5s & raw values are all greater than or equal to 0
 
 				// Copper Adjuster
-				if (this.copp.raw.toString().length < coppLMin || this.copp.raw < coppMin) {
+				if (this.copp.raw.toString().length < coppMinDigits || this.copp.raw < coppMin) {
 					// ^if copper doesn't have enough digits or is less than the minimum value
 					if (bools.copp.fromSilv) { // if copper can be made from silver
 						this.silv.raw -= 1 // make necessary adjustments
@@ -336,7 +348,7 @@ class Coin {
 				}
 
 				// Silver Adjuster
-				if (this.silv.raw.toString().length < silvLMin || this.silv.raw < silvMin) {
+				if (this.silv.raw.toString().length < silvMinDigits || this.silv.raw < silvMin) {
 					// ^if silver doesn't have enough digits or is less than the minimum value
 					if (bools.silv.fromGold) { // if silver can be made from gold
 						this.gold.raw -= 1 // make necessary adjustments
@@ -360,7 +372,7 @@ class Coin {
 				}
 
 				// Gold Adjuster
-				if (this.gold.raw.toString().length < goldLMin || this.gold.raw < goldMin) {
+				if (this.gold.raw.toString().length < goldMinDigits || this.gold.raw < goldMin) {
 					// ^if gold doesn't have enough digits or is less than the minimum value
 					if (bools.gold.fromPlat) { // if gold can be made from platinum
 						this.plat.raw -= 1 // make necessary adjustments
@@ -384,7 +396,7 @@ class Coin {
 				}
 
 				// Platinum Adjuster
-				if (this.plat.raw.toString().length < platLMin || this.plat.raw < platMin) {
+				if (this.plat.raw.toString().length < platMinDigits || this.plat.raw < platMin) {
 					// ^if platinum doesn't have enough digits or is less than the minimum value
 					if (bools.plat.fromGold) { // if platinum can be made from gold
 						this.gold.raw -= 10 // make necessary adjustments
@@ -409,12 +421,12 @@ class Coin {
 			}
 			// this.rawToPoints() // adjust pts values to account for new raw values
 			// this.updatePoints() // update points property
-			console.timeEnd('distribute') // end timelog
+			console.timeEnd("distribute") // end timelog
 			return this // return this coinset
 		} catch (err) {
-			if (err == 'time') { console.warn('Either took too long or timed out intentionally') } // log warning
+			if (err == "time") { console.warn("Either took too long or timed out intentionally") } // log warning
 			else { console.error(err) } // otherwise log error
-			console.timeEnd('distribute') // end timelog
+			console.timeEnd("distribute") // end timelog
 			return this // return this coinset
 		}
 	}
@@ -422,7 +434,7 @@ class Coin {
 		return { plat: this.plat.raw, gold: this.gold.raw, silv: this.silv.raw, copp: this.copp.raw }
 	}
 	getFormattedPoints() { // return the formatted version of the number of points
-		return Math.abs(this.points).toString().split('').reverse().join('').split(/(\d{3})/g).map(x => x.split('').reverse().join('')).filter(x => x != '').reverse().join(',')
+		return Math.abs(this.points).toString().split("").reverse().join("").split(/(\d{3})/g).map(x => x.split("").reverse().join("")).filter(x => x != "").reverse().join(",")
 	}
 	// rawToPoints() { // converts raw values to pts values
 	// 	for (let i in this) { // loop through coinset properties
@@ -452,16 +464,16 @@ class Coin {
 
 function getCurrency() { // used to get the current values of the Accounting sheet
 	const ss = SpreadsheetApp.getActiveSpreadsheet() // spreadsheet reference
-	const accounting = ss.getSheetByName('Accounting')! // accounting sheet reference
-	return accounting.getRange('B3:E3').getValues()[0].map(x => Number(x)) // returns an array of numbers based on the current values
+	const accounting = ss.getSheetByName("Accounting")! // accounting sheet reference
+	return accounting.getRange("B3:E3").getValues()[0].map(x => Number(x)) // returns an array of numbers based on the current values
 }
 
 function runManualDistributor(arr: number[]) { // used to set coin values manually
 	const adjustment = getCurrency().map((x, i) => arr[i] - x)
 	// ^calculates the adjustment required to get the manually adjusted values
-	const accounting = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Accounting')!
+	const accounting = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Accounting")!
 	// ^define reference to accounting sheet
-	accounting.getRange('A4:E4').setValues([['Manual Adjustment', ...adjustment]]) // sets the adjustment values
+	accounting.getRange("A4:E4").setValues([["Manual Adjustment", ...adjustment]]) // sets the adjustment values
 	accounting.insertRowBefore(4) // insert row before 4
-	accounting.getRange('B3:E3').setFormulas([['=SUM(B4:B)', '=SUM(C4:C)', '=SUM(D4:D)', '=SUM(E4:E)']]) // reset formulas
+	accounting.getRange("B3:E3").setFormulas([["=SUM(B4:B)", "=SUM(C4:C)", "=SUM(D4:D)", "=SUM(E4:E)"]]) // reset formulas
 }

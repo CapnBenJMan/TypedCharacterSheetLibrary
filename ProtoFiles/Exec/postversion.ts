@@ -27,7 +27,7 @@ async function main() {
 	console.log(await promExec(`clasp deploy${(latestVersion &&
 		Number(latestVersion) == latestLibraryVersion) ?
 		"" : ` -V ${latestVersion}`
-		} -d "${verString}"`))
+	} -d "${verString}"`))
 }
 
 main()

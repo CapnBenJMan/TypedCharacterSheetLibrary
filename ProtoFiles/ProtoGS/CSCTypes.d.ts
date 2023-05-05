@@ -6,14 +6,8 @@ declare namespace CharacterSheetCode {
 	export const libraryVersion = "v3.7.1"
 	export const deploymentVersion = 39
 	export function version(i: GoogleAppsScript.Events.SheetsOnOpen): void
-	export function trigger(
-		e: GoogleAppsScript.Events.SheetsOnEdit,
-		id?: string
-	): void
-	export function preload(
-		i: GoogleAppsScript.Events.SheetsOnOpen,
-		id?: string
-	): void
+	export function trigger(e: GoogleAppsScript.Events.SheetsOnEdit, id?: string): void
+	export function preload(i: GoogleAppsScript.Events.SheetsOnOpen, id?: string): void
 
 	// 01-Accounting.d.ts
 
@@ -72,34 +66,37 @@ declare namespace CharacterSheetCode {
 		}
 		copy(): CoinSet
 		/**
-		 * Returns a new CoinSet using the values from the container.
-		 * If the container or changer is an array, it must be organized (from lowest index to highest)
-		 * by Platinum, Gold, Silver, Copper, and it must have a length of 4.
-		 * Otherwise, outputted object will not be what you want.
-		 * If the container is an object, it should have the outlined parameters.
-		 * The parameters should be able to be coerced into numbers without throwing an error
-		 * (ex. "20" and 20 are both acceptable). Otherwise, all undefined values are set to 0.
-		 */
+		* Returns a new CoinSet using the values from the container.
+		* If the container or changer is an array, it must be organized (from lowest index to highest)
+		* by Platinum, Gold, Silver, Copper, and it must have a length of 4.
+		* Otherwise, outputted object will not be what you want.
+		* If the container is an object, it should have the outlined parameters.
+		* The parameters should be able to be coerced into numbers without throwing an error
+		* (ex. "20" and 20 are both acceptable). Otherwise, all undefined values are set to 0.
+		*/
 		static fromRaw(
 			container:
 				| {
 						[K in ShortCoin]: any
-				  }
+				}
 				| any[],
 			changer?:
 				| {
 						[K in ShortCoin]: any
-				  }
+				}
 				| any[]
 		): CoinSet
 		logVals(): void
 		applyChange(): this
-		distribute(
-			coppLMin?: number,
-			silvLMin?: number,
-			goldLMin?: number,
-			platLMin?: number
-		): this
+		distribute(): this
+		distribute({
+			coppMinDigits,
+			silvMinDigits,
+			goldMinDigits,
+			platMinDigits,
+		}: {
+			[K in `${ShortCoin}MinDigits`]?: number
+		}): this
 		finalize(): {
 			plat: number
 			gold: number
@@ -145,13 +142,7 @@ declare namespace CharacterSheetCode {
 		ACFormula: `=${string}`
 		strReq: "-" | `Str ${number}`
 		stealth: "-" | "Disadvantage"
-		constructor(
-			name: string,
-			ACText: string,
-			ACFormula: `=${string}`,
-			strReq: "-" | `Str ${number}`,
-			stealth: "-" | "Disadvantage"
-		)
+		constructor(name: string, ACText: string, ACFormula: `=${string}`, strReq: "-" | `Str ${number}`, stealth: "-" | "Disadvantage")
 	}
 	export const ArmorPieces: Armor[]
 	/** Sets the selected armor options and autofills the various formulas and notes */
@@ -187,10 +178,7 @@ declare namespace CharacterSheetCode {
 		Ammunition: Equipment[]
 		"Equipment Pack": EquipmentPack[]
 	}
-	export function setEquipment(
-		category: keyof typeof EquipmentInfo,
-		name: string
-	): string
+	export function setEquipment(category: keyof typeof EquipmentInfo, name: string): string
 
 	// 05-Equipment_Functions.d.ts
 
@@ -233,14 +221,14 @@ declare namespace CharacterSheetCode {
 					Weight: string
 					Quantity: string
 					Note?: undefined
-			  }
+			}
 			| {
 					Name: string
 					Cost: string
 					Weight: string
 					Note: string
 					Quantity: string
-			  }
+			}
 		)[]
 		"Usable Items": (
 			| {
@@ -249,14 +237,14 @@ declare namespace CharacterSheetCode {
 					Weight: string
 					Note: string
 					Quantity: string
-			  }
+			}
 			| {
 					Name: string
 					Cost: string
 					Weight: string
 					Quantity: string
 					Note?: undefined
-			  }
+			}
 		)[]
 		Clothes: {
 			Name: string
@@ -289,14 +277,14 @@ declare namespace CharacterSheetCode {
 					Weight: string
 					Note: string
 					Quantity: string
-			  }
+			}
 			| {
 					Name: string
 					Cost: string
 					Weight: string
 					Quantity: string
 					Note?: undefined
-			  }
+			}
 		)[]
 		Armor: {
 			Name: string
@@ -345,20 +333,13 @@ declare namespace CharacterSheetCode {
 	// 06-Features.d.ts
 
 	export function features(e: GoogleAppsScript.Events.SheetsOnEdit): void
-	export function complexFeatures(
-		e: GoogleAppsScript.Events.SheetsOnEdit
-	): void
-	export function simpleFeatures(
-		e: GoogleAppsScript.Events.SheetsOnEdit
-	): void
+	export function complexFeatures(e: GoogleAppsScript.Events.SheetsOnEdit): void
+	export function simpleFeatures(e: GoogleAppsScript.Events.SheetsOnEdit): void
 	export function featureChange(e: GoogleAppsScript.Events.SheetsOnEdit): void
 
 	// 07-Features_Functions.d.ts
 
-	export function formulaCopy(
-		start: GoogleAppsScript.Spreadsheet.Range,
-		end: GoogleAppsScript.Spreadsheet.Range
-	): void
+	export function formulaCopy(start: GoogleAppsScript.Spreadsheet.Range, end: GoogleAppsScript.Spreadsheet.Range): void
 	export function findPosition(
 		searchKey: string | number,
 		listType: "Simple" | "Complex" | "Weapons" | "Notes",
@@ -367,7 +348,7 @@ declare namespace CharacterSheetCode {
 		| {
 				row: number
 				col: number
-		  }
+		}
 		| undefined
 	export function saveSimple(): void
 	export function loadSimple(): void
@@ -377,9 +358,7 @@ declare namespace CharacterSheetCode {
 	// 08-Health_(Depreciated).d.ts
 
 	/** @deprecated */
-	export function healthDepreciated(
-		e: GoogleAppsScript.Events.SheetsOnEdit
-	): void
+	export function healthDepreciated(e: GoogleAppsScript.Events.SheetsOnEdit): void
 
 	// 09-Json.d.ts
 
@@ -427,9 +406,7 @@ declare namespace CharacterSheetCode {
 		f: string | null
 		si: number | null
 	}
-	export function textstyleBuilder(
-		all: StyleBuilderJSON[][]
-	): GoogleAppsScript.Spreadsheet.TextStyle[][]
+	export function textstyleBuilder(all: StyleBuilderJSON[][]): GoogleAppsScript.Spreadsheet.TextStyle[][]
 
 	// 11-Misc_Functions.d.ts
 
@@ -440,18 +417,18 @@ declare namespace CharacterSheetCode {
 	/** Returns true if a is undefined, null, an empty string, or '#N/A', otherwise returns false */
 	export function isEmptyish(a: any): a is undefined | null | "" | "#N/A"
 	/** Returns an array of numbers. Both the lower and upper limits are inclusive
-	 * @param {number} x The lower limit if y is also included, or it is the upper limit if y is not included
-	 * @param {number} y The upper limit
-	 * @param {number} z The rate of incrementation, defaults to 1
-	 */
+	* @param {number} x The lower limit if y is also included, or it is the upper limit if y is not included
+	* @param {number} y The upper limit
+	* @param {number} z The rate of incrementation, defaults to 1
+	*/
 	export function numRange(x: number, y?: number, z?: number): number[]
 	/** Returns a column number based on the alpha characters of a range string
-	 * @param {string} x Ex. 'A', 'BC', etc.
-	 */
+	* @param {string} x Ex. 'A', 'BC', etc.
+	*/
 	export function A1toCol(x: string): number
 	/** Fixes a series of broken imgur links in spreadsheet.
-	 *
-	 */
+	*
+	*/
 	export function fixBrokenImages(): void
 
 	// 12-Multiclass.d.ts
@@ -469,7 +446,7 @@ declare namespace CharacterSheetCode {
 		| {
 				readonly arr: readonly ["add", number]
 				readonly lvl: number
-		  }
+		}
 		| {
 				readonly arr: readonly [
 					"edit",
@@ -483,7 +460,7 @@ declare namespace CharacterSheetCode {
 					}
 				]
 				readonly lvl: number
-		  }
+		}
 	/** Saves the inputted class info */
 	export function addEditInfo(
 		className: string,
@@ -495,26 +472,15 @@ declare namespace CharacterSheetCode {
 		selection?: string
 	): void
 	/** Adjusts current hit dice values so that they are never greater than their respective max values */
-	export function adjustExpended(
-		ss: GoogleAppsScript.Spreadsheet.Spreadsheet
-	): void
+	export function adjustExpended(ss: GoogleAppsScript.Spreadsheet.Spreadsheet): void
 	/** Adjusts the note on the classes cell that contains the named ranges for each level */
-	export function adjustNote(
-		ss: GoogleAppsScript.Spreadsheet.Spreadsheet
-	): void
+	export function adjustNote(ss: GoogleAppsScript.Spreadsheet.Spreadsheet): void
 	/** Adds or removes named ranges depending on whether a class was added or removed */
-	export function adjustNamedRanges(
-		ss: GoogleAppsScript.Spreadsheet.Spreadsheet
-	): void
+	export function adjustNamedRanges(ss: GoogleAppsScript.Spreadsheet.Spreadsheet): void
 	/** Creates a new spells sheet or modifies an existing spells sheet to account
-	 * for the addition of a new caster class
-	 */
-	export function doSpells(
-		ss: GoogleAppsScript.Spreadsheet.Spreadsheet,
-		Class: string,
-		Subclass: string,
-		spells: string
-	): void
+	* for the addition of a new caster class
+	*/
+	export function doSpells(ss: GoogleAppsScript.Spreadsheet.Spreadsheet, Class: string, Subclass: string, spells: string): void
 
 	// 13-Rest.d.ts
 
@@ -527,10 +493,8 @@ declare namespace CharacterSheetCode {
 	/** This function removes a rest rule from the sheet */
 	export function removeLongRest(): void
 	/** This function adjusts the number of expended hit dice.
-	 * If less than half the total remains, opends a dialog asking for manual adjustment */
-	export function adjustHitDice(
-		ss: GoogleAppsScript.Spreadsheet.Spreadsheet
-	): void
+	* If less than half the total remains, opends a dialog asking for manual adjustment */
+	export function adjustHitDice(ss: GoogleAppsScript.Spreadsheet.Spreadsheet): void
 	export function getHitDice(): {
 		maxd6: number
 		maxd8: number
@@ -542,15 +506,7 @@ declare namespace CharacterSheetCode {
 		expendedd12: number
 		readonly maxReplacement: number
 	}
-	export function updateHitDice(
-		d6?: number,
-		d8?: number,
-		d10?: number,
-		d12?: number,
-		bool?: boolean,
-		plus?: number,
-		initial?: any[]
-	): void
+	export function updateHitDice(d6?: number, d8?: number, d10?: number, d12?: number, bool?: boolean, plus?: number, initial?: any[]): void
 
 	// 14-Rest_Runner.d.ts
 
@@ -560,13 +516,8 @@ declare namespace CharacterSheetCode {
 	// 15-Rest_Types.d.ts
 
 	/** Compiles values inputted via the lrdialog
-	 */
-	export function restCompiler(
-		range: string,
-		type: string,
-		sr: boolean,
-		rest: string
-	): void
+	*/
+	export function restCompiler(range: string, type: string, sr: boolean, rest: string): void
 
 	// 16-Side_Bar.d.ts
 
@@ -574,14 +525,14 @@ declare namespace CharacterSheetCode {
 	/** Opens the sidebar */
 	export function sideBarLoader(): void
 	/** Returns an array that contains the following in order:
-	 * * Current Health (number)
-	 * * Maximum Health (number)
-	 * * Temporary Health (number)
-	 * * Whether or not there is caster levels (boolean)
-	 * * ID of the current spreadsheet (string)
-	 * * Current version of the sheet/code (string)
-	 * * Bonus Health (number)
-	 */
+	* * Current Health (number)
+	* * Maximum Health (number)
+	* * Temporary Health (number)
+	* * Whether or not there is caster levels (boolean)
+	* * ID of the current spreadsheet (string)
+	* * Current version of the sheet/code (string)
+	* * Bonus Health (number)
+	*/
 	export function getCurrent(): [
 		CurrentHealth: number,
 		MaxHealth: number,
@@ -592,12 +543,7 @@ declare namespace CharacterSheetCode {
 		BonusHealth: number
 	]
 	/** Takes in an object and sets the various health values based on its properties */
-	export function health(HP: {
-		cur: number
-		temp: number
-		bonus: number
-		readonly max?: number
-	}): void
+	export function health(HP: { cur: number; temp: number; bonus: number; readonly max?: number }): void
 	/** Returns an object containing every saving throw and ability/skill check's modifiers */
 	export function getStats(): {
 		strSave: number
@@ -633,10 +579,32 @@ declare namespace CharacterSheetCode {
 		stealthCheck: number
 		survivalCheck: number
 	}
+	type SpellType = "sc" | "pm"
+	type SpellLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+	type SpellSlotString = `${SpellType}${SpellLevel}`
 	/** Returns the values of each spell slot type and level */
 	export function getSpells(): {
 		scLvl: number
 		pmLvl: number
+	} & {
+		sc2?: number
+		sc1?: number
+		sc3?: number
+		sc4?: number
+		sc8?: number
+		sc5?: number
+		sc6?: number
+		sc7?: number
+		sc9?: number
+		pm2?: number
+		pm1?: number
+		pm3?: number
+		pm4?: number
+		pm8?: number
+		pm5?: number
+		pm6?: number
+		pm7?: number
+		pm9?: number
 	}
 	/** Reduces a spell slot type of level n by 1 */
 	export function useSpellSlot(n: number, type: string): void
@@ -646,14 +614,14 @@ declare namespace CharacterSheetCode {
 	}
 	/** Takes in an object containing the spell slot values for each type and level and sets them to the sheet */
 	export function setSpellSlots(slots: {
-		[K in `${"sc" | "pm"}${1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}`]: Slot
+		[K in SpellSlotString]: Slot
 	}): void
 
 	// 17-Side_Bar_Functions.d.ts
 
 	/**
-	 * @returns A1 Notation for currentCell's equivalent position in a page-layout storage sheet or currentCell's A1 Notation if not a part of a page-layout
-	 */
+	* @returns A1 Notation for currentCell's equivalent position in a page-layout storage sheet or currentCell's A1 Notation if not a part of a page-layout
+	*/
 	export function getOuterRange(
 		currentCell: GoogleAppsScript.Spreadsheet.Range,
 		ss: GoogleAppsScript.Spreadsheet.Spreadsheet,
@@ -673,7 +641,7 @@ declare namespace CharacterSheetCode {
 	/** Returns a boolean denoting if a sheet/cell combination exists */
 	export function exists(sheet: string, cell: string): boolean
 	/** Used in the lookup dialog to get a website's html as a string
-	 * @returns {string} The HTML content of a website */
+	* @returns {string} The HTML content of a website */
 	export function returnFetch(url: string): string
 	/** Opens an html dialog */
 	export function openHTML(file: string, titleOverride?: string): void
@@ -688,10 +656,7 @@ declare namespace CharacterSheetCode {
 	/** Edits the weapons cells by either clearing their values and notes or autofilling their values by opening an HTML dialog */
 	export function weapons(e: GoogleAppsScript.Events.SheetsOnEdit): void
 	type ShortCharStats = "Str" | "Dex" | "Con" | "Int" | "Wis" | "Cha"
-	type WeaponDamage =
-		| `${number}d${number} ${string}`
-		| `${number} ${string}`
-		| "-"
+	type WeaponDamage = `${number}d${number} ${string}` | `${number} ${string}` | "-"
 	type WeaponProps =
 		| "Ammunition"
 		| "Finesse"
@@ -712,12 +677,7 @@ declare namespace CharacterSheetCode {
 		damage: WeaponDamage
 		type: WeaponType
 		props: WeaponProps[]
-		constructor(
-			name: string,
-			damage: WeaponDamage,
-			type: WeaponType,
-			...props: WeaponProps[]
-		)
+		constructor(name: string, damage: WeaponDamage, type: WeaponType, ...props: WeaponProps[])
 	}
 	/** Applies the values passed into the function to the edited cell */
 	export function weaponSetter(

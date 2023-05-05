@@ -1,38 +1,38 @@
 /** Returns an object that contains an array of class names and the total level */
 function getLevels() {
     const ss = SpreadsheetApp.getActiveSpreadsheet(); // define spreadsheet reference
-    const classes = ss.getRange('Character!AQ7:AQ26') // get levels storage range
+    const classes = ss.getRange("Character!AQ7:AQ26") // get levels storage range
         .getValues() // get their values
         .map(x => x[0]) // get each value in the first column
         .filter(x => !isEmptyish(x)); // filter out any blank values
-    return { arr: classes, lvl: Number(ss.getRangeByName('Lvl').getValue()) };
+    return { arr: classes, lvl: Number(ss.getRangeByName("Lvl").getValue()) };
     // ^return an object containing the classes and the total level
 }
 /** Sets buffer range to selection and opens editlevel dialog */
 function levelBuffer(selection) {
     const ss = SpreadsheetApp.getActiveSpreadsheet(); // define spreadsheet reference
-    ss.getRange('Character!AS1').setValue(selection); // set buffer range to selection
-    openHTML('editlevel', (['addlevel', 'add'].some(x => x == selection)) ? 'Add Level' : selection);
+    ss.getRange("Character!AS1").setValue(selection); // set buffer range to selection
+    openHTML("editlevel", (["addlevel", "add"].some(x => x == selection)) ? "Add Level" : selection);
     // ^open dialog with variable title
 }
 function getClassEdit() {
-    return SpreadsheetApp.getActiveSpreadsheet().getRange('Character!AS1').getValue();
+    return SpreadsheetApp.getActiveSpreadsheet().getRange("Character!AS1").getValue();
 }
 function clearClassEdit() {
-    SpreadsheetApp.getActiveSpreadsheet().getRange('Character!AS1').setValue('');
+    SpreadsheetApp.getActiveSpreadsheet().getRange("Character!AS1").setValue("");
 }
 function getClassInfo() {
     const ss = SpreadsheetApp.getActiveSpreadsheet(); // Spreadsheet reference
-    var current = getClassEdit(); // get level buffer value
-    const classRange = ss.getRange('Character!AQ7:AU26'); // class storage range reference
-    const absLvl = Number(ss.getRangeByName('TotalCharacterLevels').getValue());
+    const current = getClassEdit(); // get level buffer value
+    const classRange = ss.getRange("Character!AQ7:AU26"); // class storage range reference
+    const absLvl = Number(ss.getRangeByName("TotalCharacterLevels").getValue());
     // ^define total character level
-    let cell = (row, col) => classRange.getCell(row, col).getValue();
+    const cell = (row, col) => classRange.getCell(row, col).getValue();
     // ^arrow function to return value of certain cell in classRange
-    if (['add', 'addlevel'].some(x => x == current)) { // if current is either 'add' or 'addlevel'
+    if (["add", "addlevel"].some(x => x == current)) { // if current is either 'add' or 'addlevel'
         for (let i = 1; i <= classRange.getNumRows(); i++) { // loop through classRange rows
             if (classRange.getCell(i, 1).isBlank()) { // if the current range is blank
-                return { arr: ['add', i], lvl: absLvl }; // return array and level
+                return { arr: ["add", i], lvl: absLvl }; // return array and level
             }
         }
     }
@@ -47,7 +47,7 @@ function getClassInfo() {
                     hitdie: cell(i, 4),
                     spells: cell(i, 5) // the spellcasting type of the class
                 };
-                return { arr: ['edit', i, info], lvl: absLvl }; // return array and level
+                return { arr: ["edit", i, info], lvl: absLvl }; // return array and level
             }
         }
     }
@@ -55,24 +55,24 @@ function getClassInfo() {
 /** Saves the inputted class info */
 function addEditInfo(className, subclass, level, hitdie, spells, x, selection) {
     const ss = SpreadsheetApp.getActiveSpreadsheet(); // Spreadsheet reference
-    const classValues = ss.getRange('Character!AQ7:AQ26').getValues().flat(); // get array of class names
-    const classRange = ss.getRange('Character!AQ7:AU26'); // define reference to class storage range
+    const classValues = ss.getRange("Character!AQ7:AQ26").getValues().flat(); // get array of class names
+    const classRange = ss.getRange("Character!AQ7:AU26"); // define reference to class storage range
     const info = [className, subclass, level, hitdie, spells]; // define array of inputted parameters
-    if (selection == 'add' && checkDuplicate(className)) { // if user is adding a class that already exists
-        SpreadsheetApp.getUi().alert('Error: You cannot take separate levels in a class you already have levels in.\n' +
-            'Please change your input.'); // alert user of an error
+    if (selection == "add" && checkDuplicate(className)) { // if user is adding a class that already exists
+        SpreadsheetApp.getUi().alert("Error: You cannot take separate levels in a class you already have levels in.\n" +
+            "Please change your input."); // alert user of an error
         levelBuffer(selection); // save selection to buffer
         return; // end execution
     }
     else { // otherwise
         const cell = classRange.getCell(x, 1); // define reference to cell
-        ss.getSheetByName('Character').getRange(cell.getRow(), cell.getColumn(), 1, 5).setValues([info]);
+        ss.getSheetByName("Character").getRange(cell.getRow(), cell.getColumn(), 1, 5).setValues([info]);
         // ^set values of row in class storage to the contents of info
     }
     rearranger(); // rearranges class rows to always be as close to the top as possible (when deleting a class)
     clearClassEdit(); // self explanatory
     adjustNamedRanges(ss); // makes sure each level has a named range
-    if (spells != 'None')
+    if (spells != "None")
         doSpells(ss, className, subclass, spells);
     // ^creates a spells sheet for the class if the new class is a caster class
     adjustNote(ss); // adjusts the note that shows the named range for each class
@@ -89,9 +89,11 @@ function addEditInfo(className, subclass, level, hitdie, spells, x, selection) {
     }
     /** Sorts classes so that there are no empty rows */
     function rearranger() {
-        const sheet = ss.getSheetByName('Character'); // define Character sheet reference
-        const range = sheet.getRange('AQ7:AU26'); // define reference to class storage range
-        var i = 1, j = 1, rows = 20; // define 
+        const sheet = ss.getSheetByName("Character"); // define Character sheet reference
+        const range = sheet.getRange("AQ7:AU26"); // define reference to class storage range
+        let i = 1;
+        let j = 1;
+        const rows = 20; // define 
         while (i < rows && j < rows) { // while i and j are less than rows
             const control = {
                 cell: range.getCell(i, 1),
@@ -116,9 +118,9 @@ function addEditInfo(className, subclass, level, hitdie, spells, x, selection) {
 }
 /** Adjusts current hit dice values so that they are never greater than their respective max values */
 function adjustExpended(ss) {
-    const count = ss.getRange('Character!AQ4:AT4'); // define reference to max hit dice range
-    const current = ss.getRange('Character!AQ6:AT6'); // define reference to current hit dice range
-    let cell = (range, row, col) => Number(range.getCell(row, col).getValue());
+    const count = ss.getRange("Character!AQ4:AT4"); // define reference to max hit dice range
+    const current = ss.getRange("Character!AQ6:AT6"); // define reference to current hit dice range
+    const cell = (range, row, col) => Number(range.getCell(row, col).getValue());
     // ^arrow function to return the value of the range inputted
     for (let i = 1; i <= 4; i++) { // loop through each column
         if (cell(current, 1, i) > cell(count, 1, i))
@@ -128,22 +130,22 @@ function adjustExpended(ss) {
 }
 /** Adjusts the note on the classes cell that contains the named ranges for each level */
 function adjustNote(ss) {
-    const classRange = ss.getRange('Character!T5'); // define reference to class display cell
+    const classRange = ss.getRange("Character!T5"); // define reference to class display cell
     const note = classRange.getNote(); // get the current note in that cell
-    const classes = ss.getRange('Character!AQ7:AS26'); // define reference to class storage range
+    const classes = ss.getRange("Character!AQ7:AS26"); // define reference to class storage range
     /** @type {string[]} */
     const className = [], subclass = [], level = []; // create a series of empty arrays for classNames, subclasses, and levels
     for (let i = 1; i <= classes.getNumRows(); i++) { // loop through class range rows
-        let cell = (row, col) => classes.getCell(row, col); // arrow function to return specific cell of class range
+        const cell = (row, col) => classes.getCell(row, col); // arrow function to return specific cell of class range
         if (!cell(i, 1).isBlank()) { // if the first column of the first row is not blank
             className.push(cell(i, 1).getValue()); // push class, subclass and level of the row to their respective arrays
             subclass.push(cell(i, 2).getValue()); // ^^^
             level.push(cell(i, 3).getValue()); // ^^^
         }
     }
-    const noteBuilder = className.reduce((str, x, j) => str +
+    const noteBuilder = className.reduce((str, x, j) => (str +
         `${subclass[j]} ${x} ${level[j]} (${className[j].replace(/ /g, "")}Lvl)`.trim() +
-        ((j + 1 < className.length) ? '\n' : ''), 'To reference a level in a formula, use the value in parentheses\n');
+        ((j + 1 < className.length) ? "\n" : "")), "To reference a level in a formula, use the value in parentheses\n");
     // ^define noteBuilder as the reduced className array that becomes
     // ^a note containing the named ranges associated to their class levels
     if (note != noteBuilder)
@@ -152,7 +154,7 @@ function adjustNote(ss) {
 }
 /** Adds or removes named ranges depending on whether a class was added or removed */
 function adjustNamedRanges(ss) {
-    const classes = ss.getRange('Character!AQ7:AS26'); // defines reference to class storage range
+    const classes = ss.getRange("Character!AQ7:AS26"); // defines reference to class storage range
     for (let i = 1; i <= classes.getNumRows(); i++) { // loop through class range
         const current = classes.getCell(i, 1).getValue().replace(/ /g, ""); // value of current row's class name without spaces
         if (ss.getRangeByName(`${current}Lvl`) == null && !isEmptyish(current))
@@ -161,7 +163,7 @@ function adjustNamedRanges(ss) {
     }
     const lvlRanges = ss.getNamedRanges().filter(elem => elem.getName().includes("Lvl") && elem.getName() != "Lvl");
     // ^defines an array of named ranges whose names include the string 'Lvl' but are not equal to 'Lvl'
-    for (let a in lvlRanges) { // loop through lvlRanges
+    for (const a in lvlRanges) { // loop through lvlRanges
         console.log(lvlRanges[a].getName());
         const row = lvlRanges[a].getRange().getRow() - 6;
         // ^get the row (relative to the range to be used in getCell) of the current named range
@@ -188,49 +190,49 @@ function doSpells(ss, Class, Subclass, spells) {
     const sheetNames = ss.getSheets().map(x => x.getName()); // get all sheets and create an array containing their names
     /** Class name without spaces */
     const classWOSpaces = Class.replace(/ /g, ""); // define a version of the class name without spaces
-    if (spells != 'None') // if the class's caster type is not 'None'
+    if (spells != "None") // if the class's caster type is not 'None'
         if (!sheetNames.includes(`${Class} Spells`)) {
             // ^if sheetNames does not include a spells sheet for the inputted class
-            const master = spells == "Pact" ? 'PM' : 'SC';
+            const master = spells == "Pact" ? "PM" : "SC";
             // ^if class's caster type is 'Pact', this equals 'PM' (Pact Magic), otherwise it equals 'SC' (Spellcasting)
-            const newSheet = ss.getSheetByName('Template Spells').copyTo(ss).showSheet();
+            const newSheet = ss.getSheetByName("Template Spells").copyTo(ss).showSheet();
             // ^creates a copy of template spells and unhides it
             newSheet.setName(`${Class} Spells`); // renames the new sheet
             newSheet.getRange("AV38").setFormula(`=${classWOSpaces}Lvl`); // sets the sheet's caster level range to the proper value
-            const protections = ss.getSheetByName('Template Spells').getProtections(SpreadsheetApp.ProtectionType.RANGE);
+            const protections = ss.getSheetByName("Template Spells").getProtections(SpreadsheetApp.ProtectionType.RANGE);
             // ^get the range protections from template spells
-            for (let protection of protections)
+            for (const protection of protections)
                 newSheet.getRange(protection.getRange().getA1Notation()).protect().setWarningOnly(true);
             // ^loop through protections and set each of them to the new sheet
-            const casters = newSheet.getRange('AQ28:AQ').getValues().flat(); // get the list of casters
+            const casters = newSheet.getRange("AQ28:AQ").getValues().flat(); // get the list of casters
             if (casters.includes(Class))
-                newSheet.getRange('C5').setValue(Class);
+                newSheet.getRange("C5").setValue(Class);
             // ^if the list of casters includes the inputted class, set the dropdown list's value to the class name
             else if (casters.includes(Subclass))
-                newSheet.getRange('C5').setValue(Subclass);
+                newSheet.getRange("C5").setValue(Subclass);
             // ^else if the list of casters includes the inputted subclass, set the dropdown list's value to the subclass name
             else
                 newSheet.getRange("C5").setValue(spells); // otherwise, set the dropdown list's value to the caster type
             const newNamedRanges = newSheet.getNamedRanges(); // gets the named ranges from the new sheet
             const spellLevels = numRange(1, 9); // define array of numbers for available spell levels
-            for (let range of newNamedRanges) { // loop through named ranges
+            for (const range of newNamedRanges) { // loop through named ranges
                 const name = range.getName(); // get name of current range
                 const level = spellLevels.find(x => name.includes(`L${x}`));
                 if (!isEmptyish(level))
                     range.setName(`${classWOSpaces}${master}L${level}Slots`);
                 // ^if range references a spell slot area, set the name to the class name + the slot type + the level
-                else if (name.includes('CasterLevel'))
+                else if (name.includes("CasterLevel"))
                     range.setName(`${classWOSpaces}CasterLevel`);
                 // ^else if range references the caster level, add the class name to the range's name
             }
-            for (let i of spellLevels) { // loop through spellLevels
+            for (const i of spellLevels) { // loop through spellLevels
                 ss.getRangeByName(`'${Class} Spells'!${classWOSpaces}${master}L${i}Slots`).setFormula(`=Master${master}L${i}Slots`);
                 // ^get each of the spell slot ranges and sets the formula to its equivalent range in the master sheet
             }
         }
         else { // otherwise (this is just if a user removes a class and then adds it again later)
             ss.getSheetByName(`${Class} Spells`) // get the class's spell sheet
-                .getNamedRanges().find(x => x.getName().includes('CasterLevel')) // get the caster level named range
+                .getNamedRanges().find(x => x.getName().includes("CasterLevel")) // get the caster level named range
                 .getRange().setFormula(`=${classWOSpaces}Lvl`); // set its formula to the class's level
         }
 }

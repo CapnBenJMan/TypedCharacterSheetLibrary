@@ -4,8 +4,8 @@ function isEmptyish(a) {
     return [
         undefined,
         null,
-        '',
-        '#N/A'
+        "",
+        "#N/A"
     ].some(x => x == a);
 }
 /** Returns an array of numbers. Both the lower and upper limits are inclusive
@@ -15,7 +15,8 @@ function isEmptyish(a) {
  */
 function numRange(x, y = x, z = 1) {
     const arr = [];
-    const lower = x == y ? 0 : x, upper = y;
+    const lower = x == y ? 0 : x;
+    const upper = y;
     for (let i = lower; i <= upper; i += z)
         arr.push(i);
     return arr;
@@ -58,7 +59,7 @@ function fixBrokenImages() {
         ["Character!AN5", `=IFS(Lvl<5,IMAGE("http://i.imgur.com/stPe4fo.png",2),Lvl<11,IMAGE("http://i.imgur.com/PVGeU3d.png",2),Lvl<17,IMAGE("http://i.imgur.com/mnwcuFl.png",2),TRUE, IMAGE("http://i.imgur.com/TfiOReG.png",2))`],
         ["Details!C9", `=IMAGE("https://i.imgur.com/IxRRFOd.png",2)`],
     ];
-    for (let [a1, formula] of replacements) {
+    for (const [a1, formula] of replacements) {
         ss.getRange(a1).setFormula(formula);
     }
 }

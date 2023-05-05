@@ -1,6 +1,6 @@
-qryA('input').forEach(x => x.autocomplete = 'off'); // disable autocomplete for each input element
+qryA("input").forEach(x => x.autocomplete = "off"); // disable autocomplete for each input element
 document.addEventListener("DOMContentLoaded", async () => {
-    show(ID('loader')); // show loader
+    show(ID("loader")); // show loader
     const values = await runGoogleWithReturn("getHitDice"); // get hit dice values
     {
         [6, 8, 10, 12].forEach(n => {
@@ -11,12 +11,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             expended.value = values[`expendedd${n}`]; // set the value for expended input
         });
     }
-    hide(ID('loader')); // hide loader
+    hide(ID("loader")); // hide loader
 });
 async function update() {
-    show(ID('loader')); // show loader
-    let parseVal = (id) => Number(ID(id).value);
-    await runGoogle("updateHitDice", [parseVal('expendedd6'), parseVal('expendedd8'), parseVal('expendedd10'), parseVal('expendedd12')]);
+    show(ID("loader")); // show loader
+    const parseVal = (id) => Number(ID(id).value);
+    await runGoogle("updateHitDice", [parseVal("expendedd6"), parseVal("expendedd8"), parseVal("expendedd10"), parseVal("expendedd12")]);
     // ^update hit dice with inputted values
     google.script.host.close(); // close dialog
 }

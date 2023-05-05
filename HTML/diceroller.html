@@ -645,42 +645,19 @@
 
 	<body>
 		<div class="tab">
-			<button
-				class="tablinks"
-				onclick="pageTurner(event, 'Saving Throw')"
-				id="defaultOpen"
-			>
-				Saving Throw
-			</button>
-			<button class="tablinks" onclick="pageTurner(event, 'Skill Check')">
-				Skill Check
-			</button>
-			<button
-				class="tablinks"
-				onclick="pageTurner(event, 'Check Builder')"
-			>
-				Check Builder
-			</button>
-			<button class="tablinks" onclick="pageTurner(event, 'Misc Dice')">
-				Misc. Dice
-			</button>
-			<button class="tablinks" onclick="pageTurner(event, 'Help Info')">
-				Help
-			</button>
+			<button class="tablinks" onclick="pageTurner(event, 'Saving Throw')" id="defaultOpen">Saving Throw</button>
+			<button class="tablinks" onclick="pageTurner(event, 'Skill Check')">Skill Check</button>
+			<button class="tablinks" onclick="pageTurner(event, 'Check Builder')">Check Builder</button>
+			<button class="tablinks" onclick="pageTurner(event, 'Misc Dice')">Misc. Dice</button>
+			<button class="tablinks" onclick="pageTurner(event, 'Help Info')">Help</button>
 		</div>
 		<!--Saving Throws-->
 		<div id="Saving Throw" class="tabcontent">
 			<div class="savingthrow">
 				<div style="position: relative; float: left">
-					<button id="bstrSave" class="stbutton">Strength</button
-					><button id="bintSave" class="stbutton">Intelligence</button
-					><br />
-					<button id="bdexSave" class="stbutton">Dexterity</button
-					><button id="bwisSave" class="stbutton">Wisdom</button
-					><br />
-					<button id="bconSave" class="stbutton">Constitution</button
-					><button id="bchaSave" class="stbutton">Charisma</button
-					><br />
+					<button id="bstrSave" class="stbutton">Strength</button><button id="bintSave" class="stbutton">Intelligence</button><br />
+					<button id="bdexSave" class="stbutton">Dexterity</button><button id="bwisSave" class="stbutton">Wisdom</button><br />
+					<button id="bconSave" class="stbutton">Constitution</button><button id="bchaSave" class="stbutton">Charisma</button><br />
 					<label for="inputmodifierst">Other Modifier:</label>
 					<input
 						type="number"
@@ -690,108 +667,45 @@
 						onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
 					/>
 					<div class="tri-state-toggle">
-						<input
-							id="disst"
-							type="radio"
-							name="dadvst"
-							value="dis"
-						/>
+						<input id="disst" type="radio" name="dadvst" value="dis" />
 						<label for="disst">Dis</label>
-						<input
-							id="nast"
-							type="radio"
-							name="dadvst"
-							checked
-							value="na"
-						/>
+						<input id="nast" type="radio" name="dadvst" checked value="na" />
 						<label for="nast">Normal</label>
-						<input
-							id="advst"
-							type="radio"
-							name="dadvst"
-							value="adv"
-						/>
+						<input id="advst" type="radio" name="dadvst" value="adv" />
 						<label for="advst">Adv</label>
 					</div>
 					<div id="totalst" class="totalindicator">Total: 0</div>
 				</div>
 				<div class="d20" id="d20st">
 					<svg id="hex" width="200" height="200">
-						<polygon
-							points="100,10 22.058,55 22.058,145 100,190 177.942,145 177.942,55"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="100,10 22.058,55 22.058,145 100,190 177.942,145 177.942,55" fill="none" stroke="black" />
 					</svg>
 					<svg id="a" width="200" height="200">
-						<polygon
-							points="22.058,55 100,190 177.942,55"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="22.058,55 100,190 177.942,55" fill="none" stroke="black" />
 					</svg>
 					<svg id="a1" width="200" height="200">
-						<polygon
-							points="22.058,55 100,190 177.942,55"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="22.058,55 100,190 177.942,55" fill="none" stroke="black" />
 					</svg>
 					<svg id="a2" width="200" height="200">
-						<polygon
-							points="22.058,55 100,190 177.942,55"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="22.058,55 100,190 177.942,55" fill="none" stroke="black" />
 					</svg>
 					<svg id="a3" width="200" height="200">
-						<polygon
-							points="22.058,55 100,190 177.942,55"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="22.058,55 100,190 177.942,55" fill="none" stroke="black" />
 					</svg>
 					<svg id="b" width="200" height="200">
-						<polygon
-							points="100,10 22.058,145 177.942,145"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="100,10 22.058,145 177.942,145" fill="none" stroke="black" />
 					</svg>
 					<svg id="b1" width="200" height="200">
-						<polygon
-							points="100,10 22.058,145 177.942,145"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="100,10 22.058,145 177.942,145" fill="none" stroke="black" />
 					</svg>
 					<svg id="b2" width="200" height="200">
-						<polygon
-							points="100,10 22.058,145 177.942,145"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="100,10 22.058,145 177.942,145" fill="none" stroke="black" />
 					</svg>
 					<svg id="b3" width="200" height="200">
-						<polygon
-							points="100,10 22.058,145 177.942,145"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="100,10 22.058,145 177.942,145" fill="none" stroke="black" />
 					</svg>
-					<svg
-						width="200"
-						height="200"
-						id="rnholderst"
-						style="visibility: hidden"
-						class="randomnumber"
-					>
-						<text
-							x="100"
-							y="107.5"
-							text-anchor="middle"
-							id="randomnumberst"
-						></text>
+					<svg width="200" height="200" id="rnholderst" style="visibility: hidden" class="randomnumber">
+						<text x="100" y="107.5" text-anchor="middle" id="randomnumberst"></text>
 					</svg>
 				</div>
 			</div>
@@ -821,8 +735,7 @@
 						<option value="stealth">Stealth</option>
 						<option value="survival">Survival</option>
 					</select>
-					<button style="width: 66px" class="scbutton">Roll</button
-					><br />
+					<button style="width: 66px" class="scbutton">Roll</button><br />
 					<label for="inputmodifiersc">Other Modifier:</label>
 					<input
 						type="number"
@@ -832,108 +745,45 @@
 						onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
 					/>
 					<div class="tri-state-toggle">
-						<input
-							id="dissc"
-							type="radio"
-							name="dadvsc"
-							value="dis"
-						/>
+						<input id="dissc" type="radio" name="dadvsc" value="dis" />
 						<label for="dissc">Dis</label>
-						<input
-							id="nasc"
-							type="radio"
-							name="dadvsc"
-							checked
-							value="na"
-						/>
+						<input id="nasc" type="radio" name="dadvsc" checked value="na" />
 						<label for="nasc">Normal</label>
-						<input
-							id="advsc"
-							type="radio"
-							name="dadvsc"
-							value="adv"
-						/>
+						<input id="advsc" type="radio" name="dadvsc" value="adv" />
 						<label for="advsc">Adv</label>
 					</div>
 					<div id="totalsc" class="totalindicator">Total: 0</div>
 				</div>
 				<div class="d20" id="d20sc">
 					<svg id="hex" width="200" height="200">
-						<polygon
-							points="100,10 22.058,55 22.058,145 100,190 177.942,145 177.942,55"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="100,10 22.058,55 22.058,145 100,190 177.942,145 177.942,55" fill="none" stroke="black" />
 					</svg>
 					<svg id="a" width="200" height="200">
-						<polygon
-							points="22.058,55 100,190 177.942,55"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="22.058,55 100,190 177.942,55" fill="none" stroke="black" />
 					</svg>
 					<svg id="a1" width="200" height="200">
-						<polygon
-							points="22.058,55 100,190 177.942,55"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="22.058,55 100,190 177.942,55" fill="none" stroke="black" />
 					</svg>
 					<svg id="a2" width="200" height="200">
-						<polygon
-							points="22.058,55 100,190 177.942,55"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="22.058,55 100,190 177.942,55" fill="none" stroke="black" />
 					</svg>
 					<svg id="a3" width="200" height="200">
-						<polygon
-							points="22.058,55 100,190 177.942,55"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="22.058,55 100,190 177.942,55" fill="none" stroke="black" />
 					</svg>
 					<svg id="b" width="200" height="200">
-						<polygon
-							points="100,10 22.058,145 177.942,145"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="100,10 22.058,145 177.942,145" fill="none" stroke="black" />
 					</svg>
 					<svg id="b1" width="200" height="200">
-						<polygon
-							points="100,10 22.058,145 177.942,145"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="100,10 22.058,145 177.942,145" fill="none" stroke="black" />
 					</svg>
 					<svg id="b2" width="200" height="200">
-						<polygon
-							points="100,10 22.058,145 177.942,145"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="100,10 22.058,145 177.942,145" fill="none" stroke="black" />
 					</svg>
 					<svg id="b3" width="200" height="200">
-						<polygon
-							points="100,10 22.058,145 177.942,145"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="100,10 22.058,145 177.942,145" fill="none" stroke="black" />
 					</svg>
-					<svg
-						width="200"
-						height="200"
-						id="rnholdersc"
-						style="visibility: hidden"
-						class="randomnumber"
-					>
-						<text
-							x="100"
-							y="107.5"
-							text-anchor="middle"
-							id="randomnumbersc"
-						></text>
+					<svg width="200" height="200" id="rnholdersc" style="visibility: hidden" class="randomnumber">
+						<text x="100" y="107.5" text-anchor="middle" id="randomnumbersc"></text>
 					</svg>
 				</div>
 			</div>
@@ -943,22 +793,12 @@
 		<div id="Check Builder" class="tabcontent">
 			<div class="checkbuilder">
 				<div style="position: relative; float: left">
-					<button id="bstrCheck" class="cbbutton">Strength</button
-					><button id="bintCheck" class="cbbutton">
-						Intelligence</button
-					><br />
-					<button id="bdexCheck" class="cbbutton">Dexterity</button
-					><button id="bwisCheck" class="cbbutton">Wisdom</button
-					><br />
-					<button id="bconCheck" class="cbbutton">Constitution</button
-					><button id="bchaCheck" class="cbbutton">Charisma</button
-					><br />
-					<button id="binit" class="widebutton">Initiative</button
-					><br />
+					<button id="bstrCheck" class="cbbutton">Strength</button><button id="bintCheck" class="cbbutton">Intelligence</button><br />
+					<button id="bdexCheck" class="cbbutton">Dexterity</button><button id="bwisCheck" class="cbbutton">Wisdom</button><br />
+					<button id="bconCheck" class="cbbutton">Constitution</button><button id="bchaCheck" class="cbbutton">Charisma</button><br />
+					<button id="binit" class="widebutton">Initiative</button><br />
 					<input id="addprof" type="checkbox" />
-					<label for="addprof" style="font-size: 15px"
-						>Add Proficiency Bonus</label
-					><br />
+					<label for="addprof" style="font-size: 15px">Add Proficiency Bonus</label><br />
 					<label for="inputmodifiercb">Other Modifier:</label>
 					<input
 						type="number"
@@ -968,108 +808,45 @@
 						onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
 					/>
 					<div class="tri-state-toggle">
-						<input
-							id="discb"
-							type="radio"
-							name="dadvcb"
-							value="dis"
-						/>
+						<input id="discb" type="radio" name="dadvcb" value="dis" />
 						<label for="discb">Dis</label>
-						<input
-							id="nacb"
-							type="radio"
-							name="dadvcb"
-							checked
-							value="na"
-						/>
+						<input id="nacb" type="radio" name="dadvcb" checked value="na" />
 						<label for="nacb">Normal</label>
-						<input
-							id="advcb"
-							type="radio"
-							name="dadvcb"
-							value="adv"
-						/>
+						<input id="advcb" type="radio" name="dadvcb" value="adv" />
 						<label for="advcb">Adv</label>
 					</div>
 					<div id="totalcb" class="totalindicator">Total: 0</div>
 				</div>
 				<div class="d20" id="d20cb">
 					<svg id="hex" width="200" height="200">
-						<polygon
-							points="100,10 22.058,55 22.058,145 100,190 177.942,145 177.942,55"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="100,10 22.058,55 22.058,145 100,190 177.942,145 177.942,55" fill="none" stroke="black" />
 					</svg>
 					<svg id="a" width="200" height="200">
-						<polygon
-							points="22.058,55 100,190 177.942,55"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="22.058,55 100,190 177.942,55" fill="none" stroke="black" />
 					</svg>
 					<svg id="a1" width="200" height="200">
-						<polygon
-							points="22.058,55 100,190 177.942,55"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="22.058,55 100,190 177.942,55" fill="none" stroke="black" />
 					</svg>
 					<svg id="a2" width="200" height="200">
-						<polygon
-							points="22.058,55 100,190 177.942,55"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="22.058,55 100,190 177.942,55" fill="none" stroke="black" />
 					</svg>
 					<svg id="a3" width="200" height="200">
-						<polygon
-							points="22.058,55 100,190 177.942,55"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="22.058,55 100,190 177.942,55" fill="none" stroke="black" />
 					</svg>
 					<svg id="b" width="200" height="200">
-						<polygon
-							points="100,10 22.058,145 177.942,145"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="100,10 22.058,145 177.942,145" fill="none" stroke="black" />
 					</svg>
 					<svg id="b1" width="200" height="200">
-						<polygon
-							points="100,10 22.058,145 177.942,145"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="100,10 22.058,145 177.942,145" fill="none" stroke="black" />
 					</svg>
 					<svg id="b2" width="200" height="200">
-						<polygon
-							points="100,10 22.058,145 177.942,145"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="100,10 22.058,145 177.942,145" fill="none" stroke="black" />
 					</svg>
 					<svg id="b3" width="200" height="200">
-						<polygon
-							points="100,10 22.058,145 177.942,145"
-							fill="none"
-							stroke="black"
-						/>
+						<polygon points="100,10 22.058,145 177.942,145" fill="none" stroke="black" />
 					</svg>
-					<svg
-						width="200"
-						height="200"
-						id="rnholdercb"
-						style="visibility: hidden"
-						class="randomnumber"
-					>
-						<text
-							x="100"
-							y="107.5"
-							text-anchor="middle"
-							id="randomnumbercb"
-						></text>
+					<svg width="200" height="200" id="rnholdercb" style="visibility: hidden" class="randomnumber">
+						<text x="100" y="107.5" text-anchor="middle" id="randomnumbercb"></text>
 					</svg>
 				</div>
 			</div>
@@ -1098,142 +875,34 @@
 				<div id="d4container">
 					<div id="d4" class="d4 die">
 						<svg width="100" height="100">
-							<polygon
-								id="d4x"
-								points="50,5 5,75 50,95 95,75"
-								fill="none"
-								stroke="black"
-							/>
-							<polygon
-								id="d4y"
-								points="50,5 5,75 50,95 95,75"
-								fill="none"
-								stroke="black"
-							/>
+							<polygon id="d4x" points="50,5 5,75 50,95 95,75" fill="none" stroke="black" />
+							<polygon id="d4y" points="50,5 5,75 50,95 95,75" fill="none" stroke="black" />
 						</svg>
 						<svg width="100" height="100">
-							<polyline
-								id="d4a"
-								points="50,95 50,70"
-								stroke="black"
-							/>
-							<polyline
-								id="d4b"
-								points="50,90 50,70"
-								stroke="black"
-							/>
-							<polyline
-								id="d4c"
-								points="50,85 50,70"
-								stroke="black"
-							/>
-							<polyline
-								id="d4d"
-								points="50,80 50,70"
-								stroke="black"
-							/>
-							<polyline
-								id="d4e"
-								points="50,75 50,70"
-								stroke="black"
-							/>
-							<polyline
-								id="d4a"
-								points="50,30 50,5"
-								stroke="black"
-							/>
-							<polyline
-								id="d4b"
-								points="50,30 50,10"
-								stroke="black"
-							/>
-							<polyline
-								id="d4c"
-								points="50,30 50,15"
-								stroke="black"
-							/>
-							<polyline
-								id="d4d"
-								points="50,30 50,20"
-								stroke="black"
-							/>
-							<polyline
-								id="d4e"
-								points="50,30 50,25"
-								stroke="black"
-							/>
-							<polyline
-								id="d4ar"
-								points="50,95 50,70"
-								stroke="black"
-							/>
-							<polyline
-								id="d4br"
-								points="50,90 50,70"
-								stroke="black"
-							/>
-							<polyline
-								id="d4cr"
-								points="50,85 50,70"
-								stroke="black"
-							/>
-							<polyline
-								id="d4dr"
-								points="50,80 50,70"
-								stroke="black"
-							/>
-							<polyline
-								id="d4er"
-								points="50,75 50,70"
-								stroke="black"
-							/>
-							<polyline
-								id="d4ar"
-								points="50,30 50,5"
-								stroke="black"
-							/>
-							<polyline
-								id="d4br"
-								points="50,30 50,10"
-								stroke="black"
-							/>
-							<polyline
-								id="d4cr"
-								points="50,30 50,15"
-								stroke="black"
-							/>
-							<polyline
-								id="d4dr"
-								points="50,30 50,20"
-								stroke="black"
-							/>
-							<polyline
-								id="d4er"
-								points="50,30 50,25"
-								stroke="black"
-							/>
-							<circle
-								id="d4circle"
-								cx="50"
-								cy="50"
-								r="20"
-								fill="none"
-								stroke="black"
-							/>
+							<polyline id="d4a" points="50,95 50,70" stroke="black" />
+							<polyline id="d4b" points="50,90 50,70" stroke="black" />
+							<polyline id="d4c" points="50,85 50,70" stroke="black" />
+							<polyline id="d4d" points="50,80 50,70" stroke="black" />
+							<polyline id="d4e" points="50,75 50,70" stroke="black" />
+							<polyline id="d4a" points="50,30 50,5" stroke="black" />
+							<polyline id="d4b" points="50,30 50,10" stroke="black" />
+							<polyline id="d4c" points="50,30 50,15" stroke="black" />
+							<polyline id="d4d" points="50,30 50,20" stroke="black" />
+							<polyline id="d4e" points="50,30 50,25" stroke="black" />
+							<polyline id="d4ar" points="50,95 50,70" stroke="black" />
+							<polyline id="d4br" points="50,90 50,70" stroke="black" />
+							<polyline id="d4cr" points="50,85 50,70" stroke="black" />
+							<polyline id="d4dr" points="50,80 50,70" stroke="black" />
+							<polyline id="d4er" points="50,75 50,70" stroke="black" />
+							<polyline id="d4ar" points="50,30 50,5" stroke="black" />
+							<polyline id="d4br" points="50,30 50,10" stroke="black" />
+							<polyline id="d4cr" points="50,30 50,15" stroke="black" />
+							<polyline id="d4dr" points="50,30 50,20" stroke="black" />
+							<polyline id="d4er" points="50,30 50,25" stroke="black" />
+							<circle id="d4circle" cx="50" cy="50" r="20" fill="none" stroke="black" />
 						</svg>
-						<svg
-							width="100"
-							height="100"
-							id="rnholderd4"
-							style="visibility: hidden"
-							class="randomnumber"
-						>
-							<text
-								x="50"
-								y="57.5"
-								text-anchor="middle"
-								id="randomnumberd4"
-							></text>
+						<svg width="100" height="100" id="rnholderd4" style="visibility: hidden" class="randomnumber">
+							<text x="50" y="57.5" text-anchor="middle" id="randomnumberd4"></text>
 						</svg>
 					</div>
 					<div class="dieinputcontainer">
@@ -1253,111 +922,27 @@
 				<div id="d6container">
 					<div id="d6" class="d6 die">
 						<svg width="100" height="100">
-							<polygon
-								id="d6y1"
-								points="50,5 10,25 10,75 50,95 90,75 90,25"
-								fill="none"
-								stroke="black"
-							/>
-							<polygon
-								id="d6y2"
-								points="50,5 10,25 10,75 50,95 90,75 90,25"
-								fill="none"
-								stroke="black"
-							/>
-							<polygon
-								id="d6y3"
-								points="50,5 10,25 10,75 50,95 90,75 90,25"
-								fill="none"
-								stroke="black"
-							/>
-							<polygon
-								id="d6y4"
-								points="50,5 10,25 10,75 50,95 90,75 90,25"
-								fill="none"
-								stroke="black"
-							/>
-							<polygon
-								id="d6y5"
-								points="50,5 10,25 10,75 50,95 90,75 90,25"
-								fill="none"
-								stroke="black"
-							/>
-							<polygon
-								id="d6y6"
-								points="50,5 10,25 10,75 50,95 90,75 90,25"
-								fill="none"
-								stroke="black"
-							/>
+							<polygon id="d6y1" points="50,5 10,25 10,75 50,95 90,75 90,25" fill="none" stroke="black" />
+							<polygon id="d6y2" points="50,5 10,25 10,75 50,95 90,75 90,25" fill="none" stroke="black" />
+							<polygon id="d6y3" points="50,5 10,25 10,75 50,95 90,75 90,25" fill="none" stroke="black" />
+							<polygon id="d6y4" points="50,5 10,25 10,75 50,95 90,75 90,25" fill="none" stroke="black" />
+							<polygon id="d6y5" points="50,5 10,25 10,75 50,95 90,75 90,25" fill="none" stroke="black" />
+							<polygon id="d6y6" points="50,5 10,25 10,75 50,95 90,75 90,25" fill="none" stroke="black" />
 						</svg>
 						<svg width="100" height="100">
-							<polyline
-								id="d6a"
-								points="10,25 34.564,37.282"
-								stroke="black"
-							/>
-							<polyline
-								id="d6a"
-								points="90,25 65.463,37.282"
-								stroke="black"
-							/>
-							<polyline
-								id="d6a"
-								points="50,95 50,70"
-								stroke="black"
-							/>
-							<polyline
-								id="d6b"
-								points="10,25 34.564,37.282"
-								stroke="black"
-							/>
-							<polyline
-								id="d6b"
-								points="90,25 65.463,37.282"
-								stroke="black"
-							/>
-							<polyline
-								id="d6b"
-								points="50,95 50,70"
-								stroke="black"
-							/>
-							<polyline
-								id="d6c"
-								points="10,25 34.564,37.282"
-								stroke="black"
-							/>
-							<polyline
-								id="d6c"
-								points="90,25 65.463,37.282"
-								stroke="black"
-							/>
-							<polyline
-								id="d6c"
-								points="50,95 50,70"
-								stroke="black"
-							/>
-							<circle
-								id="d6circle"
-								cx="50"
-								cy="50"
-								r="20"
-								fill="none"
-								stroke="black"
-							/>
+							<polyline id="d6a" points="10,25 34.564,37.282" stroke="black" />
+							<polyline id="d6a" points="90,25 65.463,37.282" stroke="black" />
+							<polyline id="d6a" points="50,95 50,70" stroke="black" />
+							<polyline id="d6b" points="10,25 34.564,37.282" stroke="black" />
+							<polyline id="d6b" points="90,25 65.463,37.282" stroke="black" />
+							<polyline id="d6b" points="50,95 50,70" stroke="black" />
+							<polyline id="d6c" points="10,25 34.564,37.282" stroke="black" />
+							<polyline id="d6c" points="90,25 65.463,37.282" stroke="black" />
+							<polyline id="d6c" points="50,95 50,70" stroke="black" />
+							<circle id="d6circle" cx="50" cy="50" r="20" fill="none" stroke="black" />
 						</svg>
-						<svg
-							width="100"
-							height="100"
-							id="rnholderd6"
-							style="visibility: hidden"
-							class="randomnumber"
-						>
-							<text
-								x="50"
-								y="57.5"
-								text-anchor="middle"
-								id="randomnumberd6"
-							></text>
+						<svg width="100" height="100" id="rnholderd6" style="visibility: hidden" class="randomnumber">
+							<text x="50" y="57.5" text-anchor="middle" id="randomnumberd6"></text>
 						</svg>
 					</div>
 					<div class="dieinputcontainer">
@@ -1377,126 +962,30 @@
 				<div id="d8container">
 					<div id="d8" class="d8 die">
 						<svg width="100" height="100">
-							<polygon
-								id="d8a"
-								points="50,5 20,50 50,95 80,50"
-								fill="none"
-								stroke="black"
-							/>
-							<polygon
-								id="d8b"
-								points="50,5 20,50 50,95 80,50"
-								fill="none"
-								stroke="black"
-							/>
-							<polygon
-								id="d8c"
-								points="50,5 20,50 50,95 80,50"
-								fill="none"
-								stroke="black"
-							/>
-							<polygon
-								id="d8ar"
-								points="50,5 20,50 50,95 80,50"
-								fill="none"
-								stroke="black"
-							/>
-							<polygon
-								id="d8br"
-								points="50,5 20,50 50,95 80,50"
-								fill="none"
-								stroke="black"
-							/>
-							<polygon
-								id="d8cr"
-								points="50,5 20,50 50,95 80,50"
-								fill="none"
-								stroke="black"
-							/>
+							<polygon id="d8a" points="50,5 20,50 50,95 80,50" fill="none" stroke="black" />
+							<polygon id="d8b" points="50,5 20,50 50,95 80,50" fill="none" stroke="black" />
+							<polygon id="d8c" points="50,5 20,50 50,95 80,50" fill="none" stroke="black" />
+							<polygon id="d8ar" points="50,5 20,50 50,95 80,50" fill="none" stroke="black" />
+							<polygon id="d8br" points="50,5 20,50 50,95 80,50" fill="none" stroke="black" />
+							<polygon id="d8cr" points="50,5 20,50 50,95 80,50" fill="none" stroke="black" />
 						</svg>
 						<svg width="100" height="100">
-							<polyline
-								id="d8a"
-								points="20,50 30,50"
-								stroke="black"
-							/>
-							<polyline
-								id="d8a"
-								points="80,50 70,50"
-								stroke="black"
-							/>
-							<polyline
-								id="d8b"
-								points="20,50 30,50"
-								stroke="black"
-							/>
-							<polyline
-								id="d8b"
-								points="80,50 70,50"
-								stroke="black"
-							/>
-							<polyline
-								id="d8c"
-								points="20,50 30,50"
-								stroke="black"
-							/>
-							<polyline
-								id="d8c"
-								points="80,50 70,50"
-								stroke="black"
-							/>
-							<polyline
-								id="d8ar"
-								points="20,50 30,50"
-								stroke="black"
-							/>
-							<polyline
-								id="d8ar"
-								points="80,50 70,50"
-								stroke="black"
-							/>
-							<polyline
-								id="d8br"
-								points="20,50 30,50"
-								stroke="black"
-							/>
-							<polyline
-								id="d8br"
-								points="80,50 70,50"
-								stroke="black"
-							/>
-							<polyline
-								id="d8cr"
-								points="20,50 30,50"
-								stroke="black"
-							/>
-							<polyline
-								id="d8cr"
-								points="80,50 70,50"
-								stroke="black"
-							/>
-							<circle
-								id="d8circle"
-								cx="50"
-								cy="50"
-								r="20"
-								fill="none"
-								stroke="black"
-							/>
+							<polyline id="d8a" points="20,50 30,50" stroke="black" />
+							<polyline id="d8a" points="80,50 70,50" stroke="black" />
+							<polyline id="d8b" points="20,50 30,50" stroke="black" />
+							<polyline id="d8b" points="80,50 70,50" stroke="black" />
+							<polyline id="d8c" points="20,50 30,50" stroke="black" />
+							<polyline id="d8c" points="80,50 70,50" stroke="black" />
+							<polyline id="d8ar" points="20,50 30,50" stroke="black" />
+							<polyline id="d8ar" points="80,50 70,50" stroke="black" />
+							<polyline id="d8br" points="20,50 30,50" stroke="black" />
+							<polyline id="d8br" points="80,50 70,50" stroke="black" />
+							<polyline id="d8cr" points="20,50 30,50" stroke="black" />
+							<polyline id="d8cr" points="80,50 70,50" stroke="black" />
+							<circle id="d8circle" cx="50" cy="50" r="20" fill="none" stroke="black" />
 						</svg>
-						<svg
-							width="100"
-							height="100"
-							id="rnholderd8"
-							style="visibility: hidden"
-							class="randomnumber"
-						>
-							<text
-								x="50"
-								y="57.5"
-								text-anchor="middle"
-								id="randomnumberd8"
-							></text>
+						<svg width="100" height="100" id="rnholderd8" style="visibility: hidden" class="randomnumber">
+							<text x="50" y="57.5" text-anchor="middle" id="randomnumberd8"></text>
 						</svg>
 					</div>
 					<div class="dieinputcontainer">
@@ -1516,96 +1005,24 @@
 				<div id="d10container">
 					<div id="d10" class="d10 die">
 						<svg width="100" height="100">
-							<polygon
-								id="d10p"
-								points="50,5 10,50 50,95 90,50"
-								fill="none"
-								stroke="black"
-							/>
-							<polygon
-								id="d10p1"
-								points="50,5 10,50 50,95 90,50"
-								fill="none"
-								stroke="black"
-							/>
+							<polygon id="d10p" points="50,5 10,50 50,95 90,50" fill="none" stroke="black" />
+							<polygon id="d10p1" points="50,5 10,50 50,95 90,50" fill="none" stroke="black" />
 						</svg>
 						<svg width="100" height="100">
-							<polyline
-								id="d10a"
-								points="10,50 25,40 30.744,44.595"
-								stroke="black"
-								fill="none"
-							/>
-							<polyline
-								id="d10a"
-								points="90,50 75,40 69.256,44.595"
-								stroke="black"
-								fill="none"
-							/>
-							<polyline
-								id="d10a"
-								points="50,5 25,40"
-								stroke="black"
-							/>
-							<polyline
-								id="d10a"
-								points="50,5 75,40"
-								stroke="black"
-							/>
-							<polyline
-								id="d10a"
-								points="50,95 50,70"
-								stroke="black"
-							/>
-							<polyline
-								id="d10a1"
-								points="10,50 25,40 30.744,44.595"
-								stroke="black"
-								fill="none"
-							/>
-							<polyline
-								id="d10a1"
-								points="90,50 75,40 69.256,44.595"
-								stroke="black"
-								fill="none"
-							/>
-							<polyline
-								id="d10a1"
-								points="50,5 25,40"
-								stroke="black"
-							/>
-							<polyline
-								id="d10a1"
-								points="50,5 75,40"
-								stroke="black"
-							/>
-							<polyline
-								id="d10a1"
-								points="50,95 50,70"
-								stroke="black"
-							/>
-							<circle
-								id="d10circle"
-								cx="50"
-								cy="50"
-								r="20"
-								fill="none"
-								stroke="black"
-							/>
+							<polyline id="d10a" points="10,50 25,40 30.744,44.595" stroke="black" fill="none" />
+							<polyline id="d10a" points="90,50 75,40 69.256,44.595" stroke="black" fill="none" />
+							<polyline id="d10a" points="50,5 25,40" stroke="black" />
+							<polyline id="d10a" points="50,5 75,40" stroke="black" />
+							<polyline id="d10a" points="50,95 50,70" stroke="black" />
+							<polyline id="d10a1" points="10,50 25,40 30.744,44.595" stroke="black" fill="none" />
+							<polyline id="d10a1" points="90,50 75,40 69.256,44.595" stroke="black" fill="none" />
+							<polyline id="d10a1" points="50,5 25,40" stroke="black" />
+							<polyline id="d10a1" points="50,5 75,40" stroke="black" />
+							<polyline id="d10a1" points="50,95 50,70" stroke="black" />
+							<circle id="d10circle" cx="50" cy="50" r="20" fill="none" stroke="black" />
 						</svg>
-						<svg
-							width="100"
-							height="100"
-							id="rnholderd10"
-							style="visibility: hidden"
-							class="randomnumber"
-						>
-							<text
-								x="50"
-								y="57.5"
-								text-anchor="middle"
-								id="randomnumberd10"
-							></text>
+						<svg width="100" height="100" id="rnholderd10" style="visibility: hidden" class="randomnumber">
+							<text x="50" y="57.5" text-anchor="middle" id="randomnumberd10"></text>
 						</svg>
 					</div>
 					<div class="dieinputcontainer">
@@ -1633,58 +1050,15 @@
 							/>
 						</svg>
 						<svg id="d12a" width="100" height="100">
-							<polyline
-								id="d12aa"
-								points="50,5 50,20 21.468,40.729"
-								stroke="black"
-								fill="none"
-							/>
-							<polyline
-								id="d12ab"
-								points="7.202,36.094 21.468,40.729 32.366,74.271"
-								stroke="black"
-								fill="none"
-							/>
-							<polyline
-								id="d12ac"
-								points="23.55,86.406 32.366,74.271 67.634,74.271"
-								stroke="black"
-								fill="none"
-							/>
-							<polyline
-								id="d12ad"
-								points="76.45,86.406 67.634,74.271 78.532,40.729"
-								stroke="black"
-								fill="none"
-							/>
-							<polyline
-								id="d12ae"
-								points="92.789,36.094 78.532,40.729 50,20"
-								stroke="black"
-								fill="none"
-							/>
-							<circle
-								id="d12circle"
-								cx="50"
-								cy="50"
-								r="20"
-								fill="none"
-								stroke="black"
-							/>
+							<polyline id="d12aa" points="50,5 50,20 21.468,40.729" stroke="black" fill="none" />
+							<polyline id="d12ab" points="7.202,36.094 21.468,40.729 32.366,74.271" stroke="black" fill="none" />
+							<polyline id="d12ac" points="23.55,86.406 32.366,74.271 67.634,74.271" stroke="black" fill="none" />
+							<polyline id="d12ad" points="76.45,86.406 67.634,74.271 78.532,40.729" stroke="black" fill="none" />
+							<polyline id="d12ae" points="92.789,36.094 78.532,40.729 50,20" stroke="black" fill="none" />
+							<circle id="d12circle" cx="50" cy="50" r="20" fill="none" stroke="black" />
 						</svg>
-						<svg
-							width="100"
-							height="100"
-							id="rnholderd12"
-							style="visibility: hidden"
-							class="randomnumber"
-						>
-							<text
-								x="50"
-								y="57.5"
-								text-anchor="middle"
-								id="randomnumberd12"
-							></text>
+						<svg width="100" height="100" id="rnholderd12" style="visibility: hidden" class="randomnumber">
+							<text x="50" y="57.5" text-anchor="middle" id="randomnumberd12"></text>
 						</svg>
 					</div>
 					<div class="dieinputcontainer">
@@ -1709,43 +1083,27 @@
 			<div class="helpfulinfo">
 				<div>
 					<p>
-						<strong>Checks/Saves with Stats: </strong>The stats from
-						your character sheet are automatically imported from
-						your character sheets.
+						<strong>Checks/Saves with Stats: </strong>The stats from your character sheet are automatically imported from your character
+						sheets.
 					</p>
 					<p>
-						<strong>Dice Graphics: </strong>You can click a die to
-						have it roll based on the settings you set beforehand
-						(ie. Advantage/ Disadvantage and a modifier). If you do
-						this for any dice in the Misc. Dice tab, it will give
-						you an output without changing the total at the bottom.
+						<strong>Dice Graphics: </strong>You can click a die to have it roll based on the settings you set beforehand (ie. Advantage/
+						Disadvantage and a modifier). If you do this for any dice in the Misc. Dice tab, it will give you an output without changing
+						the total at the bottom.
 					</p>
 					<p>
-						<strong>Other Modifier: </strong>Use this to input a
-						number that will modify the result of the dice roll on
-						top of your existing modifier.
+						<strong>Other Modifier: </strong>Use this to input a number that will modify the result of the dice roll on top of your
+						existing modifier.
 					</p>
 				</div>
 				<div>
+					<p><strong>Saving Throw: </strong>Use the buttons to roll a saving throw for a particular ability.</p>
 					<p>
-						<strong>Saving Throw: </strong>Use the buttons to roll a
-						saving throw for a particular ability.
+						<strong>Skill Check: </strong>Use the dropdown menu to select a particular skill and click the d20 or Roll buton to make the
+						roll.
 					</p>
-					<p>
-						<strong>Skill Check: </strong>Use the dropdown menu to
-						select a particular skill and click the d20 or Roll
-						buton to make the roll.
-					</p>
-					<p>
-						<strong>Check Builder: </strong>Use the options to
-						create an ability check (ex. Dexterity with
-						proficiency).
-					</p>
-					<p>
-						<strong>Misc. Dice: </strong>Use this to roll any
-						combination of each die type. Modifiers must be manually
-						inputted.
-					</p>
+					<p><strong>Check Builder: </strong>Use the options to create an ability check (ex. Dexterity with proficiency).</p>
+					<p><strong>Misc. Dice: </strong>Use this to roll any combination of each die type. Modifiers must be manually inputted.</p>
 				</div>
 			</div>
 		</div>
@@ -1757,49 +1115,49 @@
 		 * @param {any[]} [args] The arguments to be passed to the function
 		*/
 		function runGoogleWithReturn(f, args) {
-		    if (arguments.length == 1)
-		        return new Promise((resolve, reject) => {
-		            google.script.run
-		                .withSuccessHandler(stuff => resolve(stuff))
-		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`)
-		        })
-		    else if (arguments.length == 2)
-		        return new Promise((resolve, reject) => {
-		            google.script.run
-		                .withSuccessHandler(stuff => resolve(stuff))
-		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`, args)
-		        })
+			if (arguments.length == 1)
+				return new Promise((resolve, reject) => {
+					google.script.run
+						.withSuccessHandler(stuff => resolve(stuff))
+						.withFailureHandler(err => reject(err))
+						.callLibraryFunction(`CharacterSheetCode.${f}`)
+				})
+			else if (arguments.length == 2)
+				return new Promise((resolve, reject) => {
+					google.script.run
+						.withSuccessHandler(stuff => resolve(stuff))
+						.withFailureHandler(err => reject(err))
+						.callLibraryFunction(`CharacterSheetCode.${f}`, args)
+				})
 		}
 		/** Simply calls a function with no return value
 		 * @param {string} f The function name
 		 * @param {any[]} [args] The arguments to be passed to the function
 		*/
 		function runGoogle(f, args) {
-		    if (arguments.length == 1)
-		        return new Promise((resolve, reject) => {
-		            google.script.run
-		                .withSuccessHandler(() => resolve())
-		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`)
-		        })
-		    else if (arguments.length == 2)
-		        return new Promise((resolve, reject) => {
-		            google.script.run
-		                .withSuccessHandler(() => resolve())
-		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`, args)
-		        })
+			if (arguments.length == 1)
+				return new Promise((resolve, reject) => {
+					google.script.run
+						.withSuccessHandler(() => resolve())
+						.withFailureHandler(err => reject(err))
+						.callLibraryFunction(`CharacterSheetCode.${f}`)
+				})
+			else if (arguments.length == 2)
+				return new Promise((resolve, reject) => {
+					google.script.run
+						.withSuccessHandler(() => resolve())
+						.withFailureHandler(err => reject(err))
+						.callLibraryFunction(`CharacterSheetCode.${f}`, args)
+				})
 		}
 		const ID = (n) => document.getElementById(n)
 		const qry = (n, el = document) => el.querySelector(n)
 		const qryA = (n, el = document) => el.querySelectorAll(n)
 		const capitalizer = (x) => {
-			if (x.includes(' ')) { // if v includes spaces
+			if (x.includes(" ")) { // if v includes spaces
 				const arr = x.split(" ") // split v on spaces
 				for (let j in arr) { // loop through arr
-					if (arr[j].includes('\n')) break // break the loop if arr[j] includes \n
+					if (arr[j].includes("\n")) break // break the loop if arr[j] includes \n
 					else arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1).toLowerCase()
 					// ^otherwise set arr[j] to itself capitalized
 				}
@@ -1814,14 +1172,14 @@
 		}
 
 		// diceroller.js
-		qryA('input').forEach(x => x.autocomplete = 'off'); // disable autocomplete for inputs
+		qryA("input").forEach(x => x.autocomplete = "off"); // disable autocomplete for inputs
 		const grandTotal = { totals: [0], get final() { return this.totals.reduce((t, c) => t + c, 0); } };
 		// ^create grandTotal object for misc dice
-		const dice = Array.from(qryA('#diceholder div div.die')), // create an array for each die type
-		d20s = Array.from(qryA('.d20'));
+		const dice = Array.from(qryA("#diceholder div div.die")), // create an array for each die type
+		d20s = Array.from(qryA(".d20"));
 		dice.forEach(die => die.onclick = () => { runSubAnimation(die, true); }); // add an onclick function for each die
 		const pages = ["Saving Throw", "Skill Check", "Check Builder", "Misc Dice"]; // array containing the page names for each type
-		var stats = {
+		let stats = {
 		    strSave: 0, dexSave: 0, conSave: 0, intSave: 0, wisSave: 0, chaSave: 0,
 		    acrobaticsCheck: 0, animalCheck: 0, arcanaCheck: 0, athleticsCheck: 0,
 		    deceptionCheck: 0, historyCheck: 0, insightCheck: 0, intimidationCheck: 0,
@@ -1830,79 +1188,81 @@
 		    stealthCheck: 0, survivalCheck: 0, strCheck: 0, init: 0,
 		    dexCheck: 0, conCheck: 0, intCheck: 0, wisCheck: 0, chaCheck: 0, prof: 0
 		};
-		var rolling = false;
-		document.addEventListener('DOMContentLoaded', async () => {
+		let rolling = false;
+		document.addEventListener("DOMContentLoaded", async () => {
 		    try {
-		        await (async () => stats = await runGoogleWithReturn('getStats'))();
+		        await (async () => stats = await runGoogleWithReturn("getStats"))();
 		    }
-		    catch { } // try to get the stats from the sheet
+		    catch {
+		        // continue regardless of error
+		    } // try to get the stats from the sheet
 		    pages.forEach(p => {
-		        var pg;
+		        let pg;
 		        switch (p) {
 		            case "Saving Throw":
-		                pg = 'st';
+		                pg = "st";
 		                break;
 		            case "Skill Check":
-		                pg = 'sc';
+		                pg = "sc";
 		                break;
 		            case "Check Builder":
-		                pg = 'cb';
+		                pg = "cb";
 		                break;
 		            case "Misc Dice":
-		                pg = 'md';
+		                pg = "md";
 		                break;
 		        }
 		        function _a(o) { }
 		        _a(pg);
 		        const d20 = ID(`d20${pg}`);
 		        const arr = [d20, ...Array.from(qryA(`.${pg}button, .widebutton`))];
-		        if (pg != 'md')
+		        if (pg != "md")
 		            arr.forEach(n => clicker(n, pg, d20));
 		    });
-		    qryA('.d20 .randomnumber').forEach((holder) => holder.dataset.initialclass = holder.className.baseVal);
+		    qryA(".d20 .randomnumber").forEach((holder) => holder.dataset.initialclass = holder.className.baseVal);
 		    // Get the element with id="defaultOpen" and click on it
 		    ID("defaultOpen").click();
 		});
 		const newObj = {};
-		qryA('.storage div span').forEach(x => newObj[x.id] = Number(x.innerHTML));
+		qryA(".storage div span").forEach(x => newObj[x.id] = Number(x.innerHTML));
 		console.log(JSON.stringify(newObj));
 		function pageTurner(evt, page) {
-		    const curPage = qry('.tabcontent:not([style*="display:none"],[style*="display: none"])');
+		    const curPage = qry(".tabcontent:not([style*=\"display:none\"],[style*=\"display: none\"])");
 		    switch (curPage.id) {
-		        case 'Saving Throw':
-		        case 'Skill Check':
-		        case 'Check Builder':
-		            qry('.totalindicator', curPage).innerHTML = 'Total: 0';
-		            qry('.randomnumber text', curPage).innerHTML = '';
+		        case "Saving Throw":
+		        case "Skill Check":
+		        case "Check Builder":
+		            qry(".totalindicator", curPage).innerHTML = "Total: 0";
+		            qry(".randomnumber text", curPage).innerHTML = "";
 		            break;
-		        case 'Misc Dice':
-		            ID('miscmodifier').value = String(0);
-		            ID('grandtotal').innerHTML = 'Total: 0';
-		            Array.from(ID('diceholder').children).forEach(child => {
-		                qry('.die svg text', child).innerHTML = ''; // clear number in svg circle
-		                qry('.dieinputcontainer input', child).value = String(0); // reset number of dice to 0
-		                qry('.dicerolls', child).innerHTML = 'Rolled:';
-		                qry('.dicetotals', child).innerHTML = 'Total:';
+		        case "Misc Dice":
+		            ID("miscmodifier").value = String(0);
+		            ID("grandtotal").innerHTML = "Total: 0";
+		            Array.from(ID("diceholder").children).forEach(child => {
+		                qry(".die svg text", child).innerHTML = ""; // clear number in svg circle
+		                qry(".dieinputcontainer input", child).value = String(0); // reset number of dice to 0
+		                qry(".dicerolls", child).innerHTML = "Rolled:";
+		                qry(".dicetotals", child).innerHTML = "Total:";
 		            });
 		            dice.forEach(die => {
-		                var els = Array.from(qryA('svg polygon,polyline', die));
-		                if (die.id == 'd12')
-		                    els.push(ID('d12a'));
+		                const els = Array.from(qryA("svg polygon,polyline", die));
+		                if (die.id == "d12")
+		                    els.push(ID("d12a"));
 		                els.forEach(x => x.classList.remove(x.id));
 		            });
 		            break;
 		    }
 		    const tabcontent = Array.from(document.getElementsByClassName("tabcontent"));
-		    for (let x of tabcontent)
+		    for (const x of tabcontent)
 		        x.style.display = "none";
 		    const tablinks = Array.from(document.getElementsByClassName("tablinks"));
-		    for (let x of tablinks)
-		        x.classList.toggle('active', false);
+		    for (const x of tablinks)
+		        x.classList.toggle("active", false);
 		    ID(page).style.display = "block";
 		    {
-		        evt.currentTarget.classList.toggle('active', true);
+		        evt.currentTarget.classList.toggle("active", true);
 		    }
-		    const d20id = page.split(' ').map(x => x[0]).join('');
+		    const d20id = page.split(" ").map(x => x[0]).join("");
 		    d20s.forEach(d20 => {
 		        const holder = ID(`rnholder${d20.id.slice(-2)}`), classes = [...Array.from(holder.classList.values())];
 		        holder.classList.remove(...classes);
@@ -1920,31 +1280,31 @@
 		            return; // guard clause that prevents rolling while a roll is taking place
 		        rolling = true;
 		        const holder = ID(`rnholder${pg}`), // this is the random number holder
-		        checkSave = (['st', 'cb'].some(x => x == pg) && n.id.slice(0, 1) != 'd') ? n.id.slice(1) : (pg == 'sc' && n.id != d20.id) ? `${ID('skill-checks').value}Check` : 'throw', modifier = stats[checkSave], dadv = qry(`input[name="dadv${pg}"]:checked`).value; // advantage/disadvantage/normal roll
+		        checkSave = (["st", "cb"].some(x => x == pg) && n.id.slice(0, 1) != "d") ? n.id.slice(1) : (pg == "sc" && n.id != d20.id) ? `${ID("skill-checks").value}Check` : "throw", modifier = stats[checkSave], dadv = qry(`input[name="dadv${pg}"]:checked`).value; // advantage/disadvantage/normal roll
 		        console.log(checkSave, modifier);
-		        holder.classList.add('unloadnum');
+		        holder.classList.add("unloadnum");
 		        setTimeout(() => {
-		            ID(`randomnumber${pg}`).innerHTML = '';
-		            holder.style.visibility = 'hidden';
-		            holder.classList.remove('unloadnum');
+		            ID(`randomnumber${pg}`).innerHTML = "";
+		            holder.style.visibility = "hidden";
+		            holder.classList.remove("unloadnum");
 		        }, 975);
-		        var promiseResolve;
+		        let promiseResolve;
 		        const proms = [...Array.from(d20.children).map((y) => new Promise((res, rej) => {
 		                const clss = y.id;
-		                const rndm1 = Math.floor(Math.random() * 20) + 1, rndm2 = Math.floor(Math.random() * 20) + 1, rndm = (dadv == 'adv') ? Math.max(rndm1, rndm2) : (dadv == 'dis') ? Math.min(rndm1, rndm2) :
+		                const rndm1 = Math.floor(Math.random() * 20) + 1, rndm2 = Math.floor(Math.random() * 20) + 1, rndm = (dadv == "adv") ? Math.max(rndm1, rndm2) : (dadv == "dis") ? Math.min(rndm1, rndm2) :
 		                    Math.floor(Math.random() * 20) + 1, rvalue = ID(`randomnumber${pg}`);
-		                if (clss == 'hex' || clss.includes('rnholder'))
+		                if (clss == "hex" || clss.includes("rnholder"))
 		                    setTimeout(() => res(rndm), 4050);
 		                else
 		                    y.classList.add(clss);
 		                y.onanimationend = () => {
 		                    y.classList.remove(clss);
 		                    switch (dadv) {
-		                        case 'na':
+		                        case "na":
 		                            rvalue.innerHTML = String(rndm);
 		                            break;
-		                        case 'dis':
-		                        case 'adv':
+		                        case "dis":
+		                        case "adv":
 		                            rvalue.innerHTML = `${rndm1}/${rndm2}`;
 		                            break;
 		                    }
@@ -1952,16 +1312,16 @@
 		                };
 		            })), new Promise((res) => promiseResolve = res)];
 		        Promise.race(proms).then(a => {
-		            holder.classList.add('loadnum');
-		            holder.style.visibility = 'visible';
+		            holder.classList.add("loadnum");
+		            holder.style.visibility = "visible";
 		            holder.onanimationend = () => promiseResolve();
 		        });
 		        Promise.all(proms).then(arr => {
-		            holder.classList.remove('loadnum');
-		            const rndm = arr[arr.length - 3], total = Number(ID(`inputmodifier${pg}`).value), prof = Number(ID('prof').innerHTML), addProf = pg == 'cb' && ID('addprof').checked, abmod = `${rndm}${(modifier > 0) ? '+' : ''}${(modifier != 0) ? modifier : ''}${addProf ? `+${prof}` : ''}` +
-		                `${(total > 0) ? '+' : ''}${(total != 0) ? total : ''}`;
-		            ID(`total${pg}`).innerHTML = `Total: ${abmod}` + (['-', '+'].some(x => abmod.includes(x)) ?
-		                `=${total + rndm + modifier + (addProf ? prof : 0)}` : '');
+		            holder.classList.remove("loadnum");
+		            const rndm = arr[arr.length - 3], total = Number(ID(`inputmodifier${pg}`).value), prof = Number(ID("prof").innerHTML), addProf = pg == "cb" && ID("addprof").checked, abmod = `${rndm}${(modifier > 0) ? "+" : ""}${(modifier != 0) ? modifier : ""}${addProf ? `+${prof}` : ""}` +
+		                `${(total > 0) ? "+" : ""}${(total != 0) ? total : ""}`;
+		            ID(`total${pg}`).innerHTML = `Total: ${abmod}` + (["-", "+"].some(x => abmod.includes(x)) ?
+		                `=${total + rndm + modifier + (addProf ? prof : 0)}` : "");
 		            rolling = false;
 		        });
 		    }
@@ -1971,17 +1331,17 @@
 		    return new Promise((res) => {
 		        const dx = parseInt(die.id.slice(1));
 		        const holder = ID(`rnholderd${dx}`);
-		        holder.classList.add('unloadnum');
+		        holder.classList.add("unloadnum");
 		        setTimeout(() => {
-		            ID(`randomnumberd${dx}`).innerHTML = '';
-		            holder.style.visibility = 'hidden';
-		            holder.classList.remove('unloadnum');
-		            ID(`d${dx}rolls`).innerHTML = 'Rolled: ';
-		            ID(`d${dx}total`).innerHTML = 'Total: ';
+		            ID(`randomnumberd${dx}`).innerHTML = "";
+		            holder.style.visibility = "hidden";
+		            holder.classList.remove("unloadnum");
+		            ID(`d${dx}rolls`).innerHTML = "Rolled: ";
+		            ID(`d${dx}total`).innerHTML = "Total: ";
 		        }, 975);
-		        var els = Array.from(qryA('svg polygon,polyline', die));
-		        if (die.id == 'd12')
-		            els.push(ID('d12a'));
+		        const els = Array.from(qryA("svg polygon,polyline", die));
+		        if (die.id == "d12")
+		            els.push(ID("d12a"));
 		        const bool = [4, 6].some(x => dx == x);
 		        els.forEach(poly => {
 		            poly.classList.add(poly.id);
@@ -1990,12 +1350,12 @@
 		                const rndm = Math.floor(Math.random() * dx) + 1;
 		                const rvalue = ID(`randomnumberd${dx}`);
 		                rvalue.innerHTML = String(rndm);
-		                holder.classList.add(`loadnum${dx == 6 ? '1' : ''}`);
+		                holder.classList.add(`loadnum${dx == 6 ? "1" : ""}`);
 		                const interval = !bool ?
 		                    setInterval(() => { rvalue.innerHTML = String(Math.floor(Math.random() * dx) + 1); }, 200) : 0;
-		                holder.style.visibility = 'visible';
+		                holder.style.visibility = "visible";
 		                holder.onanimationend = () => {
-		                    holder.classList.remove(`loadnum${dx == 6 ? '1' : ''}`);
+		                    holder.classList.remove(`loadnum${dx == 6 ? "1" : ""}`);
 		                    if (bool)
 		                        update();
 		                };
@@ -2016,7 +1376,7 @@
 		                for (let i = 1; i < numdice; i++)
 		                    rolls.push(Math.floor(Math.random() * dx) + 1);
 		                const total = rolls.reduce((tot, cur) => tot + cur, 0);
-		                rollsElem.innerHTML = `Rolled: ${rolls.join(', ')}`;
+		                rollsElem.innerHTML = `Rolled: ${rolls.join(", ")}`;
 		                totalElem.innerHTML = `Total: ${total}`;
 		            }
 		            res();
@@ -2027,19 +1387,19 @@
 		    grandTotal.totals = [0];
 		    const dx = [4, 6, 8, 10, 12];
 		    const /** @type {HTMLElement[]} */ dns = [], /** @type {HTMLElement[]} */ other = [];
-		    for (let x of dx)
+		    for (const x of dx)
 		        (Number(ID(`numd${x}`).value) > 0 ? dns : other).push(ID(`d${x}`));
 		    if (other.length)
 		        resetMiscDice(other.map(x => Number(x.id.slice(1))), false);
 		    if (dns.length > 0) {
 		        const proms = dns.map(f => runSubAnimation(f));
 		        Promise.all(proms).then(() => {
-		            for (let j of dx)
+		            for (const j of dx)
 		                grandTotal.totals.push(Number(ID(`d${j}total`).innerHTML.slice(7)));
-		            const miscMod = Number(ID('miscmodifier').value), grand = ID('grandtotal');
+		            const miscMod = Number(ID("miscmodifier").value), grand = ID("grandtotal");
 		            if (dns.length > 1) {
-		                grand.innerHTML = `Total: ${grandTotal.totals.filter(x => x).join('+')}` +
-		                    (miscMod != 0 ? `${miscMod > 0 ? '+' : ''}${miscMod}` : '') +
+		                grand.innerHTML = `Total: ${grandTotal.totals.filter(x => x).join("+")}` +
+		                    (miscMod != 0 ? `${miscMod > 0 ? "+" : ""}${miscMod}` : "") +
 		                    `=${grandTotal.final + miscMod}`;
 		            }
 		            else
@@ -2050,23 +1410,23 @@
 		function resetMiscDice(arr = [4, 6, 8, 10, 12], io = true) {
 		    arr.forEach(d => {
 		        ID(`numd${d}`).value = String(0);
-		        ID(`d${d}rolls`).innerHTML = 'Rolled: 0';
-		        ID(`d${d}total`).innerHTML = 'Total: 0';
+		        ID(`d${d}rolls`).innerHTML = "Rolled: 0";
+		        ID(`d${d}total`).innerHTML = "Total: 0";
 		        reset(ID(`d${d}`));
 		    });
 		    if (io) {
-		        ID('miscmodifier').value = String(0);
-		        ID('grandtotal').innerHTML = 'Total: 0';
+		        ID("miscmodifier").value = String(0);
+		        ID("grandtotal").innerHTML = "Total: 0";
 		    }
 		}
 		/** @param {HTMLElement} other */
 		function reset(other) {
 		    const dx = Number(other.id.slice(1)), holder = ID(`rnholderd${dx}`);
-		    holder.classList.add('unloadnum');
+		    holder.classList.add("unloadnum");
 		    holder.onanimationend = () => {
-		        ID(`randomnumberd${dx}`).innerHTML = '';
-		        holder.style.visibility = 'hidden';
-		        holder.classList.remove('unloadnum');
+		        ID(`randomnumberd${dx}`).innerHTML = "";
+		        holder.style.visibility = "hidden";
+		        holder.classList.remove("unloadnum");
 		        holder.onanimationend = () => { };
 		    };
 		}

@@ -3,11 +3,11 @@ function formulaCopy(
 	start: GoogleAppsScript.Spreadsheet.Range,
 	end: GoogleAppsScript.Spreadsheet.Range
 ) { // copy all aspects of start range to end range
-	var forms = start.getFormulas() // get formulas
-	var values = start.getValues()
-		.map((x, i) => x.map((y, j) => forms[i][j] != '' ? forms[i][j] : y)) // get values
-	var notes = start.getNotes() // get notes
-	var vals = start.getDataValidations() // get data validations
+	const forms = start.getFormulas() // get formulas
+	const values = start.getValues()
+		.map((x, i) => x.map((y, j) => forms[i][j] != "" ? forms[i][j] : y)) // get values
+	const notes = start.getNotes() // get notes
+	const vals = start.getDataValidations() // get data validations
 	start.copyTo(end, { formatOnly: true }) // copy formatting
 	end.setValues(values).setNotes(notes).setDataValidations(vals) // copy values, notes, and data validations
 }
@@ -21,10 +21,10 @@ function findPosition(
 		range: GoogleAppsScript.Spreadsheet.Range,
 		offset: number
 	} = {
-		'Simple': { range: sheetList.getRange('A1:AD39'), offset: 12 },
-		'Complex': { range: sheetList.getRange('A1:U39'), offset: 12 },
-		'Weapons': { range: sheetList.getRange('A1:AE30'), offset: 5 },
-		'Notes': { range: sheetList.getRange('AJ1:BN28'), offset: 6 }
+		"Simple": { range: sheetList.getRange("A1:AD39"), offset: 12 },
+		"Complex": { range: sheetList.getRange("A1:U39"), offset: 12 },
+		"Weapons": { range: sheetList.getRange("A1:AE30"), offset: 5 },
+		"Notes": { range: sheetList.getRange("AJ1:BN28"), offset: 6 }
 	}[listType]
 	// ^number of columns in range, number of search columns, number of rows in range + 1, column offset (column number - 1)
 
@@ -37,8 +37,8 @@ function findPosition(
 function saveSimple() {
 	const ss = SpreadsheetApp.getActiveSpreadsheet() // define reference to active spreadsheet
 	const sheetList = ss.getSheetByName("Simple Features List")! // storage sheet for different attributes
-	const start1 = ss.getRange('Character!Z45:AN56') // start for save
-	const searchKey = ss.getRange('Character!Z57').getValue() // currently selected page
+	const start1 = ss.getRange("Character!Z45:AN56") // start for save
+	const searchKey = ss.getRange("Character!Z57").getValue() // currently selected page
 	const oldPos = findPosition(searchKey, "Simple", sheetList)!
 	const end1 = sheetList.getRange(oldPos.row, oldPos.col, 12, 15) // destination for save
 	formulaCopy(start1, end1)
@@ -47,8 +47,8 @@ function saveSimple() {
 function loadSimple() {
 	const ss = SpreadsheetApp.getActiveSpreadsheet() // define reference to active spreadsheet
 	const sheetList = ss.getSheetByName("Simple Features List")! // storage sheet for different attributes
-	const start1 = ss.getRange('Character!Z45:AN56') // destination for load
-	const newPos = findPosition(ss.getRange('Character!Z57').getValue(), "Simple", sheetList)!
+	const start1 = ss.getRange("Character!Z45:AN56") // destination for load
+	const newPos = findPosition(ss.getRange("Character!Z57").getValue(), "Simple", sheetList)!
 	const start2 = sheetList.getRange(newPos.row, newPos.col, 12, 15) // start for load
 	formulaCopy(start2, start1)
 }
@@ -56,10 +56,10 @@ function loadSimple() {
 function saveComplex() {
 	const ss = SpreadsheetApp.getActiveSpreadsheet() // define reference to active spreadsheet
 	const sheetList = ss.getSheetByName("Complex Features List")! // storage sheet for different attributes
-	const range1 = ss.getRange('Character!Z45:AF56') // range for left column
-	const pos1 = ss.getRange('Character!Z57') // range for left dropdown list
-	const range2 = ss.getRange('Character!AH45:AN56') // range for right column
-	const pos2 = ss.getRange('Character!AH57') // range for right dropdown list
+	const range1 = ss.getRange("Character!Z45:AF56") // range for left column
+	const pos1 = ss.getRange("Character!Z57") // range for left dropdown list
+	const range2 = ss.getRange("Character!AH45:AN56") // range for right column
+	const pos2 = ss.getRange("Character!AH57") // range for right dropdown list
 	const oldPos = findPosition(pos1.getValue(), "Complex", sheetList)!
 	const newPos = findPosition(pos2.getValue(), "Complex", sheetList)!
 	const end1 = sheetList.getRange(oldPos.row, oldPos.col, 12, 7) // destination for left save
@@ -71,10 +71,10 @@ function saveComplex() {
 function loadComplex() {
 	const ss = SpreadsheetApp.getActiveSpreadsheet()
 	const sheetList = ss.getSheetByName("Complex Features List")! // storage sheet for different attributes
-	const start1 = ss.getRange('Character!Z45:AF56') // range for left column
-	const start2 = ss.getRange('Character!AH45:AN56') // range for right column
-	const oldPos = findPosition(ss.getRange('Character!Z57').getValue(), "Complex", sheetList)!
-	const newPos = findPosition(ss.getRange('Character!AH57').getValue(), "Complex", sheetList)!
+	const start1 = ss.getRange("Character!Z45:AF56") // range for left column
+	const start2 = ss.getRange("Character!AH45:AN56") // range for right column
+	const oldPos = findPosition(ss.getRange("Character!Z57").getValue(), "Complex", sheetList)!
+	const newPos = findPosition(ss.getRange("Character!AH57").getValue(), "Complex", sheetList)!
 	const end1 = sheetList.getRange(oldPos.row, oldPos.col, 12, 7) // start for left load
 	const end2 = sheetList.getRange(newPos.row, newPos.col, 12, 7) // start for right load
 	formulaCopy(end1, start1)

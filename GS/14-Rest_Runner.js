@@ -3,44 +3,44 @@
 function restRunner(type) {
     const ss = SpreadsheetApp.getActiveSpreadsheet(); // define spreadsheet reference
     const ui = SpreadsheetApp.getUi(); // define UI reference
-    const sheet = ss.getSheetByName('Rest List'); // define reference to Rest List sheet
+    const sheet = ss.getSheetByName("Rest List"); // define reference to Rest List sheet
     if (sheet.getLastRow() == 0)
         return; // end execution if there are no entries
     const ranges = sheet.getRange(1, 1, sheet.getLastRow(), 6); // get the range that contains the rest rules
-    const index = type == 'long' ? 4 : 5; // define the range to be filtered
+    const index = type == "long" ? 4 : 5; // define the range to be filtered
     const refRanges = ranges.getValues().filter(y => y[index] == true); // filter out ranges that are triggered on a short vs long rest
-    for (let i of refRanges) { // loop through filtered ranges
+    for (const i of refRanges) { // loop through filtered ranges
         switch (i[2]) {
-            case 'current': // case for the current cell to be set to its current value
-            case 'cell': // case for the current cell to be set to the value of a cell reference
-            case 'other': // case for the current cell to be set to a value inputted beforehand by the user
-            case 'randomnum': // case for the current cell to be set to a random value inputted beforehand by the user
+            case "current": // case for the current cell to be set to its current value
+            case "cell": // case for the current cell to be set to the value of a cell reference
+            case "other": // case for the current cell to be set to a value inputted beforehand by the user
+            case "randomnum": // case for the current cell to be set to a random value inputted beforehand by the user
                 staticRunner(i[0], i[3]);
                 break;
-            case 'inputval': // case for a user to input their own value on a long rest
+            case "inputval": // case for a user to input their own value on a long rest
                 inputvalRunner(i[0], i[1], i[3]);
                 break;
-            case 'randomlist': // case for the current cell to be set to a random value from a list of items
+            case "randomlist": // case for the current cell to be set to a random value from a list of items
                 randomlistRunner(i[0], i[3]);
                 break;
-            case 'modconstant': // case for the current cell to be modified by a certain value
+            case "modconstant": // case for the current cell to be modified by a certain value
                 modconstantRunner(i[0], i[3]);
                 break;
-            case 'modinput': // case for the current cell to be modified by a value inputted by the user
+            case "modinput": // case for the current cell to be modified by a value inputted by the user
                 modinputRunner(i[0], i[1], i[3]);
                 break;
-            case 'srreminder': // case for the sheet to display a reminder for the user on a short rest
+            case "srreminder": // case for the sheet to display a reminder for the user on a short rest
                 srreminderRunner(i[0], i[1], i[3]);
                 break;
         }
     }
     loadWeapons(); // load weapons
     loadNotes(); // load notes
-    switch (ss.getRange('Character!Z44').getValue()) { // load simple or complex based on selection
-        case 'Simple':
+    switch (ss.getRange("Character!Z44").getValue()) { // load simple or complex based on selection
+        case "Simple":
             loadSimple();
             break;
-        case 'Complex':
+        case "Complex":
             loadComplex();
             break;
     }
@@ -71,7 +71,7 @@ function restRunner(type) {
     */
     function modconstantRunner(range, args) {
         /** @type {number} */ const pre = ss.getRange(range).getValue(); // defines the value of the range before any operations
-        const post = ['+', '-'].some(x => x == args.slice(0, 1)) ? pre + Number(args) : pre;
+        const post = ["+", "-"].some(x => x == args.slice(0, 1)) ? pre + Number(args) : pre;
         // ^defines the value to be set as the modified version of the original value
         ss.getRange(range).setValue(post); // set the value of the range to post
     }
@@ -85,17 +85,17 @@ function restRunner(type) {
             if (resB == ui.Button.CANCEL)
                 return; // end execution if the user pressed CANCEL
             if (resB == ui.Button.OK) {
-                if (!['+', '-', '0'].some(x => resT.startsWith(x))) { // if response didn't start with +, -, or 0
-                    ui.alert('Error: The value you entered does not follow the proper format. Please try again.'); // alert user of error
+                if (!["+", "-", "0"].some(x => resT.startsWith(x))) { // if response didn't start with +, -, or 0
+                    ui.alert("Error: The value you entered does not follow the proper format. Please try again."); // alert user of error
                     continue; // and continue
                 }
                 else { // otherwise
                     if (isNaN(parseInt(resT.slice(1)))) { // if response was not a number
-                        ui.alert('Error: The value you entered does not follow the proper format.'); // alert user of error
+                        ui.alert("Error: The value you entered does not follow the proper format."); // alert user of error
                         continue; // and continue
                     }
                     const pre = ss.getRange(range).getValue(); // get value of range
-                    const post = ['+', '-', '0'].some(x => resT.slice(0, 1) == x) ? pre + Number(resT) : pre;
+                    const post = ["+", "-", "0"].some(x => resT.slice(0, 1) == x) ? pre + Number(resT) : pre;
                     // ^defines the value to be set as the modified version of the original value
                     ss.getRange(range).setValue(post); // set the value of the range to post
                 }

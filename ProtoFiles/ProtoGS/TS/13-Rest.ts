@@ -1,7 +1,7 @@
 /** This function handles the execution of the long rest code */
 function longRest() {
-	var curr = 'Save Weapons' // variable for stopStart timelogging
-	let stopStart = (x: string) => { // arrow function to keep track of execution time in the logger
+	let curr = "Save Weapons" // variable for stopStart timelogging
+	const stopStart = (x: string) => { // arrow function to keep track of execution time in the logger
 		console.timeEnd(curr) // end current timer
 		console.time(x) // start new timer
 		curr = x // set current to x
@@ -13,29 +13,29 @@ function longRest() {
 	saveNotes() // save notes
 	stopStart("Save Features") // start timer for features
 	const ss = SpreadsheetApp.getActiveSpreadsheet() // define spreadsheet reference
-	switch (ss.getRange('Character!Z44').getValue()) { // save simple or complex depending on selection
-		case 'Simple':
+	switch (ss.getRange("Character!Z44").getValue()) { // save simple or complex depending on selection
+		case "Simple":
 			saveSimple()
 			break
-		case 'Complex':
+		case "Complex":
 			saveComplex()
 			break
 	}
 	stopStart("References") // start timer for references
-	const mhp = ss.getRange('Character!U16').getValue() // max health value
-	const chp = ss.getRange('Character!R17') // current health range
-	const thp = ss.getRange('Character!R21') // tempHP range
-	const masterSpells = ss.getSheetByName('Master Spells')! // reference to master spells sheet
-	const curSpells = masterSpells.getRange('X3:AA20') // reference to current spell slots range
-	const maxSpells = masterSpells.getRange('AB3:AE20').getValues() // get the values of the max spell slots
+	const mhp = ss.getRange("Character!U16").getValue() // max health value
+	const chp = ss.getRange("Character!R17") // current health range
+	const thp = ss.getRange("Character!R21") // tempHP range
+	const masterSpells = ss.getSheetByName("Master Spells")! // reference to master spells sheet
+	const curSpells = masterSpells.getRange("X3:AA20") // reference to current spell slots range
+	const maxSpells = masterSpells.getRange("AB3:AE20").getValues() // get the values of the max spell slots
 	stopStart("Resetting") // start timer for resetting health values
 	chp.setValue(mhp) // set current health to max health
-	thp.setValue('') // set tempHP to empty string
+	thp.setValue("") // set tempHP to empty string
 	curSpells.setValues(maxSpells) // set each spell slot range to empty string
 	stopStart("Hit Dice") // start timer for hit dice adjuster
 	adjustHitDice(ss) // run hit dice adjuster
 	stopStart("Rest Runner") // start timer for rest runner
-	restRunner('long') // run long rest
+	restRunner("long") // run long rest
 	sideBarLoader() // reload sidebar
 	console.timeEnd(curr) // end timer
 }
@@ -45,26 +45,26 @@ function shortRest() {
 	saveWeapons() // save weapons
 	saveNotes() // save notes
 	const ss = SpreadsheetApp.getActiveSpreadsheet() // define spreadsheet reference
-	switch (ss.getRange('Character!Z44').getValue()) { // save simple or complex depending on selection
-		case 'Simple':
+	switch (ss.getRange("Character!Z44").getValue()) { // save simple or complex depending on selection
+		case "Simple":
 			saveSimple()
 			break
-		case 'Complex':
+		case "Complex":
 			saveComplex()
 			break
 	}
-	if (ss.getRange(`Character!AQ6:AT6`).getValues().flat().some(x => Number(x) > 0)) openHTML('shortrest')
+	if (ss.getRange(`Character!AQ6:AT6`).getValues().flat().some(x => Number(x) > 0)) openHTML("shortrest")
 	// ^if the character has hit dice left to be used, open short rest dialog
-	const spls = ss.getNamedRanges().filter(x => x.getName().includes('Slots') &&
-		x.getName().includes('MasterPM') &&
+	const spls = ss.getNamedRanges().filter(x => x.getName().includes("Slots") &&
+		x.getName().includes("MasterPM") &&
 		numRange(1, 5).some(y => x.getName().includes(`${y}`)))
 		.map(x => x.getRange())
 	// ^array of Pact Magic spell slots
-	const masterSpells = ss.getSheetByName('Master Spells')! // define reference to master spells sheet
+	const masterSpells = ss.getSheetByName("Master Spells")! // define reference to master spells sheet
 	const splsVals = spls.map(x => masterSpells.getRange(x.getRow(), x.getColumn() + 4).getValue())
 	// ^map max pact magic spells values
-	for (let x in spls) spls[x].setValue(splsVals[x]) // set PM ranges to their max values (reset them to full)
-	restRunner('short') // run short rest
+	for (const x in spls) spls[x].setValue(splsVals[x]) // set PM ranges to their max values (reset them to full)
+	restRunner("short") // run short rest
 	sideBarLoader() // reload sidebar
 }
 
@@ -74,21 +74,21 @@ function addLongRest() {
 	const ui = SpreadsheetApp.getUi() // define ui reference
 	const currentCell = ss.getCurrentCell()! // get current cell
 	const sheet = currentCell.getSheet().getName() // get current cell's sheet name
-	if (sheet != 'Rest List') { // if current cell's sheet is not rest list
+	if (sheet != "Rest List") { // if current cell's sheet is not rest list
 		const rangeP = getOuterRange(currentCell, ss, sheet) // define rangeP as return of getOuterRange
-		const restListSheet = ss.getSheetByName('Rest List')! // define reference to Rest List sheet
+		const restListSheet = ss.getSheetByName("Rest List")! // define reference to Rest List sheet
 		const lastRow = restListSheet.getLastRow() // define lastRow as the last row of Rest List
 		const ranges = restListSheet.getRange(1, 1, lastRow + 1, 1).getValues() // define ranges as the saved rest ranges
-		if (!ranges.flat().includes(rangeP)) openHTML('lrdialog') // if ranges doesn't include rangeP, show the dialog
+		if (!ranges.flat().includes(rangeP)) openHTML("lrdialog") // if ranges doesn't include rangeP, show the dialog
 		else if (ranges.flat().includes(rangeP)) { // else if it does include rangeP
-			var yn = ui.alert(
-				'Warning: the cell you wish to format already has a rule set to it. ' +
-				'Proceeding will overwrite this rule.\n' +
-				'Do you wish to proceed?',
+			const yn = ui.alert(
+				"Warning: the cell you wish to format already has a rule set to it. " +
+				"Proceeding will overwrite this rule.\n" +
+				"Do you wish to proceed?",
 				ui.ButtonSet.OK_CANCEL) // alert user of existing rule on cell
-			if (yn == ui.Button.OK) openHTML('lrdialog') // if user pressed okay button show dialog
+			if (yn == ui.Button.OK) openHTML("lrdialog") // if user pressed okay button show dialog
 		}
-	} else ui.alert('Do not try to add a long rest here.') // otherwise alert user of restriction
+	} else ui.alert("Do not try to add a long rest here.") // otherwise alert user of restriction
 }
 
 /** This function removes a rest rule from the sheet */
@@ -97,12 +97,12 @@ function removeLongRest() {
 	const currentCell = ss.getCurrentCell()! // get current cell
 	const sheet = currentCell.getSheet().getName() // get current cell's sheet name
 	const rangeP = getOuterRange(currentCell, ss, sheet) // get outer range
-	const restListSheet = ss.getSheetByName('Rest List')! // define lri as rest list sheet
+	const restListSheet = ss.getSheetByName("Rest List")! // define lri as rest list sheet
 	const lastRow = restListSheet.getLastRow() // define last row as last row of rest list
 	const ranges = restListSheet.getRange(1, 1, lastRow + 1, 1).getValues().flat() // define ranges as the saved rest ranges
 	const ui = SpreadsheetApp.getUi() // define ui reference
 	if (ranges.includes(rangeP)) { // if ranges includes rangeP
-		const res = ui.alert('Are you sure you want to proceed?', ui.ButtonSet.OK_CANCEL) // ask for confirmation
+		const res = ui.alert("Are you sure you want to proceed?", ui.ButtonSet.OK_CANCEL) // ask for confirmation
 		if (res == ui.Button.OK) { // if button selection is okay
 			if (lastRow == 1) restListSheet.getRange(1, 1, 1, restListSheet.getLastColumn()).clearContent()
 			// ^clear row content if last row is 1
@@ -117,8 +117,8 @@ function removeLongRest() {
 /** This function adjusts the number of expended hit dice. 
  * If less than half the total remains, opends a dialog asking for manual adjustment */
 function adjustHitDice(ss: GoogleAppsScript.Spreadsheet.Spreadsheet) {
-	const hitDiceRange = ss.getRange('Character!AQ4:AT4') // define reference to max hit dice range
-	const expendedRange = ss.getRange('Character!AQ6:AT6') // define reference to current hit dice range
+	const hitDiceRange = ss.getRange("Character!AQ4:AT4") // define reference to max hit dice range
+	const expendedRange = ss.getRange("Character!AQ6:AT6") // define reference to current hit dice range
 	const hitDiceVals = hitDiceRange.getValues() // get the values of the max range
 	const expendedVals = expendedRange.getValues() // get the values of the current range
 	const numHitDice = hitDiceVals[0].reduce((total, val) => total + Number(val), 0)
@@ -129,7 +129,7 @@ function adjustHitDice(ss: GoogleAppsScript.Spreadsheet.Spreadsheet) {
 	// ^if number of expended hit dice (or 1) is greater than or equal to half of the total number of hit dice (rounded up)
 	// ^^set expended hit dice to their respective maxxes
 	else { // otherwise
-		var numZero = 0, pos = 0 // define numZero and pos
+		let numZero = 0, pos = 0 // define numZero and pos
 		hitDiceVals[0].forEach((x, i) => { // loop through hitDiceVals
 			if (Number(x) == 0) numZero++ // if x is 0, increment numZero
 			else pos = i // otherwise, set pos to i
@@ -139,41 +139,40 @@ function adjustHitDice(ss: GoogleAppsScript.Spreadsheet.Spreadsheet) {
 				max = Number(hitDiceVals[0][pos]) // and get its respective max
 			expendedRange.getCell(1, pos + 1).setValue(Math.min(max, current + Math.ceil(max / 2)))
 			// ^update the expended hitDie value, making sure that the value can't exceed the max
-		} else openHTML('adjuster') // otherwise open adjuster dialog
+		} else openHTML("adjuster") // otherwise open adjuster dialog
 	}
 }
 
 function getHitDice() {
 	const ss = SpreadsheetApp.getActiveSpreadsheet() // define spreadsheet reference
 	/** @returns Cell Value */
-	let val = (r: string) => Number(ss.getRange(r).getValue()) // arrow function to get value of a range and return it as a number
+	const val = (r: string) => Number(ss.getRange(r).getValue()) // arrow function to get value of a range and return it as a number
 	return { // returns an object containing the max and expended values of each die type, and their max replacement value
-		maxd6: val('Character!AQ4'),
-		maxd8: val('Character!AR4'),
-		maxd10: val('Character!AS4'),
-		maxd12: val('Character!AT4'),
-		expendedd6: val('Character!AQ6'),
-		expendedd8: val('Character!AR6'),
-		expendedd10: val('Character!AS6'),
-		expendedd12: val('Character!AT6'),
+		maxd6: val("Character!AQ4"),
+		maxd8: val("Character!AR4"),
+		maxd10: val("Character!AS4"),
+		maxd12: val("Character!AT4"),
+		expendedd6: val("Character!AQ6"),
+		expendedd8: val("Character!AR6"),
+		expendedd10: val("Character!AS6"),
+		expendedd12: val("Character!AT6"),
 		get maxReplacement() { return Math.max(Math.floor((this.maxd6 + this.maxd8 + this.maxd10 + this.maxd12) / 2), 1) }
 	}
 }
 
 
 function updateHitDice(
-	d6: number = 0,
-	d8: number = 0,
-	d10: number = 0,
-	d12: number = 0,
-	bool: boolean = false,
-	plus: number = 0,
+	d6 = 0,
+	d8 = 0,
+	d10 = 0,
+	d12 = 0,
+	bool = false,
+	plus = 0,
 	initial: any[] = []
 ) {
 	const ss = SpreadsheetApp.getActiveSpreadsheet() // define spreadsheet reference
-	/** @param {string} range */
-	let setVal = (range: string, value: any) => ss.getRange(range).setValue(value) // arrow function to set a value to a specific range
-	for (let range of [['Character!AQ6', d6], ['Character!AR6', d8], ['Character!AS6', d10], ['Character!AT6', d12]] as const)
+	const setVal = (range: string, value: any) => ss.getRange(range).setValue(value) // arrow function to set a value to a specific range
+	for (const range of [["Character!AQ6", d6], ["Character!AR6", d8], ["Character!AS6", d10], ["Character!AT6", d12]] as const)
 		setVal(range[0], range[1]) // loop through each range and set their associated value
 	if (bool) { // if bool is set to true
 		const conMultiplier = initial.reduce((total, x) => total += x, 0) // calculate con multiplier
@@ -182,9 +181,9 @@ function updateHitDice(
 		const currentHpVal = Math.min(
 			Math.max(Number(ss.getRange("Character!R17").getValue()) +
 				// ^defines currentHpVal as either
-				Number(plus) + (conMultiplier * Number(ss.getRangeByName('Con')!.getValue())), 0),
+				Number(plus) + (conMultiplier * Number(ss.getRangeByName("Con")!.getValue())), 0),
 			// ^^the currentHP plus rolled total plus con modifiers
-			Number(ss.getRange('Character!U16').getValue()))
+			Number(ss.getRange("Character!U16").getValue()))
 		// ^^or the maximum health value
 
 		health({ cur: currentHpVal, temp: tempHpVal, bonus: bonusHpVal }) // set health

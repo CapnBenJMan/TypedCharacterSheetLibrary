@@ -1,16 +1,16 @@
-qryA('input').forEach(x => x.autocomplete = 'off'); // disable autocomplete for each input element
-let urlFormatter = (n) => n.replace(/'/g, ``).replace(/\/| /g, `-`).toLowerCase();
+qryA("input").forEach(x => x.autocomplete = "off"); // disable autocomplete for each input element
+const urlFormatter = (n) => n.replace(/'/g, ``).replace(/\/| /g, `-`).toLowerCase();
 // ^arrow function for formatting urls
 function changer() {
-    if (String(ID('searchoptions').value) != 'class')
-        qry('form').style.display = 'flex';
+    if (String(ID("searchoptions").value) != "class")
+        qry("form").style.display = "flex";
     else
-        qry('form').style.display = 'block';
-    ID('variance').innerHTML = searchOptions[String(ID('searchoptions').value)];
+        qry("form").style.display = "block";
+    ID("variance").innerHTML = searchOptions[String(ID("searchoptions").value)];
     try {
-        const ih = ID('selector').innerHTML
+        const ih = ID("selector").innerHTML
             .split(/(?<=>)(?:\n|\t)+?(?=<)/g)
-            .map(x => x.replace(/(?:\n|\t)/g, ''))
+            .map(x => x.replace(/(?:\n|\t)/g, ""))
             .sort((a0, b0) => {
             const a = a0.match(/(?<=>).*?(?=<)/)[0].toUpperCase();
             const b = b0.match(/(?<=>).*?(?=<)/)[0].toUpperCase();
@@ -19,28 +19,30 @@ function changer() {
             if (a > b)
                 return 1;
             return 0;
-        }).filter(x => x != '<option value=""></option>').join("\n");
-        ID('selector').innerHTML = ih;
+        }).filter(x => x != "<option value=\"\"></option>").join("\n");
+        ID("selector").innerHTML = ih;
     }
-    catch { }
-    qryA('input').forEach(x => x.autocomplete = 'off');
+    catch {
+        // continue regardless of error
+    }
+    qryA("input").forEach(x => x.autocomplete = "off");
 }
 function classChange() {
-    const classval = String(ID('classSearch').value);
-    if (classval == 'sub') {
-        ID('subsearchdiv').className = '';
-        ID('subsearch').required = true;
+    const classval = String(ID("classSearch").value);
+    if (classval == "sub") {
+        ID("subsearchdiv").className = "";
+        ID("subsearch").required = true;
     }
     else {
-        ID('subsearchdiv').className = 'magic';
-        ID('subsearch').required = false;
+        ID("subsearchdiv").className = "magic";
+        ID("subsearch").required = false;
     }
 }
 async function handler(e) {
-    ID('loader').style.visibility = 'visible';
+    ID("loader").style.visibility = "visible";
     try {
         e.preventDefault();
-        ID('outputdiv').innerHTML = '';
+        ID("outputdiv").innerHTML = "";
         const searches = {
             "class": "classSearch",
             "feat": "searchbar",
@@ -50,177 +52,181 @@ async function handler(e) {
             "background": "searchbar",
             "misc": "selector"
         };
-        const search = ID(searches[ID('searchoptions').value]).value == 'level' ?
-            Number(ID('searchbar').value.match(/\d+/)) :
-            searches[ID('searchoptions').value] == 'selector' ?
-                String(ID('selector').value) : String(ID('searchbar').value);
-        var baseURL = 'http://dnd5e.wikidot.com';
+        const search = ID(searches[ID("searchoptions").value]).value == "level" ?
+            Number(ID("searchbar").value.match(/\d+/)) :
+            searches[ID("searchoptions").value] == "selector" ?
+                String(ID("selector").value) : String(ID("searchbar").value);
+        let baseURL = "http://dnd5e.wikidot.com";
         const Regex = {
             prettier: /(?:<\/?a.*?>|(?:id|class)=".+?"|<script(?:.|\n)+?<\/script>)/g
         };
-        switch (String(ID('searchoptions').value)) {
+        switch (String(ID("searchoptions").value)) {
             case "class":
-                const Class = urlFormatter(String(ID('classname').value));
-                const subclass = urlFormatter(String(ID('subclassname').value));
-                const subsearch = urlFormatter(String(ID('subsearch').value));
+                const Class = urlFormatter(String(ID("classname").value));
+                const subclass = urlFormatter(String(ID("subclassname").value));
+                const subsearch = urlFormatter(String(ID("subsearch").value));
                 baseURL += `/${Class}`;
-                if (subclass != '')
+                if (subclass != "")
                     baseURL += `:${subclass}`;
-                if (subsearch != '' && String(ID('classSearch').value) == 'sub')
+                if (subsearch != "" && String(ID("classSearch").value) == "sub")
                     baseURL += `:${subsearch}`;
-                Regex.featureNamePt1 = new RegExp(`<span>${(String(ID('classSearch').value) == 'name') ? capitalizer(String(search)) :
-                    ''}<\\/span><\\/h(?<num>\\d)>\\n<p>(?:.|\\n)*?(?=\\n<h\\k<num>)`, 'i');
-                Regex.featureNamePt2 = new RegExp(`(?<=<span>${(String(ID('classSearch').value) == 'name') ? capitalizer(String(search)) :
-                    ''}<\\/span><\\/h)\\d+(?=>)`, '');
-                Regex.featureLevelPt1 = new RegExp(`<span>.+<\\/span><\\/h(?<num>\\d)>\\n<p>(?:.|\\n){1,200}?\\b${search}(?:st|nd|rd|th) level(?:.|\\n)*?(?=(?:\\n<h\\k<num>|\\n?\\t*?<\\/div>))`, 'gi');
-                Regex.featureLevelPt2 = new RegExp(`(?<=<\\/span><\\/h)\\d+(?=>)`, '');
-                Regex.featureSubPt1 = new RegExp(`(?:<span.*?>){1,2}${capitalizer(String(search))}(?:<\\/span>\\n?\\t*?){1,2}<\\/h(?<num>\\d)>(?:.|\\n)*?(?=(?:\\n<h\\k<num>|\\n?\\t*?<\\/div>))`, 'i');
-                Regex.featureSubPt2 = new RegExp(`(?<=<\\/span><\\/h)\\d+(?=>)`, '');
+                Regex.featureNamePt1 = new RegExp(`<span>${(String(ID("classSearch").value) == "name") ? capitalizer(String(search)) :
+                    ""}<\\/span><\\/h(?<num>\\d)>\\n<p>(?:.|\\n)*?(?=\\n<h\\k<num>)`, "i");
+                Regex.featureNamePt2 = new RegExp(`(?<=<span>${(String(ID("classSearch").value) == "name") ? capitalizer(String(search)) :
+                    ""}<\\/span><\\/h)\\d+(?=>)`, "");
+                Regex.featureLevelPt1 = new RegExp(`<span>.+<\\/span><\\/h(?<num>\\d)>\\n<p>(?:.|\\n){1,200}?\\b${search}(?:st|nd|rd|th) level(?:.|\\n)*?(?=(?:\\n<h\\k<num>|\\n?\\t*?<\\/div>))`, "gi");
+                Regex.featureLevelPt2 = new RegExp(`(?<=<\\/span><\\/h)\\d+(?=>)`, "");
+                Regex.featureSubPt1 = new RegExp(`(?:<span.*?>){1,2}${capitalizer(String(search))}(?:<\\/span>\\n?\\t*?){1,2}<\\/h(?<num>\\d)>(?:.|\\n)*?(?=(?:\\n<h\\k<num>|\\n?\\t*?<\\/div>))`, "i");
+                Regex.featureSubPt2 = new RegExp(`(?<=<\\/span><\\/h)\\d+(?=>)`, "");
                 break;
             case "feat":
-                baseURL += `/feat:${urlFormatter(String(ID('searchbar').value))}`;
+                baseURL += `/feat:${urlFormatter(String(ID("searchbar").value))}`;
                 break;
             case "item":
-                baseURL += `/wondrous-items:${urlFormatter(String(ID('searchbar').value))}`;
+                baseURL += `/wondrous-items:${urlFormatter(String(ID("searchbar").value))}`;
                 break;
             case "spell":
-                baseURL += `/spell:${urlFormatter(String(ID('searchbar').value))}`;
+                baseURL += `/spell:${urlFormatter(String(ID("searchbar").value))}`;
                 break;
             case "race":
-                baseURL += `/${urlFormatter(String(ID('searchbar').value))}`;
+                baseURL += `/${urlFormatter(String(ID("searchbar").value))}`;
                 break;
             case "background":
-                baseURL += `/background:${urlFormatter(String(ID('searchbar').value))}`;
+                baseURL += `/background:${urlFormatter(String(ID("searchbar").value))}`;
                 break;
             case "misc":
-                baseURL += `/${ID('selector').value}`;
+                baseURL += `/${ID("selector").value}`;
                 break;
         }
-        var response0, bo = false;
+        let response0, bo = false;
         try {
-            response0 = await runGoogleWithReturn('returnFetch', [baseURL]);
+            response0 = await runGoogleWithReturn("returnFetch", [baseURL]);
         }
         catch {
             try {
-                if (String(ID('searchoptions').value) == 'spell')
-                    throw '';
-                baseURL += 's';
+                if (String(ID("searchoptions").value) == "spell")
+                    throw "";
+                baseURL += "s";
                 bo = true;
-                response0 = await runGoogleWithReturn('returnFetch', [baseURL]);
+                response0 = await runGoogleWithReturn("returnFetch", [baseURL]);
             }
             catch {
                 if (bo)
                     baseURL = baseURL.slice(0, -1);
-                baseURL += '-ua';
-                response0 = await runGoogleWithReturn('returnFetch', [baseURL]);
+                baseURL += "-ua";
+                response0 = await runGoogleWithReturn("returnFetch", [baseURL]);
             }
         }
         const response = response0;
-        var el = document.createElement('html');
+        const el = document.createElement("html");
         el.innerHTML = response;
         try {
-            qry('#toc', el).remove();
+            qry("#toc", el).remove();
         }
-        catch { }
+        catch {
+            // removes the table of contents
+        }
         try {
-            qryA('span.hover', el).forEach(x => {
-                const span = qry('span', x);
+            qryA("span.hover", el).forEach(x => {
+                const span = qry("span", x);
                 span.outerHTML = ` (${span.innerHTML}) `;
             });
         }
-        catch { }
-        if (String(ID('searchoptions').value) == 'misc' && String(ID('selector').value) != 'trinkets') {
-            try {
-                qryA('.yui-nav', el).forEach(x => x.remove());
-            }
-            catch { }
-            try {
-                qryA('.yui-content>div', el).forEach((x) => x.style.display = '');
-            }
-            catch { }
+        catch {
+            // no idea
         }
-        if (search != '') {
-            switch (String(ID('searchoptions').value)) {
+        if (String(ID("searchoptions").value) == "misc" && String(ID("selector").value) != "trinkets") {
+            try {
+                qryA(".yui-nav", el).forEach(x => x.remove());
+            }
+            catch { /* continue regardless of error */ }
+            try {
+                qryA(".yui-content>div", el).forEach(x => x.style.display = "");
+            }
+            catch { /* continue regardless of error */ }
+        }
+        if (search != "") {
+            switch (String(ID("searchoptions").value)) {
                 case "class":
-                    const features = qry('.feature', el);
-                    switch (String(ID('classSearch').value)) {
-                        case 'name': {
+                    const features = qry(".feature", el);
+                    switch (String(ID("classSearch").value)) {
+                        case "name": {
                             const [refine] = features.innerHTML.match(Regex.featureNamePt1);
-                            const parsedHTML = `<h${refine.match(Regex.featureNamePt2)}>${refine.replace(Regex.prettier, '')}`;
-                            ID('outputdiv').innerHTML = parsedHTML;
+                            const parsedHTML = `<h${refine.match(Regex.featureNamePt2)}>${refine.replace(Regex.prettier, "")}`;
+                            ID("outputdiv").innerHTML = parsedHTML;
                             break;
                         }
-                        case 'level': {
+                        case "level": {
                             const refine = features.innerHTML.match(Regex.featureLevelPt1)
                                 .filter(x => x.length > 10)
-                                .map(x => `<h${x.match(Regex.featureLevelPt2)}>${x.replace(Regex.prettier, '')}`)
-                                .join('');
-                            ID('outputdiv').innerHTML = refine;
+                                .map(x => `<h${x.match(Regex.featureLevelPt2)}>${x.replace(Regex.prettier, "")}`)
+                                .join("");
+                            ID("outputdiv").innerHTML = refine;
                             break;
                         }
-                        case 'sub': {
+                        case "sub": {
                             const [refine] = features.innerHTML.match(Regex.featureSubPt1);
-                            const parsedHTML = `<h${refine.match(Regex.featureSubPt2)}>${refine.replace(Regex.prettier, '')}`;
-                            ID('outputdiv').innerHTML = parsedHTML;
+                            const parsedHTML = `<h${refine.match(Regex.featureSubPt2)}>${refine.replace(Regex.prettier, "")}`;
+                            ID("outputdiv").innerHTML = parsedHTML;
                             break;
                         }
                     }
                     break;
                 case "feat":
-                    const feat = qry('#page-content', el).innerHTML.replace(Regex.prettier, '');
-                    ID('outputdiv').innerHTML = `<h3><span>${capitalizer(String(search))}</span></h3>` + feat;
+                    const feat = qry("#page-content", el).innerHTML.replace(Regex.prettier, "");
+                    ID("outputdiv").innerHTML = `<h3><span>${capitalizer(String(search))}</span></h3>` + feat;
                     break;
                 case "item":
-                    const item = qry('#page-content', el).innerHTML.replace(Regex.prettier, '');
-                    ID('outputdiv').innerHTML = `<h3><span>${capitalizer(String(search))}</span></h3>` + item;
+                    const item = qry("#page-content", el).innerHTML.replace(Regex.prettier, "");
+                    ID("outputdiv").innerHTML = `<h3><span>${capitalizer(String(search))}</span></h3>` + item;
                     break;
                 case "spell":
-                    const spell0 = qry('#page-content', el);
-                    qryA('div', spell0).forEach(x => { if (/\+.*?Show.*?HB.*?Suggestion/.test(x.innerHTML))
+                    const spell0 = qry("#page-content", el);
+                    qryA("div", spell0).forEach(x => { if (/\+.*?Show.*?HB.*?Suggestion/.test(x.innerHTML))
                         x.remove(); });
-                    const spell = spell0.innerHTML.replace(Regex.prettier, '');
-                    ID('outputdiv').innerHTML = `<h3><span>${capitalizer(String(search)) + (baseURL.slice(-3) == '-ua' ? ' (UA)' : '')}</span></h3>` + spell;
+                    const spell = spell0.innerHTML.replace(Regex.prettier, "");
+                    ID("outputdiv").innerHTML = `<h3><span>${capitalizer(String(search)) + (baseURL.slice(-3) == "-ua" ? " (UA)" : "")}</span></h3>` + spell;
                     break;
-                case 'race':
-                    qryA('#page-content h1', el).forEach(x => x.outerHTML = `<h2>${x.innerHTML}</h2>`);
-                    const race = qry('#page-content', el).innerHTML.replace(Regex.prettier, '');
-                    ID('outputdiv').innerHTML = `<h1><span>${capitalizer(String(search))}</span></h1>` + race;
+                case "race":
+                    qryA("#page-content h1", el).forEach(x => x.outerHTML = `<h2>${x.innerHTML}</h2>`);
+                    const race = qry("#page-content", el).innerHTML.replace(Regex.prettier, "");
+                    ID("outputdiv").innerHTML = `<h1><span>${capitalizer(String(search))}</span></h1>` + race;
                     break;
-                case 'background':
-                    qryA('#page-content h2', el).forEach(x => x.outerHTML = `<h3>${x.innerHTML}</h3>`);
-                    qryA('#page-content h1', el).forEach(x => x.outerHTML = `<h2>${x.innerHTML}</h2>`);
-                    const bg = qry('#page-content', el).innerHTML.replace(Regex.prettier, '');
-                    ID('outputdiv').innerHTML = `<h1><span>${capitalizer(String(search))}</span></h1>` + bg;
+                case "background":
+                    qryA("#page-content h2", el).forEach(x => x.outerHTML = `<h3>${x.innerHTML}</h3>`);
+                    qryA("#page-content h1", el).forEach(x => x.outerHTML = `<h2>${x.innerHTML}</h2>`);
+                    const bg = qry("#page-content", el).innerHTML.replace(Regex.prettier, "");
+                    ID("outputdiv").innerHTML = `<h1><span>${capitalizer(String(search))}</span></h1>` + bg;
                     break;
-                case 'misc':
-                    const misc = qry('#page-content', el).innerHTML.replace(Regex.prettier, '');
-                    const title = qry(`option[value="${ID('selector').value}"`).innerHTML;
-                    ID('outputdiv').innerHTML = `<h1><span>${title}</span></h1>` + misc;
-                    if (title == 'Trinkets') {
-                        const sources = Array.from(qryA('#outputdiv>div>ul>li>em')).map(x => x.innerHTML);
-                        const lists = Array.from(qryA('#outputdiv>div>div>div')).map(x => x.innerHTML);
-                        ID('outputdiv').innerHTML = sources.reduce((final, cur, i) => final + `<h2>${cur}</h2><div>${lists[i]}</div>`, '');
+                case "misc":
+                    const misc = qry("#page-content", el).innerHTML.replace(Regex.prettier, "");
+                    const title = qry(`option[value="${ID("selector").value}"`).innerHTML;
+                    ID("outputdiv").innerHTML = `<h1><span>${title}</span></h1>` + misc;
+                    if (title == "Trinkets") {
+                        const sources = Array.from(qryA("#outputdiv>div>ul>li>em")).map(x => x.innerHTML);
+                        const lists = Array.from(qryA("#outputdiv>div>div>div")).map(x => x.innerHTML);
+                        ID("outputdiv").innerHTML = sources.reduce((final, cur, i) => final + `<h2>${cur}</h2><div>${lists[i]}</div>`, "");
                     }
-                    else if (title == 'Tools') { }
+                    else if (title == "Tools") { /* nothing yet */ }
                     break;
             }
         }
-        else if (String(ID('searchoptions').value) == 'class')
-            ID('outputdiv').innerHTML = qry('#page-content', el).innerHTML.replace(Regex.prettier, '');
+        else if (String(ID("searchoptions").value) == "class")
+            ID("outputdiv").innerHTML = qry("#page-content", el).innerHTML.replace(Regex.prettier, "");
     }
     catch (err) {
-        ID('outputdiv').innerHTML = `An error occurred. Either the thing you requested doesn't exist, or the program encountered an issue while retrieving it.
+        ID("outputdiv").innerHTML = `An error occurred. Either the thing you requested doesn't exist, or the program encountered an issue while retrieving it.
 	If you attempt this again, please make sure you entered it correctly.`;
         console.error(err);
     }
-    ID('loader').style.visibility = 'hidden';
+    ID("loader").style.visibility = "hidden";
 }
 function clear0() {
-    ID('outputdiv').innerHTML = '';
-    ID('variance').innerHTML = searchOptions['class'];
-    qry('form').style.display = 'block';
-    qryA('input').forEach(x => {
-        x.autocomplete = 'off';
+    ID("outputdiv").innerHTML = "";
+    ID("variance").innerHTML = searchOptions["class"];
+    qry("form").style.display = "block";
+    qryA("input").forEach(x => {
+        x.autocomplete = "off";
     });
 }
 const searchOptions = {

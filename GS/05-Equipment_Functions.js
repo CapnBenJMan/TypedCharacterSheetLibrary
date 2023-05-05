@@ -1,6 +1,6 @@
 function equipmentInfo() {
     const raw = rawInfo(); // define reference to object returned by raw info
-    let find = (m, n) => raw[m].find(x => x.Name == n); // define arrow function to return a searched object in raw
+    const find = (m, n) => raw[m].find(x => x.Name == n); // define arrow function to return a searched object in raw
     return {
         "Equipment Pack": [
             {

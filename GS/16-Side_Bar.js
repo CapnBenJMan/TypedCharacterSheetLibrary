@@ -1,18 +1,18 @@
 function sideBar() {
     SpreadsheetApp.getUi()
-        .createMenu('Sidebar')
-        .addItem('(Re)Load Sidebar', 'CharacterSheetCode.sideBarLoader')
-        .addItem('Long Rest', 'CharacterSheetCode.longRest')
-        .addItem('Short Rest', 'CharacterSheetCode.shortRest')
-        .addItem('Add Rest', 'CharacterSheetCode.addLongRest')
-        .addItem('Remove Rest', 'CharacterSheetCode.removeLongRest')
-        .addItem('Fix Broken Images', 'CharacterSheetCode.fixBrokenImages')
+        .createMenu("Sidebar")
+        .addItem("(Re)Load Sidebar", "CharacterSheetCode.sideBarLoader")
+        .addItem("Long Rest", "CharacterSheetCode.longRest")
+        .addItem("Short Rest", "CharacterSheetCode.shortRest")
+        .addItem("Add Rest", "CharacterSheetCode.addLongRest")
+        .addItem("Remove Rest", "CharacterSheetCode.removeLongRest")
+        .addItem("Fix Broken Images", "CharacterSheetCode.fixBrokenImages")
         .addToUi(); // creates menu item in case user closes sidebar
     sideBarLoader(); // opens sidebar
 }
 /** Opens the sidebar */
 function sideBarLoader() {
-    var sb = HtmlService.createHtmlOutputFromFile('HTML/sidebar')
+    const sb = HtmlService.createHtmlOutputFromFile("HTML/sidebar")
         .setTitle(`Automation Sidebar`); // constructs sidebar
     SpreadsheetApp.getUi().showSidebar(sb); // opens sidebar
 }
@@ -27,39 +27,39 @@ function sideBarLoader() {
  */
 function getCurrent() {
     const ss = SpreadsheetApp.getActiveSpreadsheet(); // active spreadsheet reference
-    const scVal = ss.getRangeByName('TotalSCLevels').getValue(); // number of spellcasting class levels
-    const pmVal = ss.getRangeByName('TotalPMLevels').getValue(); // number of pact magic class levels
+    const scVal = ss.getRangeByName("TotalSCLevels").getValue(); // number of spellcasting class levels
+    const pmVal = ss.getRangeByName("TotalPMLevels").getValue(); // number of pact magic class levels
     const tf = (scVal > 0 || pmVal > 0); // whether or not there are any pact magic or spellcasting class levels
     const version = ss.getRange(`'Legal and How-To'!M4`).getValue(); // the current version of the sheet/code
-    const bonus = ss.getRange('Character!X17').getValue() || 0; // the current amount of bonus health (or 0 if empty)
+    const bonus = ss.getRange("Character!X17").getValue() || 0; // the current amount of bonus health (or 0 if empty)
     const healthVals = [
-        ss.getRange('Character!R17').getValue(),
-        ss.getRange('Character!U16').getValue(),
-        ss.getRange('Character!R21').getValue() || 0 // temp health (0 if cell is empty)
+        ss.getRange("Character!R17").getValue(),
+        ss.getRange("Character!U16").getValue(),
+        ss.getRange("Character!R21").getValue() || 0 // temp health (0 if cell is empty)
     ].map(x => Number(x)); // makes sure each element is an integer
     return [...healthVals, tf, ss.getId(), version, Number(bonus)]; // self-explanatory
 }
 /** Takes in an object and sets the various health values based on its properties */
 function health(HP) {
     const ss = SpreadsheetApp.getActiveSpreadsheet();
-    ss.getRange('Character!R17').setValue(HP.cur); // set current health to hpVal
+    ss.getRange("Character!R17").setValue(HP.cur); // set current health to hpVal
     if (HP.temp == 0)
-        ss.getRange('Character!R21').setValue(''); // if tempHpVal is 0, set cell to empty string
+        ss.getRange("Character!R21").setValue(""); // if tempHpVal is 0, set cell to empty string
     else
-        ss.getRange('Character!R21').setValue(HP.temp); // otherwise, set cell to tempHpVal
+        ss.getRange("Character!R21").setValue(HP.temp); // otherwise, set cell to tempHpVal
     if (HP.bonus == 0)
-        ss.getRange('Character!X17').setValue(''); // if bonus hp is 0, set cell to empty string
+        ss.getRange("Character!X17").setValue(""); // if bonus hp is 0, set cell to empty string
     else
-        ss.getRange('Character!X17').setValue(HP.bonus); // otherwise, set cell to bonusHpVal
+        ss.getRange("Character!X17").setValue(HP.bonus); // otherwise, set cell to bonusHpVal
 }
 /** Returns an object containing every saving throw and ability/skill check's modifiers */
 function getStats() {
     const ss = SpreadsheetApp.getActiveSpreadsheet(); // define spreadsheet reference
-    const savingThrows = ss.getRange('Character!I17:I22').getValues().flat().map(x => Number(x)); // get saving throw modifiers
-    const skillChecks = ss.getRange('Character!I25:I42').getValues().flat().map(x => Number(x)); // get skill check modifiers
+    const savingThrows = ss.getRange("Character!I17:I22").getValues().flat().map(x => Number(x)); // get saving throw modifiers
+    const skillChecks = ss.getRange("Character!I25:I42").getValues().flat().map(x => Number(x)); // get skill check modifiers
     const { Str: sC, Dex: dC, Con: coC, Int: iC, Wis: wC, Cha: chC, Prof: pr } = ss.getNamedRanges()
         // ^get stat modifiers and proficiency bonus
-        .filter(x => ['Str', 'Dex', 'Con', 'Int', 'Wis', 'Cha', 'Prof'].some(y => y == x.getName()))
+        .filter(x => ["Str", "Dex", "Con", "Int", "Wis", "Cha", "Prof"].some(y => y == x.getName()))
         // ^filter named ranges
         .reduce((obj, cur) => {
         obj[cur.getName()] = Number(cur.getRange().getValue()); // set a property of obj as the value of the current range
@@ -105,7 +105,7 @@ function getStats() {
         wisCheck: Number(wC),
         chaCheck: Number(chC),
         prof: Number(pr),
-        init: Number(ss.getRange('Character!V12').getValue()),
+        init: Number(ss.getRange("Character!V12").getValue()),
         acrobaticsCheck: skillChecks[0],
         animalCheck: skillChecks[1],
         arcanaCheck: skillChecks[2],
@@ -129,15 +129,15 @@ function getStats() {
 /** Returns the values of each spell slot type and level */
 function getSpells() {
     const ss = SpreadsheetApp.getActiveSpreadsheet(); // define spreadsheet reference
-    const scVal = ss.getRangeByName('TotalSCLevels').getValue(); // get spellcaster levels
-    const pmVal = ss.getRangeByName('TotalPMLevels').getValue(); // get pact magic levels
-    const masterSpells = ss.getSheetByName('Master Spells'); // define reference to Master Spells sheet
+    const scVal = ss.getRangeByName("TotalSCLevels").getValue(); // get spellcaster levels
+    const pmVal = ss.getRangeByName("TotalPMLevels").getValue(); // get pact magic levels
+    const masterSpells = ss.getSheetByName("Master Spells"); // define reference to Master Spells sheet
     const slotRangeNames = masterSpells.getNamedRanges().map(x => {
         return { name: x.getName(), range: x.getRange() };
     });
     // ^get the names of each named range on the Master Spells sheet
-    const slotValues = { scLvl: Number(scVal), pmLvl: Number(pmVal) }; // define object containing caster levels
-    for (let x of slotRangeNames) // loop through range names
+    const slotValues = { scLvl: Number(scVal), pmLvl: Number(pmVal) };
+    for (const x of slotRangeNames) // loop through range names
         if (!isEmptyish(x.range.getValue())) // if isEmptyish doesn't return true
             slotValues[x.name.replace(/Master|L|Slots/g, "").toLowerCase()] = // set new property to slotValues
                 x.range.getValue(); // ^^equal to the value of the range
@@ -154,8 +154,8 @@ function useSpellSlot(n, type) {
 /** Takes in an object containing the spell slot values for each type and level and sets them to the sheet */
 function setSpellSlots(slots) {
     const ss = SpreadsheetApp.getActiveSpreadsheet(); // define spreadsheet reference
-    for (let a in slots) // loop through slots
-        if (slots[a].dis) // if this is true
+    for (const [a, slot] of Object.entries(slots)) // loop through slots
+        if (slot.dis) // if this is true
             ss.getRangeByName(`Master${a.toUpperCase().slice(0, 2)}L${a.slice(-1)}Slots`)
-                .setValue(slots[a].val == 0 ? '' : slots[a].val); // set the value
+                .setValue(slot.val || ""); // set the value
 }

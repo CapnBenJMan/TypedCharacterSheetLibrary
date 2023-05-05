@@ -90,43 +90,15 @@
 
 	<body>
 		<div class="content">
-			<div>
-				<strong
-					>If you want to forgo this process, click the X at the top
-					right of this dialog.</strong
-				>
-			</div>
-			<div
-				id="propspan"
-				class="magic center"
-				style="z-index: 10; width: inherit; max-height: 300px"
-			>
-				<div
-					style="
-						background-color: white;
-						border-radius: 1em;
-						width: 300px;
-						margin: auto;
-					"
-				>
-					Separate properties by a comma (,). You can use the
-					additional info section for descriptions and the like.
+			<div><strong>If you want to forgo this process, click the X at the top right of this dialog.</strong></div>
+			<div id="propspan" class="magic center" style="z-index: 10; width: inherit; max-height: 300px">
+				<div style="background-color: white; border-radius: 1em; width: 300px; margin: auto">
+					Separate properties by a comma (,). You can use the additional info section for descriptions and the like.
 				</div>
-				<input
-					type="text"
-					id="customprops"
-					style="margin: auto"
-					placeholder="Properties..."
-				/><br />
+				<input type="text" id="customprops" style="margin: auto" placeholder="Properties..." /><br />
 				<textarea
 					id="custompropsExt"
-					style="
-						margin: auto;
-						min-width: 185px;
-						min-height: 44px;
-						max-height: 180px;
-						max-width: 390px;
-					"
+					style="margin: auto; min-width: 185px; min-height: 44px; max-height: 180px; max-width: 390px"
 					placeholder="Additional info..."
 				></textarea
 				><br />
@@ -142,16 +114,12 @@
 				><br />
 				<!--Custom Weapon Creator-->
 				<span id="custom">
-					<label for="customname">Weapon Name: </label
-					><input id="customname" type="text" /><br />
-					<label for="customdmgNum">Weapon Damage: </label
-					><input
-						type="number"
-						id="customdmgNum"
-						class="bonus"
-						min="1"
-						value="1"
-					/><label for="customdmgDie"> d</label>
+					<label for="customname">Weapon Name: </label><input id="customname" type="text" /><br />
+					<label for="customdmgNum">Weapon Damage: </label><input type="number" id="customdmgNum" class="bonus" min="1" value="1" /><label
+						for="customdmgDie"
+					>
+						d</label
+					>
 					<select id="customdmgDie">
 						<option value="4">4</option>
 						<option value="6">6</option>
@@ -174,9 +142,7 @@
 						<option value="radiant">Radiant</option>
 						<option value="thunder">Thunder</option></select
 					><br />
-					<button type="button" onclick="toggleWeaponProps(false)">
-						Open Weapon Properties</button
-					><br />
+					<button type="button" onclick="toggleWeaponProps(false)">Open Weapon Properties</button><br />
 					<label for="customtype">Weapon Type: </label>
 					<select id="customtype" name="customtype">
 						<option value="melee">Melee</option>
@@ -186,13 +152,8 @@
 				</span>
 				<!--Options described below-->
 
-				<input type="checkbox" id="proficient" /><label for="proficient"
-					>: Proficient?</label
-				>
-				<input type="checkbox" id="ismonkweapon" /><label
-					for="ismonkweapon"
-					>: Monk Weapon?</label
-				><br />
+				<input type="checkbox" id="proficient" /><label for="proficient">: Proficient?</label>
+				<input type="checkbox" id="ismonkweapon" /><label for="ismonkweapon">: Monk Weapon?</label><br />
 				<input type="checkbox" id="overridebool" />
 				<label for="overridebool">: Override Ability?</label>
 				<span id="overridespan" class="magic"
@@ -219,10 +180,7 @@
 						onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
 					/>
 				</div>
-				<div
-					id="differentdiv"
-					style="visibility: hidden; position: absolute"
-				>
+				<div id="differentdiv" style="visibility: hidden; position: absolute">
 					<label for="attackbonus">Additional Attack Bonus: </label>
 					<input
 						type="number"
@@ -240,11 +198,7 @@
 						onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 45"
 					/>
 				</div>
-				<input type="submit" value="Confirm" id="confirm" /><span
-					id="loader"
-					class="loader"
-					style="visibility: hidden"
-				></span>
+				<input type="submit" value="Confirm" id="confirm" /><span id="loader" class="loader" style="visibility: hidden"></span>
 			</form>
 		</div>
 	</body>
@@ -256,49 +210,49 @@
 		 * @param {any[]} [args] The arguments to be passed to the function
 		*/
 		function runGoogleWithReturn(f, args) {
-		    if (arguments.length == 1)
-		        return new Promise((resolve, reject) => {
-		            google.script.run
-		                .withSuccessHandler(stuff => resolve(stuff))
-		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`)
-		        })
-		    else if (arguments.length == 2)
-		        return new Promise((resolve, reject) => {
-		            google.script.run
-		                .withSuccessHandler(stuff => resolve(stuff))
-		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`, args)
-		        })
+			if (arguments.length == 1)
+				return new Promise((resolve, reject) => {
+					google.script.run
+						.withSuccessHandler(stuff => resolve(stuff))
+						.withFailureHandler(err => reject(err))
+						.callLibraryFunction(`CharacterSheetCode.${f}`)
+				})
+			else if (arguments.length == 2)
+				return new Promise((resolve, reject) => {
+					google.script.run
+						.withSuccessHandler(stuff => resolve(stuff))
+						.withFailureHandler(err => reject(err))
+						.callLibraryFunction(`CharacterSheetCode.${f}`, args)
+				})
 		}
 		/** Simply calls a function with no return value
 		 * @param {string} f The function name
 		 * @param {any[]} [args] The arguments to be passed to the function
 		*/
 		function runGoogle(f, args) {
-		    if (arguments.length == 1)
-		        return new Promise((resolve, reject) => {
-		            google.script.run
-		                .withSuccessHandler(() => resolve())
-		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`)
-		        })
-		    else if (arguments.length == 2)
-		        return new Promise((resolve, reject) => {
-		            google.script.run
-		                .withSuccessHandler(() => resolve())
-		                .withFailureHandler(err => reject(err))
-		                .callLibraryFunction(`CharacterSheetCode.${f}`, args)
-		        })
+			if (arguments.length == 1)
+				return new Promise((resolve, reject) => {
+					google.script.run
+						.withSuccessHandler(() => resolve())
+						.withFailureHandler(err => reject(err))
+						.callLibraryFunction(`CharacterSheetCode.${f}`)
+				})
+			else if (arguments.length == 2)
+				return new Promise((resolve, reject) => {
+					google.script.run
+						.withSuccessHandler(() => resolve())
+						.withFailureHandler(err => reject(err))
+						.callLibraryFunction(`CharacterSheetCode.${f}`, args)
+				})
 		}
 		const ID = (n) => document.getElementById(n)
 		const qry = (n, el = document) => el.querySelector(n)
 		const qryA = (n, el = document) => el.querySelectorAll(n)
 		const capitalizer = (x) => {
-			if (x.includes(' ')) { // if v includes spaces
+			if (x.includes(" ")) { // if v includes spaces
 				const arr = x.split(" ") // split v on spaces
 				for (let j in arr) { // loop through arr
-					if (arr[j].includes('\n')) break // break the loop if arr[j] includes \n
+					if (arr[j].includes("\n")) break // break the loop if arr[j] includes \n
 					else arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1).toLowerCase()
 					// ^otherwise set arr[j] to itself capitalized
 				}
@@ -313,42 +267,42 @@
 		}
 
 		// weapon.js
-		qryA('input').forEach(x => x.autocomplete = 'off');
-		const weapons = ID('weapons'); // defines reference to type element and its options
+		qryA("input").forEach(x => x.autocomplete = "off");
+		const weapons = ID("weapons"); // defines reference to type element and its options
 		async function submission() {
-		    ID('loader').style.visibility = 'visible'; // set loader to visible
-		    const props = [...((ID('customprops').value !== '') ?
-		            String(ID('customprops').value).split(/(?<!\() *, *(?![\w\s]*\))/g)
-		            : ['-']), (ID('custompropsExt').innerHTML !== '') ? `Additional Info:\n\n${ID('custompropsExt').innerHTML}` : '']
-		        .filter(x => x !== ''), custom = {
-		        name: capitalizer(ID('customname').value),
-		        damage: `${ID('customdmgNum').value}d${ID('customdmgDie').value} ${ID('customdmgType').value}`,
+		    ID("loader").style.visibility = "visible"; // set loader to visible
+		    const props = [...((ID("customprops").value !== "") ?
+		            String(ID("customprops").value).split(/(?<!\() *, *(?![\w\s]*\))/g)
+		            : ["-"]), (ID("custompropsExt").innerHTML !== "") ? `Additional Info:\n\n${ID("custompropsExt").innerHTML}` : ""]
+		        .filter(x => x !== ""), custom = {
+		        name: capitalizer(ID("customname").value),
+		        damage: `${ID("customdmgNum").value}d${ID("customdmgDie").value} ${ID("customdmgType").value}`,
 		        props,
-		        type: ID('customtype').value
+		        type: ID("customtype").value
 		    };
 		    await runGoogle("weaponSetter", [
 		        weapons.value,
-		        ID('proficient').checked,
-		        ID('same').checked,
+		        ID("proficient").checked,
+		        ID("same").checked,
 		        {
-		            bonus: Number(ID('samebonus').value),
-		            attBonus: Number(ID('attackbonus').value),
-		            damBonus: Number(ID('damagebonus').value)
+		            bonus: Number(ID("samebonus").value),
+		            attBonus: Number(ID("attackbonus").value),
+		            damBonus: Number(ID("damagebonus").value)
 		        },
 		        custom,
 		        {
-		            bool: ID('overridebool').checked,
-		            val: ID('overrideval').value,
-		            mw: ID('ismonkweapon').checked
+		            bool: ID("overridebool").checked,
+		            val: ID("overrideval").value,
+		            mw: ID("ismonkweapon").checked
 		        }
 		    ]);
 		    google.script.host.close();
 		}
 		document.addEventListener("DOMContentLoaded", async () => {
-		    const array = await runGoogleWithReturn('weaponInfo');
-		    var options = array.map(x => capitalizer(x.name));
-		    for (let a of options) {
-		        var el = document.createElement("option");
+		    const array = await runGoogleWithReturn("weaponInfo");
+		    const options = array.map(x => capitalizer(x.name));
+		    for (const a of options) {
+		        const el = document.createElement("option");
 		        el.textContent = a;
 		        el.value = a;
 		        weapons.appendChild(el);
@@ -357,32 +311,32 @@
 		const same = ID("same"), ddiv = ID("differentdiv");
 		same.onclick = () => {
 		    if (same.checked) {
-		        ddiv.style.visibility = 'visible';
-		        ddiv.style.position = 'initial';
+		        ddiv.style.visibility = "visible";
+		        ddiv.style.position = "initial";
 		    }
 		    else {
-		        ddiv.style.visibility = 'hidden';
-		        ddiv.style.position = 'absolute';
+		        ddiv.style.visibility = "hidden";
+		        ddiv.style.position = "absolute";
 		    }
 		};
 		/** @param {boolean} bool */
 		function toggleWeaponProps(bool) {
-		    ID('propspan').classList.toggle('magic', bool);
-		    ID('propback').classList.toggle('magic', bool);
+		    ID("propspan").classList.toggle("magic", bool);
+		    ID("propback").classList.toggle("magic", bool);
 		}
 		function changer() {
-		    const custom = ID('custom');
-		    if (ID('weapons').value === 'Custom')
-		        custom.classList.toggle('magic', false);
+		    const custom = ID("custom");
+		    if (ID("weapons").value === "Custom")
+		        custom.classList.toggle("magic", false);
 		    else
-		        custom.classList.toggle('magic', true);
+		        custom.classList.toggle("magic", true);
 		}
-		ID('overridebool').onchange = () => {
-		    if (ID('overridebool').checked) {
-		        ID('overridespan').className = '';
+		ID("overridebool").onchange = () => {
+		    if (ID("overridebool").checked) {
+		        ID("overridespan").className = "";
 		    }
 		    else {
-		        ID('overridespan').className = 'magic';
+		        ID("overridespan").className = "magic";
 		    }
 		};
 	</script>

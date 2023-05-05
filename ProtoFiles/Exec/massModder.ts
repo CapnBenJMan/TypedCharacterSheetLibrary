@@ -3,7 +3,7 @@ import { readdirSync, readFileSync, writeFileSync } from "fs"
 const path = __dirname + "\\..\\ProtoHTML\\Scripts\\TS\\"
 
 
-for (let fileName of readdirSync(path)) {
+for (const fileName of readdirSync(path)) {
 	const file = readFileSync(path + fileName, { encoding: "utf-8" })
 
 	writeFileSync(path + fileName,

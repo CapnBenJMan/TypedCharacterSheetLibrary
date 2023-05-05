@@ -1,6 +1,6 @@
 function features(e: GoogleAppsScript.Events.SheetsOnEdit) {
-	var sc = e.source.getRange('Character!Z44').getValue() // value of the simple/complex selector
-	if (e.range.getA1Notation() == 'Z44') { // if the edited range is Character!Z44...
+	const sc = e.source.getRange("Character!Z44").getValue() // value of the simple/complex selector
+	if (e.range.getA1Notation() == "Z44") { // if the edited range is Character!Z44...
 		featureChange(e) // ...change the mode
 		return
 	}
@@ -12,22 +12,22 @@ function features(e: GoogleAppsScript.Events.SheetsOnEdit) {
 }
 
 function complexFeatures(e: GoogleAppsScript.Events.SheetsOnEdit) { // complex features changer
-	if ((e.range.getA1Notation() === 'Z57' || e.range.getA1Notation() === 'AH57') && e.range.getSheet().getName() === 'Character') {
+	if ((e.range.getA1Notation() === "Z57" || e.range.getA1Notation() === "AH57") && e.range.getSheet().getName() === "Character") {
 		// ^if edited range is Z57 or AH57 and edited range is within sheet Character...
-		if (e.source.getRange('Character!Z57').getValue() == e.source.getRange('Character!AH57').getValue()) {
+		if (e.source.getRange("Character!Z57").getValue() == e.source.getRange("Character!AH57").getValue()) {
 			// ^...if both lists are set to the same thing...
-			SpreadsheetApp.getUi().alert('You cannot display the same list twice.\nPlease select a different list.')
+			SpreadsheetApp.getUi().alert("You cannot display the same list twice.\nPlease select a different list.")
 			// ^...alert user of error
 			e.range.setValue(e.oldValue) // ...and set edited range to its original value
 		} else { // ...otherwise...
 			const listType = "Complex" // define const x = "Complex" (used in findPosition)
 			const sheetList = e.source.getSheetByName("Complex Features List")!
 			// ^storage sheet for different attributes
-			const range1 = e.source.getRange('Character!Z45:AF56') // range for left column
-			const pos1 = e.source.getRange('Character!Z57') // range for left dropdown list
-			const range2 = e.source.getRange('Character!AH45:AN56') // range for right column
-			const pos2 = e.source.getRange('Character!AH57') // range for right dropdown list
-			var start1: GoogleAppsScript.Spreadsheet.Range // define var start1
+			const range1 = e.source.getRange("Character!Z45:AF56") // range for left column
+			const pos1 = e.source.getRange("Character!Z57") // range for left dropdown list
+			const range2 = e.source.getRange("Character!AH45:AN56") // range for right column
+			const pos2 = e.source.getRange("Character!AH57") // range for right dropdown list
+			let start1: GoogleAppsScript.Spreadsheet.Range // define var start1
 			const oldPos = findPosition(e.oldValue, listType, sheetList)!
 			// ^define oldPos as return value of findPosition for oldValue
 			const newPos = findPosition(e.value, listType, sheetList)!
@@ -50,10 +50,10 @@ function complexFeatures(e: GoogleAppsScript.Events.SheetsOnEdit) { // complex f
 }
 
 function simpleFeatures(e: GoogleAppsScript.Events.SheetsOnEdit) { // simple features changer
-	if (e.range.getA1Notation() === 'Z57' && e.range.getSheet().getName() === 'Character') { // if range is Character!Z57
+	if (e.range.getA1Notation() === "Z57" && e.range.getSheet().getName() === "Character") { // if range is Character!Z57
 		const listType = "Simple" // define listType = "Simple" (used in findPosition)
 		const sheetList = e.source.getSheetByName("Simple Features List")! // storage sheet for different attributes
-		const start1 = e.source.getRange('Character!Z45:AN56') // define start1 as start for save and end for load
+		const start1 = e.source.getRange("Character!Z45:AN56") // define start1 as start for save and end for load
 		const oldPos = findPosition(e.oldValue, listType, sheetList)!
 		// ^define oldPos as return value of findPosition for oldValue
 		const newPos = findPosition(e.value, listType, sheetList)!
@@ -67,18 +67,18 @@ function simpleFeatures(e: GoogleAppsScript.Events.SheetsOnEdit) { // simple fea
 
 function featureChange(e: GoogleAppsScript.Events.SheetsOnEdit) { // feature change
 	const ui = SpreadsheetApp.getUi() // define reference to Spreadsheet Ui
-	const response = ui.alert('Are you sure you want to continue?\nIf you have features in one layout, it will take some work to transfer them to the other one.', ui.ButtonSet.OK_CANCEL) // ask for confirmation before continuing
+	const response = ui.alert("Are you sure you want to continue?\nIf you have features in one layout, it will take some work to transfer them to the other one.", ui.ButtonSet.OK_CANCEL) // ask for confirmation before continuing
 	const ss = e.source // define ss as the spreadsheet
-	const dropdownPageRanges = ['Character!Z57:AF57', 'Character!AH57:AN57', 'AG57']
+	const dropdownPageRanges = ["Character!Z57:AF57", "Character!AH57:AN57", "AG57"]
 	// left column list range, right column list range, the cell between the two
 	const ranges = ss.getRangeList(dropdownPageRanges) // get a range list from the ranges defined above
 	const range = [ss.getRange(dropdownPageRanges[0]), ss.getRange(dropdownPageRanges[1])]
 	// ^set range array to left and right column ranges
-	const cRange = ss.getSheetByName('Complex Features List')!.getRange('V1:AA13')
+	const cRange = ss.getSheetByName("Complex Features List")!.getRange("V1:AA13")
 	// ^get the range of each list item for complex
-	const sRange = ss.getSheetByName('Simple Features List')!.getRange('AE1:AJ13')
+	const sRange = ss.getSheetByName("Simple Features List")!.getRange("AE1:AJ13")
 	// ^get the range of each list item for simple
-	const rangeFull = ss.getRange('Character!Z57:AN57') // get the full range for the dropdown selector
+	const rangeFull = ss.getRange("Character!Z57:AN57") // get the full range for the dropdown selector
 	const ruleC = SpreadsheetApp.newDataValidation() // complex data validation rule
 		.requireValueInRange(cRange)
 		.setAllowInvalid(false)

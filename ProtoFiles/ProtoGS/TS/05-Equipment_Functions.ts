@@ -16,7 +16,7 @@ interface EquipmentPack {
 
 function equipmentInfo() { // returns all the equipment info formatted properly
 	const raw = rawInfo() as { [K in keyof ReturnType<typeof rawInfo>]: Equipment[] } // define reference to object returned by raw info
-	let find = (m: string, n: string) => raw[m as keyof typeof raw].find(x => x.Name == n)! // define arrow function to return a searched object in raw
+	const find = (m: string, n: string) => raw[m as keyof typeof raw].find(x => x.Name == n)! // define arrow function to return a searched object in raw
 	return { // return the equipment packs combined with raw info in the same object
 		"Equipment Pack": [
 			{

@@ -53,10 +53,11 @@ export const qry = <K extends string>(n: K, el: Element | Document = document) =
 export const qryA = <K extends string>(n: K, el: Element | Document = document) => el.querySelectorAll(n) as NodeListOf<QueryElem<K>>
 
 export const capitalizer = (x: string) => {
-	if (x.includes(' ')) { // if v includes spaces
+	if (x.includes(" ")) { // if v includes spaces
 		const arr = x.split(" ") // split v on spaces
-		for (let j in arr) { // loop through arr
-			if (arr[j].includes('\n')) break // break the loop if arr[j] includes \n
+		for (const j in arr) { // loop through arr
+			if (arr[j].includes("\n")) break 
+			// ^break the loop if arr[j] includes \n
 			else arr[j] = arr[j].charAt(0).toUpperCase() + arr[j].slice(1).toLowerCase()
 			// ^otherwise set arr[j] to itself capitalized
 		}

@@ -9,8 +9,8 @@ function isEmptyish(a: any): a is undefined | null | "" | "#N/A" {
 	return [
 		undefined,
 		null,
-		'',
-		'#N/A'
+		"",
+		"#N/A"
 	].some(x => x == a)
 }
 
@@ -19,10 +19,10 @@ function isEmptyish(a: any): a is undefined | null | "" | "#N/A" {
  * @param {number} y The upper limit
  * @param {number} z The rate of incrementation, defaults to 1
  */
-function numRange(x: number, y: number = x, z: number = 1) {
+function numRange(x: number, y: number = x, z = 1) {
 	const arr: number[] = []
-	const lower = x == y ? 0 : x,
-		upper = y
+	const lower = x == y ? 0 : x
+	const upper = y
 	for (let i = lower; i <= upper; i += z) arr.push(i)
 	return arr
 }
@@ -70,7 +70,7 @@ function fixBrokenImages() {
 
 	]
 
-	for (let [a1, formula] of replacements) {
+	for (const [a1, formula] of replacements) {
 		ss.getRange(a1).setFormula(formula)
 	}
 }

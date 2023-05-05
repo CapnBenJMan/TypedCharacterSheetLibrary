@@ -7,9 +7,9 @@ function validationBuilder(
 	return vals.map(x => x.map(y => {
 		if (y == null) return null
 		switch (y[0]) {
-			case 'CHECKBOX':
+			case "CHECKBOX":
 				return dv().requireCheckbox().build()
-			case 'VALUE_IN_RANGE':
+			case "VALUE_IN_RANGE":
 				return dv().requireValueInRange(ss.getRange(y[1][0])).setAllowInvalid(y[1][1]).build()
 			default:
 				return dv()
@@ -71,7 +71,7 @@ interface StyleBuilderJSON {
 }
 
 function textstyleBuilder(all: StyleBuilderJSON[][]) {
-	console.time('Style Builder')
+	console.time("Style Builder")
 	const text = all.map(x => x.map(y => {
 		return SpreadsheetApp.newTextStyle()
 			.setFontFamily(y.f!)
@@ -83,7 +83,7 @@ function textstyleBuilder(all: StyleBuilderJSON[][]) {
 			.setUnderline("u" in y)
 			.build()
 	}))
-	console.timeEnd('Style Builder')
+	console.timeEnd("Style Builder")
 	console.log(text)
 	return text
 }

@@ -14,7 +14,7 @@ async function main() {
 
 	const nFile = file.replace(libRe, `const libraryVersion = "v${json.version}"`)
 		.replace(depRe, `const deploymentVersion = ${json.latestLibraryVersion + (argv[2] == "next" ? 1 : 0)
-			}`)
+		}`)
 
 	await writeFile(path, nFile)
 }

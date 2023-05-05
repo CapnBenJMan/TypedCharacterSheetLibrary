@@ -7,16 +7,16 @@ function getOuterRange(
 	sheetName: string
 ) {
 	const iwr = { // (is within range) array
-		weapons: isWithinRange(currentCell, ss.getRange('Character!R32:AF36')), // weapons range
-		notes: isWithinRange(currentCell, ss.getRange('Character!R37:AF42')), // notes range
-		lFeatures: isWithinRange(currentCell, ss.getRange('Character!Z45:AF56')), // left features range
-		rFeatures: isWithinRange(currentCell, ss.getRange('Character!AH45:AN56')) // right features range
+		weapons: isWithinRange(currentCell, ss.getRange("Character!R32:AF36")), // weapons range
+		notes: isWithinRange(currentCell, ss.getRange("Character!R37:AF42")), // notes range
+		lFeatures: isWithinRange(currentCell, ss.getRange("Character!Z45:AF56")), // left features range
+		rFeatures: isWithinRange(currentCell, ss.getRange("Character!AH45:AN56")) // right features range
 	}
-	const weapnsAndNotes = ss.getSheetByName('Weapons and Notes List')!
+	const weapnsAndNotes = ss.getSheetByName("Weapons and Notes List")!
 	if (iwr.weapons.tf) { // if within weapons range
 
-		const position = findPosition(ss.getRange('Character!T31').getValue(),
-			'Notes',
+		const position = findPosition(ss.getRange("Character!T31").getValue(),
+			"Notes",
 			weapnsAndNotes)!
 		// ^find position
 		const cell = weapnsAndNotes
@@ -26,8 +26,8 @@ function getOuterRange(
 		// ^get A1 notation for the found position
 		return `'Weapons and Notes List'!${cell}` // return the A1 notation for the range
 	} else if (iwr.notes.tf) { // if within notes range
-		const position = findPosition(ss.getRange('Character!R43').getValue(),
-			'Notes',
+		const position = findPosition(ss.getRange("Character!R43").getValue(),
+			"Notes",
 			weapnsAndNotes)!
 		// ^find position
 		const cell = weapnsAndNotes
@@ -37,13 +37,13 @@ function getOuterRange(
 		// ^get A1 notation for the found position
 		return `'Weapons and Notes List'!${cell}` // return A1 notation for the range
 	} else if (iwr.lFeatures.tf || iwr.rFeatures.tf) { // if within features range
-		const type = ss.getRange('Character!Z44').getValue() // simple/complex
+		const type = ss.getRange("Character!Z44").getValue() // simple/complex
 		switch (type) { // switch between simple and complex
-			case 'Simple': { // if simple
-				const simple = ss.getSheetByName('Simple Features List')!
-				const page = ss.getRange('Character!Z57').getValue()
+			case "Simple": { // if simple
+				const simple = ss.getSheetByName("Simple Features List")!
+				const page = ss.getRange("Character!Z57").getValue()
 				// ^get page number
-				const position = findPosition(page, 'Simple', simple)!
+				const position = findPosition(page, "Simple", simple)!
 				// ^get the position of the page in the features sheet
 				const cell = simple
 					.getRange(position.row, position.col, 12, 15)
@@ -51,14 +51,14 @@ function getOuterRange(
 				// ^get the A1 notation of the page's reference
 				return `'Simple Features List'!${cell}` // return the formatted A1 notation
 			}
-			case 'Complex': { // if complex
-				const complex = ss.getSheetByName('Complex Features List')!
+			case "Complex": { // if complex
+				const complex = ss.getSheetByName("Complex Features List")!
 				const ptype = (iwr.lFeatures.tf) ? iwr.lFeatures : (iwr.rFeatures.tf) ? iwr.rFeatures : undefined
 				// ^get the object that represents either the left or right side
-				const range = (iwr.lFeatures.tf) ? 'Character!Z57' : (iwr.rFeatures.tf) ? 'Character!AH57' : undefined
+				const range = (iwr.lFeatures.tf) ? "Character!Z57" : (iwr.rFeatures.tf) ? "Character!AH57" : undefined
 				// ^get the A1 Notation based of the page cell based on left or right side selection
 				const page = ss.getRange(range!).getValue() // get the current page number
-				const position = findPosition(page, 'Complex', complex)!
+				const position = findPosition(page, "Complex", complex)!
 				// ^get the position object for the page
 				const cell = complex
 					.getRange(position.row, position.col, 12, 7)
@@ -80,7 +80,7 @@ function isWithinRange(subRange: GoogleAppsScript.Spreadsheet.Range, ...searchRa
 		end: A1toRowCol(subrangeA1.split(":")[1] ? subrangeA1.split(":")[1].toUpperCase() : subrangeA1.toUpperCase())
 	} // get row/col objects for start and end positions of sub range
 
-	for (let range of searchRange) { // loop through search ranges
+	for (const range of searchRange) { // loop through search ranges
 		const rangeA1 = range.getA1Notation() // get A1 notation of current search range
 		const rangeRC = {
 			start: A1toRowCol(rangeA1.split(":")[0].toUpperCase()),
@@ -143,28 +143,28 @@ function returnFetch(url: string): string {
 }
 
 /** Opens an html dialog */
-function openHTML(file: string, titleOverride = '') {
+function openHTML(file: string, titleOverride = "") {
 	const ui = SpreadsheetApp.getUi()
 	const fileInfo = [ // name: file name, width & height: container width/height + 50
 		// ^^title: the title to be given the dialog, func: the type of dialog to be shown
-		{ name: 'lookup', width: 650, height: 450, title: 'Lookup', func: ui.showModelessDialog },
-		{ name: 'calculator', width: 500, height: 300, title: 'Coin Calculator', func: ui.showModalDialog },
-		{ name: 'distributor', width: 300, height: 300, title: 'Coin Distributor', func: ui.showModalDialog },
-		{ name: 'weapon', width: 425, height: 325, title: 'Weapon Selector', func: ui.showModalDialog },
-		{ name: 'lrdialog', width: 400, height: 175, title: 'Long Rest Options', func: ui.showModalDialog },
-		{ name: 'adjuster', width: 450, height: 250, title: 'Adjust Hit Dice', func: ui.showModalDialog },
-		{ name: 'shortrest', width: 525, height: 200, title: 'Short Rest', func: ui.showModalDialog },
-		{ name: 'armor', width: 475, height: 575, title: 'Armor Selector', func: ui.showModalDialog },
-		{ name: 'diceroller', width: 620, height: 330, title: 'Dice Roller', func: ui.showModalDialog },
-		{ name: 'level', width: 500, height: 300, title: 'Level Selector', func: ui.showModalDialog },
-		{ name: 'editlevel', width: 350, height: 250, title: 'Add Level', func: ui.showModalDialog },
-		{ name: 'formulas', width: 800, height: 425, title: 'Formula Library', func: ui.showModalDialog },
-		{ name: 'hitdice', width: 450, height: 180, title: 'Hit Dice Override', func: ui.showModalDialog },
-		{ name: 'equipment', width: 500, height: 450, title: 'Equipment Setter', func: ui.showModelessDialog },
-		{ name: '', width: 0, height: 0, title: '', func: ui.showModalDialog } // template
+		{ name: "lookup", width: 650, height: 450, title: "Lookup", func: ui.showModelessDialog },
+		{ name: "calculator", width: 500, height: 300, title: "Coin Calculator", func: ui.showModalDialog },
+		{ name: "distributor", width: 300, height: 300, title: "Coin Distributor", func: ui.showModalDialog },
+		{ name: "weapon", width: 425, height: 325, title: "Weapon Selector", func: ui.showModalDialog },
+		{ name: "lrdialog", width: 400, height: 175, title: "Long Rest Options", func: ui.showModalDialog },
+		{ name: "adjuster", width: 450, height: 250, title: "Adjust Hit Dice", func: ui.showModalDialog },
+		{ name: "shortrest", width: 525, height: 200, title: "Short Rest", func: ui.showModalDialog },
+		{ name: "armor", width: 475, height: 575, title: "Armor Selector", func: ui.showModalDialog },
+		{ name: "diceroller", width: 620, height: 330, title: "Dice Roller", func: ui.showModalDialog },
+		{ name: "level", width: 500, height: 300, title: "Level Selector", func: ui.showModalDialog },
+		{ name: "editlevel", width: 350, height: 250, title: "Add Level", func: ui.showModalDialog },
+		{ name: "formulas", width: 800, height: 425, title: "Formula Library", func: ui.showModalDialog },
+		{ name: "hitdice", width: 450, height: 180, title: "Hit Dice Override", func: ui.showModalDialog },
+		{ name: "equipment", width: 500, height: 450, title: "Equipment Setter", func: ui.showModelessDialog },
+		{ name: "", width: 0, height: 0, title: "", func: ui.showModalDialog } // template
 	].find(x => x.name == file)!
 	fileInfo.func( // call the function to show the dialog
 		HtmlService.createHtmlOutputFromFile(`HTML/${fileInfo.name}`) // create html output
 			.setWidth(fileInfo.width).setHeight(fileInfo.height), // set width and height
-		(titleOverride !== '') ? titleOverride : fileInfo.title) // set title
+		(titleOverride !== "") ? titleOverride : fileInfo.title) // set title
 }

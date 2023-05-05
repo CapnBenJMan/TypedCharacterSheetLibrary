@@ -3,6 +3,6 @@
 
 call tsc -p typeifyTSC.json
 
-call ts-node ArrangeTypes.ts
+call npx prettier --config "./.prettierrc.json" -w "../ProtoGS/Types/*.d.ts"
 
-call npx prettier --config ./.prettierrc.json -w "../ProtoGS/CSCTypes.d.ts"
+call ts-node ArrangeTypes.ts

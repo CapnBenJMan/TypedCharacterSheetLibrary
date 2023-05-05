@@ -1,15 +1,15 @@
 import { runGoogle, runGoogleWithReturn, ID, qry, qryA, capitalizer, show, hide } from "../../../Master/JS_Template"
 import type { Button, Div, Input, Select } from "../../../Master/JS_Template"
 
-const loader = ID('loader') // define loader element
-var maximum = 0
+const loader = ID("loader") // define loader element
+let maximum = 0
 const HP = { cur: 0, temp: 0, bonus: 0, limit: 0, get max(): number { return maximum + this.temp + this.bonus } }
-var spellsIsRunning = false
+let spellsIsRunning = false
 
-document.addEventListener('DOMContentLoaded', () => { // when the sidebar finishes loading
+document.addEventListener("DOMContentLoaded", () => { // when the sidebar finishes loading
 	getCurrent()
 	setTimeout(() => {
-		if (loader.style.visibility == 'visible') show(ID('errormessage'))
+		if (loader.style.visibility == "visible") show(ID("errormessage"))
 	}, 20_000)
 })
 
@@ -43,33 +43,33 @@ document.addEventListener('DOMContentLoaded', () => { // when the sidebar finish
 	})
 }
 
-ID('errormessage').onclick = () => hide(ID('errormessage'))
-qryA('input').forEach(x => x.autocomplete = 'off')
-qryA('.content.needsHelp button.dbutton').forEach(x => {
+ID("errormessage").onclick = () => hide(ID("errormessage"))
+qryA("input").forEach(x => x.autocomplete = "off")
+qryA(".content.needsHelp button.dbutton").forEach(x => {
 	// for each button, create an onmouseover, onmouseout, onmousedown, and onmouseup listener
 	x.onmouseover = () => helptext(true, x.id) // onmouseover, turn on helptext
 	x.onmouseout = () => helptext(false) // onmouseout, turn off helptext
-	x.onmousedown = () => animationControl('pause') // onmousedown, pause scrolling helptext
-	x.onmouseup = () => animationControl('resume') // onmouseup, unpause scrolling helptext
+	x.onmousedown = () => animationControl("pause") // onmousedown, pause scrolling helptext
+	x.onmouseup = () => animationControl("resume") // onmouseup, unpause scrolling helptext
 })
 
 async function getCurrent() { // get current values of health cells and update formatting to match
 	try {
 		show(loader) // show loader while code is processing
-		ID<Input>('ip').style.backgroundImage = "url('data:image/svg+xml;base64," +
+		ID<Input>("ip").style.backgroundImage = "url('data:image/svg+xml;base64," +
 			window.btoa(ID("inputBG").outerHTML)
 			+ "')"
 		// qryA('button#SR, button#LR').forEach(x => x.style.width = `39%`)
 		// qryA('button#\\+LR, button#-LR').forEach((x: Button) => x.style.width = `${(80 / 300) * 100}%`)
 		// qryA('button#setSlots, button#spellReturn').forEach(x => x.style.width = `${(95 / 285) * 100}%`)
 		// qryA('button#bonushp, button#bhplimit').forEach(x => x.style.width = `42%`)
-		const returnVal = await runGoogleWithReturn('getCurrent') // run code to return values of health cells
+		const returnVal = await runGoogleWithReturn("getCurrent") // run code to return values of health cells
 		HP.cur = Number(returnVal[0])
 		maximum = Number(returnVal[1])
 		HP.temp = Number(returnVal[2])
 		HP.bonus = Number(returnVal[6])
 		if (returnVal[3]) getSpells(returnVal[3]) // run get spells
-		ID('version').innerHTML = returnVal[5]
+		ID("version").innerHTML = returnVal[5]
 		updateHealth()
 		if (!spellsIsRunning) hide(loader)
 	} catch (err) { console.error(err) }
@@ -77,10 +77,10 @@ async function getCurrent() { // get current values of health cells and update f
 
 async function updateHealth() {
 	// This is where the references are defined
-	const hpbar = ID('hpbar'),
-		bhpbar = ID('bhpbar'),
-		thpbar = ID('thpbar'),
-		healthText = ID('healthtext')
+	const hpbar = ID("hpbar"),
+		bhpbar = ID("bhpbar"),
+		thpbar = ID("thpbar"),
+		healthText = ID("healthtext")
 	// This section sets the width of the bars
 	hpbar.style.width = `${(HP.cur / HP.max) * 100}%`
 	bhpbar.style.width = `${(HP.bonus / HP.max) * 100}%`
@@ -91,27 +91,27 @@ async function updateHealth() {
 	hpbar.style.backgroundColor = `rgb(${hpcolor[0]}, ${hpcolor[1]}, 0)`
 	bhpbar.style.backgroundColor = `rgb(${bhpcolor[0]}, ${bhpcolor[1]}, 255)`
 	// This is where the corners of the bars are set
-	if (HP.temp == 0 && HP.bonus == 0) hpbar.style.borderRadius = '10px 10px 10px 10px'
-	else hpbar.style.borderRadius = '10px 0px 0px 10px'
-	if (HP.temp > 0) bhpbar.style.borderRadius = '0px 0px 0px 0px'
-	else bhpbar.style.borderRadius = '0px 10px 10px 0px'
+	if (HP.temp == 0 && HP.bonus == 0) hpbar.style.borderRadius = "10px 10px 10px 10px"
+	else hpbar.style.borderRadius = "10px 0px 0px 10px"
+	if (HP.temp > 0) bhpbar.style.borderRadius = "0px 0px 0px 0px"
+	else bhpbar.style.borderRadius = "0px 10px 10px 0px"
 	// This is where the Current Health text is set
-	const cur = `${HP.cur}${HP.bonus > 0 ? `+${HP.bonus}` : ''}${HP.temp > 0 ? `+${HP.temp}` : ''}`
-	const max = `${maximum}${HP.bonus > 0 ? `+${HP.bonus}` : ''}${HP.temp > 0 ? `+${HP.temp}` : ''}`
+	const cur = `${HP.cur}${HP.bonus > 0 ? `+${HP.bonus}` : ""}${HP.temp > 0 ? `+${HP.temp}` : ""}`
+	const max = `${maximum}${HP.bonus > 0 ? `+${HP.bonus}` : ""}${HP.temp > 0 ? `+${HP.temp}` : ""}`
 	healthText.innerHTML = `Current Health: ${cur}/${max}`
-	healthText.style.fontSize = '16px'
-	for (let i = 16; getComputedStyle(qry('.back')).height <= getComputedStyle(qry('.healthtext')).height; i -= 0.01)
+	healthText.style.fontSize = "16px"
+	for (let i = 16; getComputedStyle(qry(".back")).height <= getComputedStyle(qry(".healthtext")).height; i -= 0.01)
 		healthText.style.fontSize = `${i}px`
 }
 
 async function health(button: string) {
-	const nue = [null, undefined, '']
+	const nue = [null, undefined, ""]
 	// if input is not null, undefined, or an empty string and if input is greater than 0
-	if (nue.every(x => x != ID<Input>('ip').value) && Number(ID<Input>('ip').value) > 0) {
-		const input = parseInt(ID<Input>('ip').value)
+	if (nue.every(x => x != ID<Input>("ip").value) && Number(ID<Input>("ip").value) > 0) {
+		const input = parseInt(ID<Input>("ip").value)
 		switch (button) {
-			case 'damage': {
-				var damage = input
+			case "damage": {
+				let damage = input
 				if (HP.temp > 0) {
 					if (damage > HP.temp) {
 						damage -= HP.temp
@@ -142,19 +142,19 @@ async function health(button: string) {
 				}
 				break
 			}
-			case 'heal':
+			case "heal":
 				HP.cur = Math.min(maximum, HP.cur + input)
 				break
-			case 'temphp':
+			case "temphp":
 				HP.temp = input
 				break
-			case 'bheal':
+			case "bheal":
 				if (HP.limit > 0) HP.bonus = Math.min(HP.limit, HP.bonus + input)
 				else HP.bonus += input
 				break
 		}
-		try { runGoogle("health", [HP]) } catch { }
-		ID<Input>('ip').value = ''
+		try { runGoogle("health", [HP]) } catch { /* continue regardless of error */ }
+		ID<Input>("ip").value = ""
 		updateHealth()
 	}
 }
@@ -163,79 +163,79 @@ type Spellcast = Button & { readonly: boolean }
 
 async function longRest() {
 	show(loader) // set loader to visible while processing
-	ID<Spellcast>('spellcast').readonly = true
-	await runGoogle('longRest') // run long rest code
+	ID<Spellcast>("spellcast").readonly = true
+	await runGoogle("longRest") // run long rest code
 	getCurrent() // run getCurrent
 }
 
 async function shortRest() {
 	show(loader) // set loader to visible while processing
-	ID<Spellcast>('spellcast').readonly = true
-	await runGoogle('shortRest') // run short rest code
+	ID<Spellcast>("spellcast").readonly = true
+	await runGoogle("shortRest") // run short rest code
 	getCurrent() // run getCurrent
 }
 
 async function addLongRest() {
 	show(loader) // set loader to visible while processing
-	await runGoogle('addLongRest') // run add rest code
+	await runGoogle("addLongRest") // run add rest code
 	hide(loader) // set loader to hidden as processing ends
 }
 
 async function removeLongRest() {
 	show(loader) // set loader to visible while processing
-	await runGoogle('removeLongRest') // run remove rest code
+	await runGoogle("removeLongRest") // run remove rest code
 	hide(loader) // set loader to hidden as processing ends
 }
 
-var helpTextHovering = false
+let helpTextHovering = false
 
 const infoRepository = {
-	'dmg': 'Enter a value in the input box and press this button to have the program calculate damage.',
-	'heal': 'Enter a value in the input box and press this button to have the program calculate healing.',
-	'temphp': 'Enter a value in the input box and press this button to have the program add TempHP.<br>NOTE: TempHP is not cumulative, and this program will not add to the previous TempHP value.',
-	'reload': `Use this button to refresh the HTML content of this sidebar in case it isn't working properly.`,
-	'LR': 'Use this button when you take a long rest. It will automatically reset your health, tempHP, spells, and any other value set with the +Rest button.',
-	'SR': 'Use this button when you take a short rest. It will automatically ask you if you rolled hit dice, the total rolled, and reset any value set with the +Rest button.',
-	'+LR': 'Use this button to apply a rest rule to a cell or modify an existing rule.',
-	'-LR': 'Use this button to remove a rest rule from a cell.',
-	'diceroll': 'Use this button to perform a dice roll.',
-	'level': 'Use this button to add or edit a level in a class.',
-	'spellcast': 'Use this button to use your spell slots or edit how many you have of each.',
-	'btools': 'Use this button to access a couple of tools, such as a coin calculator or converter, a formula generator, and more.',
-	'bonushp': 'Enter a value in the input box and press this button to have the program calculate BonusHP for things like Wild Shape Health, Abjuration Wizard\'s Arcane Ward, Polymorph Health, etc.',
-	'bhplimit': 'Use this button to apply a limit to the amount of BonusHP the character can have. Enter 0 to remove the limit.',
-	'returnTools': 'Use this button to return to the main page.',
-	'featurelookup': 'Use this button to search for a feature, feat, magic item, or spell.',
-	'calculator': 'Use this button to manually calculate coin totals.',
-	'distributor': 'Use this button to redistribute your coin totals.',
-	'formulas': 'Use this button to open up a library that contains a series of formulas for the different class features.',
-	'sethitdice': 'Use this button to override your current amount of hit dice.',
-	'equipment': 'Use this button to copy a piece of equipment to the sheet.'
+	"dmg": "Enter a value in the input box and press this button to have the program calculate damage.",
+	"heal": "Enter a value in the input box and press this button to have the program calculate healing.",
+	"temphp": "Enter a value in the input box and press this button to have the program add TempHP.<br>NOTE: TempHP is not cumulative, and this program will not add to the previous TempHP value.",
+	"reload": `Use this button to refresh the HTML content of this sidebar in case it isn't working properly.`,
+	"LR": "Use this button when you take a long rest. It will automatically reset your health, tempHP, spells, and any other value set with the +Rest button.",
+	"SR": "Use this button when you take a short rest. It will automatically ask you if you rolled hit dice, the total rolled, and reset any value set with the +Rest button.",
+	"+LR": "Use this button to apply a rest rule to a cell or modify an existing rule.",
+	"-LR": "Use this button to remove a rest rule from a cell.",
+	"diceroll": "Use this button to perform a dice roll.",
+	"level": "Use this button to add or edit a level in a class.",
+	"spellcast": "Use this button to use your spell slots or edit how many you have of each.",
+	"btools": "Use this button to access a couple of tools, such as a coin calculator or converter, a formula generator, and more.",
+	"bonushp": "Enter a value in the input box and press this button to have the program calculate BonusHP for things like Wild Shape Health, Abjuration Wizard's Arcane Ward, Polymorph Health, etc.",
+	"bhplimit": "Use this button to apply a limit to the amount of BonusHP the character can have. Enter 0 to remove the limit.",
+	"returnTools": "Use this button to return to the main page.",
+	"featurelookup": "Use this button to search for a feature, feat, magic item, or spell.",
+	"calculator": "Use this button to manually calculate coin totals.",
+	"distributor": "Use this button to redistribute your coin totals.",
+	"formulas": "Use this button to open up a library that contains a series of formulas for the different class features.",
+	"sethitdice": "Use this button to override your current amount of hit dice.",
+	"equipment": "Use this button to copy a piece of equipment to the sheet."
 }
 
 function helptext(ioBool: false): void
 function helptext(ioBool: true, buttonType: string): void
 function helptext(ioBool: boolean, buttonType?: string): void { // input/output Boolean, button id
-	if (ID<Input>('togglehelp').checked) { // if enable helptext is checked
+	if (ID<Input>("togglehelp").checked) { // if enable helptext is checked
 		helpTextHovering = ioBool
 
-		const helpContainer = ID('helpcontainer') // define reference to helptext div element
-		const helpTextElem = ID('helptext') // define reference to helptext paragraph element
-		const helpText = (ioBool) ? infoRepository[buttonType! as keyof typeof infoRepository] : '' // define paragraph content variable
+		const helpContainer = ID("helpcontainer") // define reference to helptext div element
+		const helpTextElem = ID("helptext") // define reference to helptext paragraph element
+		const helpText = (ioBool) ? infoRepository[buttonType! as keyof typeof infoRepository] : "" // define paragraph content variable
 
 
 		if (ioBool) { // if onmouseover was triggered
 			helpTextElem.innerHTML = helpText
 			setTimeout(() => {
 				if (parseFloat(getComputedStyle(helpContainer).height) < parseFloat(getComputedStyle(helpTextElem).height))
-					helpTextElem.style.animation = 'scroll 4s linear 1s infinite alternate' // create scrolling animation
+					helpTextElem.style.animation = "scroll 4s linear 1s infinite alternate" // create scrolling animation
 			}, 1)
 			show(helpContainer)
 		} else { // if onmouseout was triggered
 			setTimeout(() => {
 				if (!helpTextHovering) {
 					helpTextElem.innerHTML = helpText
-					helpTextElem.style.animation = '' // end animation
+					helpTextElem.style.animation = "" // end animation
 					hide(helpContainer)
 				}
 			}, 100)
@@ -245,38 +245,38 @@ function helptext(ioBool: boolean, buttonType?: string): void { // input/output 
 
 
 function animationControl(a: string) {
-	const help = qry('#helpcontainer > p')
+	const help = qry("#helpcontainer > p")
 	switch (a) { // switch between onmousedown and onmouseup to pause and unpause scrolling animation
-		case 'pause':
-			help.style.animationPlayState = 'paused'
+		case "pause":
+			help.style.animationPlayState = "paused"
 			break
-		case 'resume':
-			help.style.animationPlayState = 'running'
+		case "resume":
+			help.style.animationPlayState = "running"
 			break
 	}
 }
 
 async function rollSomeDice() {
 	show(loader) // set loader to visible while processing
-	await runGoogle('openHTML', ['diceroller']) // run dice roller code
+	await runGoogle("openHTML", ["diceroller"]) // run dice roller code
 	getCurrent() // run getCurrent
 	hide(loader) // set loader to hidden as processing ends
 }
 
 function addlevel() {
 	show(loader)
-	runGoogle("openHTML", ['level'])
+	runGoogle("openHTML", ["level"])
 }
 
 async function getSpells(bool = false) {
 	spellsIsRunning = true
-	if (bool) ID('spellcontainer').className = ''
-	const slots = await runGoogleWithReturn('getSpells')
-	for (let a of ['sc', 'pm']) {
+	if (bool) ID("spellcontainer").className = ""
+	const slots = await runGoogleWithReturn("getSpells")
+	for (const a of ["sc", "pm"]) {
 		for (let i = 1; i <= 9; i++) {
 			const cur = ID<Input>(`cur${a}${i}`)
 			const use = ID<Button>(`use${a}${i}`)
-			if ((slots.scLvl > 0 && a == 'sc') || (slots.pmLvl > 0 && a == 'pm')) {
+			if ((slots.scLvl > 0 && a == "sc") || (slots.pmLvl > 0 && a == "pm")) {
 				if (slots[`${a}${i}`] >= 0) {
 					cur.value = slots[`${a}${i}`]
 					cur.dataset.ignore = "false"
@@ -294,9 +294,9 @@ async function getSpells(bool = false) {
 			}
 		}
 	}
-	const spellcast = ID<Spellcast>('spellcast')
+	const spellcast = ID<Spellcast>("spellcast")
 	spellcast.readonly = false
-	spellcast.classList.toggle('grayout', false)
+	spellcast.classList.toggle("grayout", false)
 	hide(loader)
 	spellsIsRunning = false
 }
@@ -311,8 +311,8 @@ function openSpells(n) {
 function closeSpells() {
 	hide(ID("spells"))
 	show(ID("main"))
-	ID<Spellcast>('spellcast').readonly = true
-	ID<Spellcast>('spellcast').classList.add('grayout')
+	ID<Spellcast>("spellcast").readonly = true
+	ID<Spellcast>("spellcast").classList.add("grayout")
 	getSpells()
 }
 
@@ -329,15 +329,15 @@ function closeTools() {
 function useSlot(n: number, type: "sc" | "pm") {
 	const current = ID<Input>(`cur${type}${n}`)
 	ID<Button>(`use${type}${n}`).disabled = true
-	ID<Button>(`use${type}${n}`).classList.add('grayout')
+	ID<Button>(`use${type}${n}`).classList.add("grayout")
 	setTimeout(() => {
 		ID<Button>(`use${type}${n}`).disabled = false
-		ID<Button>(`use${type}${n}`).classList.remove('grayout')
+		ID<Button>(`use${type}${n}`).classList.remove("grayout")
 	}, 3000)
 	const cv = Number(current.value)
 	if (current.value != "0") {
 		current.value = String(cv - 1)
-		runGoogle('useSpellSlot', [n, type])
+		runGoogle("useSpellSlot", [n, type])
 	}
 }
 
@@ -369,12 +369,12 @@ function setSlots() {
 	// 	pm8: { dis: (Number(ID<Input>('curpm8').value) > 0 || ID<Input>('curpm8').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm8').value) },
 	// 	pm9: { dis: (Number(ID<Input>('curpm9').value) > 0 || ID<Input>('curpm9').dataset.ignore == "false") ? true : false, val: Number(ID<Input>('curpm9').value) }
 	// }
-	runGoogle('setSpellSlots', [obj])
+	runGoogle("setSpellSlots", [obj])
 }
 
 function colorArray(percent) {
 	percent = parseFloat(percent) // makes sure  percent is a number
-	var red, green // defines a pair of variables to be assigned values later
+	let red, green // defines a pair of variables to be assigned values later
 	const redMax = 255 // sets the max for red
 	const greenMax = 255 // sets the max for green
 	if (percent > 50) { // if percent is greater than 50
@@ -392,7 +392,7 @@ function colorArray(percent) {
 
 function colorArrayB(percent) {
 	percent = parseFloat(percent) // makes sure  percent is a number
-	var red, green // defines a pair of variables to be assigned values later
+	let red, green // defines a pair of variables to be assigned values later
 	const redMax = 255 // sets the max for red
 	const greenMax = 255 // sets the max for green
 	if (percent > 50) { // if percent is greater than 50
@@ -409,10 +409,10 @@ function colorArrayB(percent) {
 }
 
 function limit() {
-	var res: number
+	let res: number
 	while (true) {
-		res = Number(prompt('Enter the upper limit of your bonus health.\nEnter 0 to remove that limit\n(No Decimals)'))
-		if (Number.isNaN(res) || res.toString().includes('.')) alert('ERROR: You must enter an integer. Letters and decimals will be rejected.')
+		res = Number(prompt("Enter the upper limit of your bonus health.\nEnter 0 to remove that limit\n(No Decimals)"))
+		if (Number.isNaN(res) || res.toString().includes(".")) alert("ERROR: You must enter an integer. Letters and decimals will be rejected.")
 		else break
 	}
 	HP.limit = res

@@ -25,7 +25,7 @@ function jsonSwap(e: GoogleAppsScript.Events.SheetsOnEdit) {
 	const ss = e.source || SpreadsheetApp.getActiveSpreadsheet()
 
 	// Get Object that represents edited range
-	var curr = '' // variable used for debugging function
+	const curr = "" // variable used for debugging function
 	// let time = x => { // debugging function for logging execution time
 	// 	console.timeEnd(curr)
 	// 	console.time(x)
@@ -36,25 +36,25 @@ function jsonSwap(e: GoogleAppsScript.Events.SheetsOnEdit) {
 	console.log("JSON")
 	if (!isEmptyish(e)) console.log(e.range.getA1Notation().replace(/:.+/, ""))
 	const a1 = e.range.getCell(1, 1).getA1Notation() || "T31"
-	const mode = ss.getRange('Character!Z44').getValue()
+	const mode = ss.getRange("Character!Z44").getValue()
 	const obj = [
-		{ name: 'Notes', targetRange: 'Character!R37:AF42', inputRange: 'Character!R43', col: 1, searchRange: 'H2:H' },
-		{ name: 'Weapons', targetRange: 'Character!R32:AF36', inputRange: 'Character!T31', col: 1, searchRange: 'F2:F' },
-		{ name: 'SimpleLeft', targetRange: 'Character!Z45:AF56', inputRange: 'Character!Z57', col: -1, searchRange: 'B2:B' },
-		{ name: 'SimpleRight', targetRange: 'Character!AH45:AN56', inputRange: 'Character!Z57', col: 1, searchRange: 'B2:B' },
-		{ name: 'ComplexLeft', targetRange: 'Character!Z45:AF56', inputRange: 'Character!Z57', col: 1, searchRange: 'D2:D' },
-		{ name: 'ComplexRight', targetRange: 'Character!AH45:AN56', inputRange: 'Character!AH57', col: 1, searchRange: 'D2:D' }
+		{ name: "Notes", targetRange: "Character!R37:AF42", inputRange: "Character!R43", col: 1, searchRange: "H2:H" },
+		{ name: "Weapons", targetRange: "Character!R32:AF36", inputRange: "Character!T31", col: 1, searchRange: "F2:F" },
+		{ name: "SimpleLeft", targetRange: "Character!Z45:AF56", inputRange: "Character!Z57", col: -1, searchRange: "B2:B" },
+		{ name: "SimpleRight", targetRange: "Character!AH45:AN56", inputRange: "Character!Z57", col: 1, searchRange: "B2:B" },
+		{ name: "ComplexLeft", targetRange: "Character!Z45:AF56", inputRange: "Character!Z57", col: 1, searchRange: "D2:D" },
+		{ name: "ComplexRight", targetRange: "Character!AH45:AN56", inputRange: "Character!AH57", col: 1, searchRange: "D2:D" }
 	].find(x => {
-		if (a1 == 'Z57' || a1 == 'AH57') return x.inputRange.includes(a1) && x.name.includes(mode)
+		if (a1 == "Z57" || a1 == "AH57") return x.inputRange.includes(a1) && x.name.includes(mode)
 		return x.inputRange.includes(a1)
 	})!
 
 	console.log(obj)
 
 	const range = ss.getRange(obj.targetRange) // target range
-	const pages = ss.getSheetByName('Pages')!
+	const pages = ss.getSheetByName("Pages")!
 	const contentRange = pages.getRange(obj.searchRange)
-	const formatSheet = ss.getSheetByName('Formatting')!
+	const formatSheet = ss.getSheetByName("Formatting")!
 	const formatRange = formatSheet.getRange(obj.searchRange)
 
 	// Savepoints
@@ -88,16 +88,16 @@ function jsonSwap(e: GoogleAppsScript.Events.SheetsOnEdit) {
 		}
 	}))
 	const textStyles = textstyleBuilder(all)
-	const loadNumformats = formatting.num.map(x => x.map(y => (y == '÷') ? '0.###############' : y))
+	const loadNumformats = formatting.num.map(x => x.map(y => (y == "÷") ? "0.###############" : y))
 	// Promise.resolve(formatting.num.map(x => x.map(y => (y == '÷') ? '0.###############' : y)))
 	const loadHori = formatting.hori.map(x => x.map(y => {
 		switch (y) {
-			case 'l':
-				return 'left'
-			case 'c':
-				return 'center'
-			case 'r':
-				return 'right'
+			case "l":
+				return "left"
+			case "c":
+				return "center"
+			case "r":
+				return "right"
 		}
 	}))
 	/* Promise.resolve(formatting.hori.map(x => x.map(y => {
@@ -112,12 +112,12 @@ function jsonSwap(e: GoogleAppsScript.Events.SheetsOnEdit) {
 	}))) */
 	const loadVert = formatting.vert.map(x => x.map(y => {
 		switch (y) {
-			case 't':
-				return 'top'
-			case 'm':
-				return 'middle'
-			case 'b':
-				return 'bottom'
+			case "t":
+				return "top"
+			case "m":
+				return "middle"
+			case "b":
+				return "bottom"
 		}
 	}))
 	/* Promise.resolve(formatting.vert.map(x => x.map(y => {
@@ -134,14 +134,14 @@ function jsonSwap(e: GoogleAppsScript.Events.SheetsOnEdit) {
 	// Save Content
 	const saveMerges = range.getMergedRanges().map(x => x.getA1Notation())
 	const forms = range.getFormulas()
-	const saveValues = range.getValues().map((x, i) => x.map((y, j) => (forms[i][j] != '') ? forms[i][j] : y))
+	const saveValues = range.getValues().map((x, i) => x.map((y, j) => (forms[i][j] != "") ? forms[i][j] : y))
 	const saveNotes = range.getNotes()
 	const saveValis = range.getDataValidations().map(x => x.map(y => {
 		if (y == null) return null
-		const critType = y.getCriteriaType().toString(),
-			critValues = y.getCriteriaValues()
+		const critType = y.getCriteriaType().toString()
+		const critValues = y.getCriteriaValues()
 		return [critType,
-			critType == 'VALUE_IN_RANGE' ? [`'${critValues[0].getSheet().getName()}'!${critValues[0].getA1Notation()}`, critValues[1]] : critValues] satisfies [any, any]
+			critType == "VALUE_IN_RANGE" ? [`'${critValues[0].getSheet().getName()}'!${critValues[0].getA1Notation()}`, critValues[1]] : critValues] satisfies [any, any]
 	}))
 	const backgroundColor = range.getBackgrounds()
 	/* Promise.resolve(range.getDataValidations().map(x => x.map(y => {
@@ -156,20 +156,20 @@ function jsonSwap(e: GoogleAppsScript.Events.SheetsOnEdit) {
 	}))) */
 
 	// Save Format
-	const saveNumform = range.getNumberFormats().map(x => x.map(y => y == "0.###############" ? '÷' : y))
+	const saveNumform = range.getNumberFormats().map(x => x.map(y => y == "0.###############" ? "÷" : y))
 	const saveHori = range.getHorizontalAlignments().map(x => x.map(y => {
-		if (y.includes('general') && !y.includes('-')) {
-			return 'l' as Hori
-		} else if (y.includes('general') && y.includes('-')) {
-			return y.replace('general-', '').slice(0, 1) as Hori
+		if (y.includes("general") && !y.includes("-")) {
+			return "l" as Hori
+		} else if (y.includes("general") && y.includes("-")) {
+			return y.replace("general-", "").slice(0, 1) as Hori
 		} else {
 			return y.charAt(0) as Hori
 		}
 	}))
 	const saveVert = range.getVerticalAlignments().map(x => x.map(y => {
-		if (y.includes('general') && !y.includes('-')) {
-			return 'm' as Vert
-		} else if (y.includes('general') && y.includes('-')) {
+		if (y.includes("general") && !y.includes("-")) {
+			return "m" as Vert
+		} else if (y.includes("general") && y.includes("-")) {
 			return y.slice(8, 9) as Vert
 		} else {
 			return y.charAt(0) as Vert
@@ -183,11 +183,11 @@ function jsonSwap(e: GoogleAppsScript.Events.SheetsOnEdit) {
 	// new Promise((res, _rej) => res(text.map(x => x.map(y => y.getForegroundColorObject().asRgbColor().asHexString()))))
 	// Promise.resolve(text.map(x => x.map(y => y.getForegroundColorObject().asRgbColor().asHexString())))
 	const styles = text.map(x => x.map(y => {
-		var arr = {} as { [K: string]: string }
-		if (y.isBold()) arr.b = ''
-		if (y.isItalic()) arr.i = ''
-		if (y.isStrikethrough()) arr.s = ''
-		if (y.isUnderline()) arr.u = ''
+		const arr = {} as { [K: string]: string }
+		if (y.isBold()) arr.b = ""
+		if (y.isItalic()) arr.i = ""
+		if (y.isStrikethrough()) arr.s = ""
+		if (y.isUnderline()) arr.u = ""
 		return arr
 	}))
 	/* new Promise((res, _rej) => {
