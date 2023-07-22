@@ -3,8 +3,8 @@
 declare namespace CharacterSheetCode {
 	// 00-Main.d.ts
 
-	export const libraryVersion = "v3.7.1"
-	export const deploymentVersion = 39
+	export const libraryVersion = "v3.7.2"
+	export const deploymentVersion = 40
 	export function version(i: GoogleAppsScript.Events.SheetsOnOpen): void
 	export function trigger(e: GoogleAppsScript.Events.SheetsOnEdit, id?: string): void
 	export function preload(i: GoogleAppsScript.Events.SheetsOnOpen, id?: string): void

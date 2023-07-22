@@ -6,8 +6,8 @@ The license in its entirety can be found at https://creativecommons.org/licenses
 This library and its source code can be found at https://github.com/CapnBenJMan/TypedCharacterSheetLibrary.
 */
 
-const libraryVersion = "v3.7.1"
-const deploymentVersion = 39
+const libraryVersion = "v3.7.2"
+const deploymentVersion = 40
 
 function version(i: GoogleAppsScript.Events.SheetsOnOpen) {
 	//version update

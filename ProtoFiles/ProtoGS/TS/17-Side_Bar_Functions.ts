@@ -109,8 +109,8 @@ function isWithinRange(subRange: GoogleAppsScript.Spreadsheet.Range, ...searchRa
 	function A1toRowCol(a: string): RowCol {
 		const b = a.split(/(\d+)/) // split a into letter (row) and number (col)
 		return { // return the object
-			row: A1toCol(b[0]),
-			col: Number(b[1])
+			col: A1toCol(b[0]),
+			row: Number(b[1])
 		}
 	}
 }

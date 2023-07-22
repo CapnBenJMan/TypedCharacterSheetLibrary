@@ -99,8 +99,8 @@ function isWithinRange(subRange, ...searchRange) {
     function A1toRowCol(a) {
         const b = a.split(/(\d+)/); // split a into letter (row) and number (col)
         return {
-            row: A1toCol(b[0]),
-            col: Number(b[1])
+            col: A1toCol(b[0]),
+            row: Number(b[1])
         };
     }
 }

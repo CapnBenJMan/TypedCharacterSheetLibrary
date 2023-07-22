@@ -1,7 +1,7 @@
 {
 	"name": "typedcsc",
-	"version": "3.7.1",
-	"latestLibraryVersion": 38,
+	"version": "3.7.2",
+	"latestLibraryVersion": 39,
 	"description": "",
 	"scripts": {
 		"transpile": "cd ProtoFiles/Exec/ && transpile.bat",
