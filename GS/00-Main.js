@@ -6,7 +6,7 @@ The license in its entirety can be found at https://creativecommons.org/licenses
 This library and its source code can be found at https://github.com/CapnBenJMan/TypedCharacterSheetLibrary.
 */
 const libraryVersion = "v3.7.2";
-const deploymentVersion = 40;
+const deploymentVersion = 41;
 function version(i) {
     //version update
     const rangeLHT = i.source.getRange("Legal and How-to!M4");

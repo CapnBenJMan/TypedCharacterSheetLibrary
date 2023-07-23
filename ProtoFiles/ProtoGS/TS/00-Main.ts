@@ -7,7 +7,7 @@ This library and its source code can be found at https://github.com/CapnBenJMan/
 */
 
 const libraryVersion = "v3.7.2"
-const deploymentVersion = 40
+const deploymentVersion = 41
 
 function version(i: GoogleAppsScript.Events.SheetsOnOpen) {
 	//version update

@@ -117,7 +117,7 @@ function exists(sheet, cell) {
         const s = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheet); // get the inputted sheet
         const lrow = s.getLastRow(), lcol = s.getLastColumn(), r = s.getRange(cell);
         // ^get the last row and column of the sheet, and define reference to range
-        return s != null && (lrow <= r.getRow() && lcol <= r.getColumn());
+        return s != null && (lrow >= r.getRow() && lcol >= r.getColumn());
         // ^returns if the sheet exists and if the range exists within the regular bounds of the sheet
     }
     catch {
